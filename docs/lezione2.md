@@ -1,5 +1,5 @@
 ---
-title: Lezione 1
+title: Lezione 2
 layout: Lezione 1
 ---
 comandi per eseguire le lezioni pratiche 
