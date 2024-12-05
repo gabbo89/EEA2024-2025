@@ -1,6 +1,6 @@
 ---
 layout: default
-title: ANALISI BIOINFORMATICA DI DATI EPIGENETICI
+title: ANALISI 
 nav_order: 1
 description: First tutorial
 ---
