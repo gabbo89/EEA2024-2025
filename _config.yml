@@ -3,6 +3,7 @@ description: A starter template for a Jeykll site using the Just the Docs theme!
 theme: just-the-docs
 
 url: https://gabbo89.github.io/EEA2024
+logo: https://www.uniud.it/it/ateneo-uniud/ateneo-uniud-organizzazione/sistema-qualita/allegati-ed-immagini/logo-uniud/download
 
 aux_links:
   Template Repository: https://github.com/just-the-docs/just-the-docs-template
