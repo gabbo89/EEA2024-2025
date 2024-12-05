@@ -1,6 +1,8 @@
 title: EEA 2024
-description: A starter template for a Jeykll site using the Just the Docs theme!
+description: Tutorial for Analysis of Epigenetics Data
 theme: just-the-docs
+color_scheme: dark
+nav_enabled: true
 
 url: https://gabbo89.github.io/EEA2024
 logo: "https://www.sisfvg.it/sites/default/files/logoUniud-small.png"
