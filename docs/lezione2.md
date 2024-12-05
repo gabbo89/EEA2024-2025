@@ -1,6 +1,6 @@
 ---
 title: Lezione 2
-layout: Lezione 1
+layout: Home
 ---
 comandi per eseguire le lezioni pratiche 
 sadasdasd
