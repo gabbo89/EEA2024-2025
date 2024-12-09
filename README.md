@@ -1,6 +1,6 @@
 # Analisi Bioinformatica di Dati Epigenetici
 
-Questa è la pagina This is a *bare-minimum* template to create a [Jekyll] site that:
+Questa è la pagina di riferimento per i tutorial del Corso di Analisi Bioinformatica di Dati Epigenetici
 
 - uses the [Just the Docs] theme;
 - can be built and published on [GitHub Pages];
