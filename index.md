@@ -11,7 +11,7 @@ Per comprendere i meccanismi dell'analisi bioinformatica
 
 
 
-la prova da fare è con il seguente codice 
+la prova da fare è con il seguente codice uffa
 # lancio bismark 
 `augustus` can be used to predict genes as follows:
 ```bash
