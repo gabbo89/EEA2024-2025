@@ -12,6 +12,7 @@ Per comprendere i meccanismi dell'analisi bioinformatica
 capi
 la prova da fare è con il seguente codice 
 # lancio bismark 
+`augustus` can be used to predict genes as follows:
 ```bash
 $ bismark --alignment input_file.fna > output_file.gff
 ```
