@@ -11,6 +11,6 @@ _Epigenetics_ rules
 This is the first page
 ### TEST di immagine
 
-![test_figura](assets/images/Picture3.jpg)
+![test_figura](images/Picture3.jpg)
 
 ##
