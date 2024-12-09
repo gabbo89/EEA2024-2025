@@ -9,7 +9,8 @@ Per comprendere i meccanismi dell'analisi bioinformatica
 
 ![metilazione](/assets/images/Picture1.png)
 
-capi
+
+
 la prova da fare è con il seguente codice 
 # lancio bismark 
 `augustus` can be used to predict genes as follows:
