@@ -16,6 +16,5 @@ This is the first page
 ![test_figura](https://gabbo89.github.io/EEA2024/assets/images/Picture3.jpg)
 
 
-
 ho fatto un'altra modifica
 ##

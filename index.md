@@ -1,6 +1,9 @@
 ---
-title: Analisi Bioinformatica di Dati Epigenetici
-layout: home
+layout: default
+title: Home
+nav_order: 1
+description: "Analisi Bioinformatica di Dati Epigenetici: tutorial"
+permalink: /
 ---
 Per comprendere i meccanismi dell'analisi bioinformatica
 
