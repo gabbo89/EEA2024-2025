@@ -1,19 +1,13 @@
 ---
 layout: default
-title: lezione 4
-nav_order: 4
+title: lezione 1
+nav_order: 1
+parent: 3. Tutorial
 description: A comprehensive guide to understanding epigenetics.
 ---
-comandi per eseguire le lezioni pratiche 
-sadasdasd
 
-sdasdasdsa
 
-asd
-as
-das
-s
-dasdas
+### Check quality of fastq files 
 ----
 
 
