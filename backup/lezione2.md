@@ -1,7 +1,6 @@
 ---
-title: Lezione 1
-layout: Lezione 1
-nav_order: 4
+title: Lezione 2
+layout: Home
 ---
 comandi per eseguire le lezioni pratiche 
 sadasdasd
@@ -14,6 +13,4 @@ das
 s
 dasdas
 ----
-
-
 
