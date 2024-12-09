@@ -3,7 +3,6 @@ layout: default
 title: Home
 nav_order: 1
 description: "Analisi Bioinformatica di Dati Epigenetici: tutorial"
-permalink: /
 ---
 
 # Analisi Bioinformatica di Dati Epigenetici

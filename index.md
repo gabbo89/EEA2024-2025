@@ -1,6 +1,6 @@
 ---
-layout: home
-title: Home
+layout: default
+title: Subpage
 nav_order: 1
 description: "Welcome to my docs"
 ---
