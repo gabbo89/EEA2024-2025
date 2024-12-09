@@ -11,9 +11,10 @@ _Epigenetics_ refers to changes in gene expression that do not involve alteratio
 
 ---
 
+![figura_di_mercoledì](/assets/images/Picture3.jpg)
 
-![test_figura](/assets/images/Picture3.jpg)
-    
+![giove]({{ "/assets/images/Picture3.jpg" | EEA2024 }})
+
 ## What is Epigenetics?
 
 Epigenetics explores how genes are turned on or off without changing the genetic code itself. Key mechanisms include:
