@@ -12,11 +12,9 @@ _Epigenetics_ rules
 This is the first page
 ### TEST di immagine
 
-![test_figura][def]
+![test_figura](/assets/images/Picture3.jpg)
 
 
 
 ho fatto un'altra modifica
 ##
-
-[def]: /assets/images/Picture3.jpg
