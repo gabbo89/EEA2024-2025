@@ -13,8 +13,10 @@ This is the first page
 ### TEST di immagine
 
 #![test_figura]({{ https://gabbo89.github.io/EEA2024/ }}/assets/images/Picture3.jpg)
-![test_figura](https://gabbo89.github.io/EEA2024/assets/images/Picture3.jpg)
+![test_figura][def]
 
 
 ho fatto un'altra modifica
 ##
+
+[def]: https://gabbo89.github.io/EEA2024/assets/images/Picture3.jpg
