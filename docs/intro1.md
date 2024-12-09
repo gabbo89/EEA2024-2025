@@ -11,4 +11,4 @@ _Epigenetics_ rules
 This is the first page
 ### TEST di immagine
 
-![metilazione](/assets/images/Picture3.jpg)
+![metilazione](assets/images/Picture3.jpg)
