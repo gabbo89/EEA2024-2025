@@ -1,7 +1,7 @@
 title: EEA 2024
 description: Tutorial for Analysis of Epigenetics Data
 theme: just-the-docs
-#color_scheme: dark
+color_scheme: light
 nav_enabled: true
 
 url: https://gabbo89.github.io/EEA2024
