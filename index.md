@@ -4,8 +4,17 @@ layout: home
 ---
 Per comprendere i meccanismi dell'analisi bioinformatica
 
-![metilazione](/assets/images/Picture1.png)
+
 ### TEST di immagine
+
+![metilazione](/assets/images/Picture1.png)
+
+capi
+la prova da fare è con il seguente codice 
+# lancio bismark 
+```bash
+$ bismark --alignment input_file.fna > output_file.gff
+```
 ----
 
 [^1]: [It can take up to 10 minutes for changes to your site to publish after you push the changes to GitHub](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/creating-a-github-pages-site-with-jekyll#creating-your-site).
