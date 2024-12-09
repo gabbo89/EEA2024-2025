@@ -1,11 +1,11 @@
 ---
-layout: default
+layout: home
 title: Home
 nav_order: 1
-description: "Analisi Bioinformatica di Dati Epigenetici: tutorial"
+description: "Welcome to my docs"
 permalink: /
 ---
-Per comprendere i meccanismi dell'analisi bioinformatica
+
 
 
 ### TEST di immagine
