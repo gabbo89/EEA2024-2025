@@ -11,7 +11,7 @@ _Epigenetics_ rules
 This is the first page
 ### TEST di immagine
 
-![test_figura]({{https://github.com/gabbo89/EEA2024}}/assets/images/Picture3.jpg)
+![test_figura]({{https://gabbo89.github.io/EEA2024/}}/assets/images/Picture3.jpg)
 
 ho fatto un'altra modifica
 ##
