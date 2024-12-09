@@ -1,5 +1,5 @@
 ---
-title: Analisi Bioinformatica di Dati Epigenetici
+title: Home
 layout: home
 ---
 

@@ -1,6 +1,6 @@
-# Analisi Bioinformatica di Dati Epigenetici
+# just-the-docs-template
 
-Questa è la pagina This is a *bare-minimum* template to create a [Jekyll] site that:
+This is a *bare-minimum* template to create a [Jekyll] site that:
 
 - uses the [Just the Docs] theme;
 - can be built and published on [GitHub Pages];
