@@ -1,3 +1,11 @@
+---
+layout: default
+title: Home
+nav_order: 1
+description: "Analisi Bioinformatica di Dati Epigenetici: tutorial"
+permalink: /
+---
+
 # Analisi Bioinformatica di Dati Epigenetici
 
 Questa è la pagina di riferimento per i tutorial del Corso di Analisi Bioinformatica di Dati Epigenetici

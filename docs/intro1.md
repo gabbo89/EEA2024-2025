@@ -1,9 +1,10 @@
 ---
 layout: default
-title: Lezione di analisi 
-nav_order: 2
-description: First tutorial
+title: File formats used in bioinformatics
+parent: 1. General guides
+nav_order: 1
 ---
+
 
 # Epigenetics
 _Epigenetics_ rules
