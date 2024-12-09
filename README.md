@@ -2,6 +2,11 @@
 
 Questa è la pagina di riferimento per i tutorial del Corso di Analisi Bioinformatica di Dati Epigenetici
 
+
+![metilazione](/assets/images/Picture1.png)
+
+
+
 - uses the [Just the Docs] theme;
 - can be built and published on [GitHub Pages];
 - can be built and previewed locally, and published on other platforms.
