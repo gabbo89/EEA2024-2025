@@ -11,7 +11,8 @@ _Epigenetics_ refers to changes in gene expression that do not involve alteratio
 
 ---
 
-![figura2: The methylation ]({{ "/assets/images/Picture2.png" | relative_url }})
+
+![figura2: The methylation ]({{ "/assets/images/Picture1.png" | relative_url }})
 
 
 ## What is Epigenetics?

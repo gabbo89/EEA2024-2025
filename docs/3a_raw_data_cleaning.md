@@ -13,17 +13,17 @@ description: A comprehensive guide to understanding epigenetics.
 ## Fastqc is availbale both as graphical and textual interface (we will use the textual)
 
 #### upload the module required 
-`conda activate epigenomics`
+```conda activate epigenomics```
 
 #### test if fastqc is working
-`fastqc --help`
+```fastqc --help```
 
 #### copy the raw data from the folder to our working directory 
-`cp ... /data2/student_space/st24_01_folder/...`
+```cp ... /data2/student_space/st24_01_folder/...```
 
 #### run Fastqc 
 
-`fastqc ..R1.fastq.gz ...R2.fastq.gz`
+```fastqc ..R1.fastq.gz ...R2.fastq.gz```
 
 ----
 
