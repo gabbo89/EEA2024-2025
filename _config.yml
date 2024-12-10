@@ -36,8 +36,8 @@ callouts:
     color: purple
   warning:
     title: Warning
-    color: orange
+    color: red
   failed:
     title: Failed
-    color: red
+    color: grey-dk
 
