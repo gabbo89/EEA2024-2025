@@ -29,7 +29,7 @@ callouts:
     title: Important
     color: blue
   new:
-    title: New
+    title: Success
     color: green
   note:
     title: Note
