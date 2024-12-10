@@ -28,7 +28,7 @@ callouts:
   important:
     title: Important
     color: blue
-  new:
+  success:
     title: Success
     color: green
   note:
@@ -36,4 +36,8 @@ callouts:
     color: purple
   warning:
     title: Warning
+    color: orange
+  failed:
+    title: Failed
     color: red
+
