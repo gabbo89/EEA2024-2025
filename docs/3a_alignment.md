@@ -31,6 +31,7 @@ bismark_methylation_extractor --genome_folder /projects/novabreed/share/gmagris/
 ```yaml
 bismark_methylation_extractor --genome_folder /projects/novabreed/share/gmagris/collaboration/lezioni/2024/EEA/reference/ -p --bedGraph --cytosine_report --CX_context --multicore 1 --gzip rkatsiteli.leaves.rkatsiteli.leaves.R1_bismark_bt2_pe.deduplicated.bam
 ```
+
 {: .Success }
 > Finished writing out cytosine report for covered chromosomes (processed 343 chromosomes/scaffolds in total)
 > Now processing chromosomes that were not covered by any methylation calls in the coverage file...
