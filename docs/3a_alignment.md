@@ -5,12 +5,23 @@ nav_order: 2
 parent: 3. Tutorial
 description: A comprehensive guide to understanding epigenetics.
 ---
+# Perform the alignment of the filtered reads 
 
+We will use bismark suite [bismark](https://xxx)
+
+{: .warning }
+> need to be sure the index is present 
+
+
+## #### bismark alignment 
+
+> bismark alignment
+
+`bismark` 
 #### perform deduplicate 
 ```bash
 deduplicate_bismark --bam rkatsiteli.leaves.rkatsiteli.leaves.R1_bismark_bt2_pe.bam
 ```
-
 
 ### extract methylation information 
 ```bash
