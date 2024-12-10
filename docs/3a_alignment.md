@@ -16,22 +16,10 @@ deduplicate_bismark --bam rkatsiteli.leaves.rkatsiteli.leaves.R1_bismark_bt2_pe.
 ```bash
 bismark_methylation_extractor --genome_folder /projects/novabreed/share/gmagris/collaboration/lezioni/2024/EEA/reference/ -p --bedGraph --cytosine_report --CX_context --multicore 1 --gzip rkatsiteli.leaves.rkatsiteli.leaves.R1_bismark_bt2_pe.deduplicated.bam
 ```
-<div style="background-color: #d4edda; color: black; padding: 15px; border-left: 5px solid #155724; margin-bottom: 20px;word-wrap: break-word; overflow-wrap: break-word; white-space: normal;">
-  <pre><code>puts 'Finished writing out cytosine report for covered chromosomes (processed 343 chromosomes/scaffolds in total)
 
-Now processing chromosomes that were not covered by any methylation calls in the coverage file...
-Writing cytosine report for not covered chromosome h1tg000079l
-Writing cytosine report for not covered chromosome h1tg000179l
-Finished writing out cytosine report (processed 345 chromosomes/scaffolds in total). coverage2cytosine processing complete.
-
-
-Finished generating genome-wide cytosine report!'</code></pre>
-</div>
-
-<div style="background-color: #f0f0f0; border-left: 5px solid #007bff; padding: 10px; margin-bottom: 20px; overflow: hidden; word-wrap: break-word; overflow-wrap: break-word; white-space: pre-wrap; word-break: break-word; max-width: 100%; box-sizing: border-box;">
-  <pre><code>puts 'Hello, World! This is a very long code that should wrap properly inside the box when the content is too wide to fit on one line.'</code></pre>
-</div>
-
+```yaml
+bismark_methylation_extractor --genome_folder /projects/novabreed/share/gmagris/collaboration/lezioni/2024/EEA/reference/ -p --bedGraph --cytosine_report --CX_context --multicore 1 --gzip rkatsiteli.leaves.rkatsiteli.leaves.R1_bismark_bt2_pe.deduplicated.bam
+```
 {: .note }
 > Finished writing out cytosine report for covered chromosomes (processed 343 chromosomes/scaffolds in total)
 > Now processing chromosomes that were not covered by any methylation calls in the coverage file...
