@@ -1,1 +1,20 @@
+/* Custom Styles for Wrapping Code Boxes */
+.code-box {
+  background-color: #f0f0f0;
+  border-left: 5px solid #007bff;
+  padding: 10px;
+  margin-bottom: 20px;
+  max-width: 100%; /* Prevent overflow beyond container */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+  word-break: break-word;
+  box-sizing: border-box;
+}
+
+/* Optionally, control the width of the pre/code blocks inside */
+.code-box pre {
+  overflow-x: auto; /* Add horizontal scrolling if necessary */
+  margin: 0;        /* Remove default margins */
+}
 
