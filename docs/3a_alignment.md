@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Lezione 1 - alignment
+title: Lesson 2 - alignment
 nav_order: 1
 parent: 3. Tutorial
 description: A comprehensive guide to understanding epigenetics.

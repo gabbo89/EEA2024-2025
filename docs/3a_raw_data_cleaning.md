@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Lezione 1 - raw data cleaning
+title: Lesson 1 - raw data cleaning
 nav_order: 1
 parent: 3. Tutorial
 description: A comprehensive guide to understanding epigenetics.
