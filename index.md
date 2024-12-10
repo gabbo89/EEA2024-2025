@@ -1,8 +1,8 @@
 ---
 layout: default
-title: Subpage
+title: Home
 nav_order: 1
-description: "Welcome to my docs"
+description: "Analisi Bioinformatica di Dati Epigenetici: tutorial"
 ---
 
 
