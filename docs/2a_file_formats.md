@@ -3,7 +3,7 @@ layout: default
 title: File formats used in bioinformatics
 parent: 2. General guides
 nav_order: 1
-permalink: /secret/hidden-page-1/
+published: false
 ---
 
 
