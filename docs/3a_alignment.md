@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Lesson 2 - alignment
-nav_order: 1
+nav_order: 2
 parent: 3. Tutorial
 description: A comprehensive guide to understanding epigenetics.
 ---
@@ -28,4 +28,6 @@ Finished writing out cytosine report (processed 345 chromosomes/scaffolds in tot
 Finished generating genome-wide cytosine report!'</code></pre>
 </div>
 
-
+<div style="background-color: #f0f0f0; border-left: 5px solid #007bff; padding: 10px; margin-bottom: 20px; word-wrap: break-word; overflow-wrap: break-word; white-space: pre-wrap; word-break: break-word;">
+  <pre><code>puts 'Hello, World! This is a very long code that should wrap properly inside the box when the content is too wide to fit on one line.'</code></pre>
+</div>
