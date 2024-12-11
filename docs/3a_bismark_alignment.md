@@ -4,6 +4,7 @@ title: Lesson 2 - alignment
 nav_order: 2
 parent: 3. Tutorial
 description: A comprehensive guide to understanding epigenetics.
+published: false
 ---
 # Perform the alignment of the filtered reads 
 

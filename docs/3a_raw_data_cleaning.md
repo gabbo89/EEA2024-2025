@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Lesson 1 - raw data cleaning
+title: Lesson 1 - Raw data cleaning and alignment
 nav_order: 1
 parent: 3. Tutorial
 description: A comprehensive guide to understanding epigenetics.
@@ -76,15 +76,15 @@ trim_galore --path_to_cutadapt cutadapt --phred33 --illumina --paired --trim1 --
 
 The most important options are:
 
-- –path_to_cutadapt cutadapt  trimming software loading
+- `--path_to_cutadapt cutadapt` trimming software loading
 - `--phred33`  Phred quality scores (DEFAULT)
-- > --illumina for Illumina adapters
-- --paired for paired sequences
-- --trim1 to elude the software that discards overlapping reads
-- --clip_R1 20 cut 20 nt in R1 (5’)
-- --clip_R2 6 cut 6 nt in R2 (5’)
-- --three_prime_clip_R1 4 #  cut 4 additional nt in 3’ because adapters clipping leads to residual low-quality bases
-- --three_prime_clip_R2 4 #  cut 4 additional nt in 3’ because adapters clipping leads to residual low-quality bases
+- `--illumina` for Illumina adapters
+- `--paired` for paired sequences
+- `--trim1` to elude the software that discards overlapping reads
+- `--clip_R1 20` cut 20 nt in R1 (5’)
+- `--clip_R2 6` cut 6 nt in R2 (5’)
+- `--three_prime_clip_R1 4`  cut 4 additional nt in 3’ because adapters clipping leads to residual low-quality bases
+- `--three_prime_clip_R2 4`  cut 4 additional nt in 3’ because adapters clipping leads to residual low-quality bases
 
 ### Perform a second round of quality control on the trimmed data
 
@@ -98,24 +98,62 @@ Open the obtained figures from the output folder in order to evaluate the qualit
 ---
 
 # 3. Alignment of fastq files 
-In order to perform the alignment we will use the Bismark suite [Bismark short manual][bismark short manual] and [TrimGalore on Github][trimgalore_github].
+In order to perform the alignment we will use the Bismark suite [^Bismark short manual] and [^TrimGalore on Github][trimgalore_github].
+#In order to perform the alignment we will use the Bismark suite [^Bismark short manual] [Bismark short manual][bismark short manual] and [^TrimGalore on Github][trimgalore_github].
 
-# First we need to 
-## #### bismark alignment 
+{: .warning }
+> Be sure that the reference genome has the required indexes
+
+### Create the indexes required by Bismark
+```bash
+bismark_genome_preparation --path_to_bowtie bowtie2_folder --verbose genome_folder
+```
+1. bowtie2_folder is the folder containing the bowtie2 software (the command requires the folder name rather the executable).
+The folder is:
+2. genome_folder is the folder containing the reference fasta file. The preparation command should create and additional folder, inside the `genome_folder`, called `Bisulfite_Genome` > Bisulfite_Genome
+
+
+### Perform the paired-end mapping 
 
 > bismark alignment
-
-`bismark --bowtie2 --bam --phred33-quals -N 1 -p 2 genome_folder -1 [file R1.fq.gz pathway] -2 [file R2.fq.gz pathway]` 
+```bash
+bismark --bowtie2 --bam --phred33-quals -N 1 -p 2 genome_folder -1 [file R1.fq.gz pathway] -2 [file R2.fq.gz pathway]
+```
 
 # the options 
-- --bowtie2 bowtie2 is used as the backend (DEFAULT).
-- --bam alignment is written in bam format (DEFAULT).
+- `--bowtie2 bowtie2` is used as the backend (DEFAULT).
+- `--bam` alignment is written in bam format (DEFAULT).
 - ../genome genome directory (not entered as a parameter per se, but rather directly in the line).
-- --phred33-quals Quality format: ASCII chars equal to the Phred quality plus 33 (valid for current Illumina data) (DEFAULT).
-- -N 1 Sets the number of mismatches to be allowed in a seed alignment during multiseed alignment (a bowtie2 property that allows for higher sensitivity).
-- -p 2 Number of cores used for bowtie alignment.
-- -1 read1 file
-- -2 read2 file
+- `--phred33-quals` Quality format: ASCII chars equal to the Phred quality plus 33 (valid for current Illumina data) (DEFAULT).
+- `-N 1` Sets the number of mismatches to be allowed in a seed alignment during multiseed alignment (a bowtie2 property that allows for higher sensitivity).
+- `-p 2` Number of cores used for bowtie alignment.
+- `-1` read1 file
+- `-2` read2 file
+
+The ouput of the aligment process is a `bam file` containing mapping results that can be read using `samtools`.
+`Samtools` is a suite of commands that can be used for manipulating sam/bam files. 
+
+Also a .txt file is stored with the report of mapping efficiency that can be read with a normal textual reader command:
+For example:
+```bash
+less -S ...
+```
+{: .note-title }
+>The most important values
+>
+>
+> Sequencesa analyzed in total
+> Mapping efficiency
+> Number of alignments with a unique best hit from the different alignments
+> Sequences did not map uniquely
+
+
+It is possible to calculate:
+
+$$
+Total efficiency(%) = (Number of alignments with a unique best hit from the different alignments + sequences did not map uniquely) / Sequences in input
+$$
+
 ### Perform deduplicate 
 ```bash
 deduplicate_bismark --bam rkatsiteli.leaves.rkatsiteli.leaves.R1_bismark_bt2_pe.bam
@@ -129,6 +167,7 @@ bismark_methylation_extractor --genome_folder /projects/novabreed/share/gmagris/
 
 {: .success-title }
 > STDOUT of command
+>
 > Finished writing out cytosine report for covered chromosomes (processed 343 chromosomes/scaffolds in total)
 >
 > Now processing chromosomes that were not covered by any methylation calls in the coverage file...
@@ -143,5 +182,5 @@ bismark_methylation_extractor --genome_folder /projects/novabreed/share/gmagris/
 
 [trimgalore short manual]: https://gabbo89.github.io/EEA2024/docs/2a_trim_galore_manual.html
 [trimgalore_github]: https://github.com/FelixKrueger/TrimGalore
-[bismark short manual]: https://github.com/FelixKrueger/TrimGalore
-[bismark_github]: https://github.com/FelixKrueger/TrimGalore
+[^Bismark short manual]: [Bismark short manual]: https://github.com/FelixKrueger/TrimGalore
+[^bismark_github]: https://github.com/FelixKrueger/TrimGalore
