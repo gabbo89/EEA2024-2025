@@ -25,7 +25,6 @@ We need to check the quality of the raw data in order to be sure that sequencing
 
 We will use FastQC software to verify if raw data quality is appropriate and thus planning the quality trimming.
 Fastqc is availbale both as graphical and textual interface (we will use the textual).  
-
 ---
 
 ## 1. First step check fastq quality using fastqc software 
@@ -78,12 +77,12 @@ trim_galore --path_to_cutadapt cutadapt --phred33 --illumina --paired --trim1 --
 The most important options are:
 
 - –path_to_cutadapt cutadapt  trimming software loading
-- --phred33  Phred quality scores (DEFAULT)
-- --illumina  for Illumina adapters
-- --paired  for paired sequences
-- --trim1  to elude the software that discards overlapping reads
-- --clip_R1 20  cut 20 nt in R1 (5’)
-- --clip_R2 6  cut 6 nt in R2 (5’)
+- `--phred33`  Phred quality scores (DEFAULT)
+- > --illumina for Illumina adapters
+- --paired for paired sequences
+- --trim1 to elude the software that discards overlapping reads
+- --clip_R1 20 cut 20 nt in R1 (5’)
+- --clip_R2 6 cut 6 nt in R2 (5’)
 - --three_prime_clip_R1 4 #  cut 4 additional nt in 3’ because adapters clipping leads to residual low-quality bases
 - --three_prime_clip_R2 4 #  cut 4 additional nt in 3’ because adapters clipping leads to residual low-quality bases
 
@@ -106,13 +105,23 @@ In order to perform the alignment we will use the Bismark suite [Bismark short m
 
 > bismark alignment
 
-`bismark` 
-#### perform deduplicate 
+`bismark --bowtie2 --bam --phred33-quals -N 1 -p 2 genome_folder -1 [file R1.fq.gz pathway] -2 [file R2.fq.gz pathway]` 
+
+# the options 
+- --bowtie2 bowtie2 is used as the backend (DEFAULT).
+- --bam alignment is written in bam format (DEFAULT).
+- ../genome genome directory (not entered as a parameter per se, but rather directly in the line).
+- --phred33-quals Quality format: ASCII chars equal to the Phred quality plus 33 (valid for current Illumina data) (DEFAULT).
+- -N 1 Sets the number of mismatches to be allowed in a seed alignment during multiseed alignment (a bowtie2 property that allows for higher sensitivity).
+- -p 2 Number of cores used for bowtie alignment.
+- -1 read1 file
+- -2 read2 file
+### Perform deduplicate 
 ```bash
 deduplicate_bismark --bam rkatsiteli.leaves.rkatsiteli.leaves.R1_bismark_bt2_pe.bam
 ```
 
-### extract methylation information 
+### Extract methylation information 
 ```bash
 bismark_methylation_extractor --genome_folder /projects/novabreed/share/gmagris/collaboration/lezioni/2024/EEA/reference/ -p --bedGraph --cytosine_report --CX_context --multicore 1 --gzip rkatsiteli.leaves.rkatsiteli.leaves.R1_bismark_bt2_pe.deduplicated.bam
 ```
