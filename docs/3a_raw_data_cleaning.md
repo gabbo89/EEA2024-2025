@@ -99,8 +99,9 @@ Open the obtained figures from the output folder in order to evaluate the qualit
 
 # 3. Alignment of fastq files 
 In order to perform the alignment we will use the Bismark suite [^Bismark short manual] and [^TrimGalore on Github][trimgalore_github].
-#In order to perform the alignment we will use the Bismark suite [^Bismark short manual] [Bismark short manual][bismark short manual] and [^TrimGalore on Github][trimgalore_github].
-
+<!--
+In order to perform the alignment we will use the Bismark suite [^Bismark short manual] [Bismark short manual][bismark short manual] and [^TrimGalore on Github][trimgalore_github].
+-->
 {: .warning }
 > Be sure that the reference genome has the required indexes
 
@@ -147,11 +148,14 @@ less -S ...
 
 
 It is possible to calculate:
-
+<!--
 $$
 Total efficiency(%) = (Number of alignments with a unique best hit from the different alignments + sequences did not map uniquely) / Sequences in input
 $$
-
+-->
+$$ 
+\text{Total efficiency(\%)} = \frac{(\text{Number of alignments with a unique best hit from the different alignments} + \text{sequences did not map uniquely})}{\text{Sequences in input}} 
+$$
 ---
 
 # 4. Deduplication and methylome extraction
@@ -218,7 +222,7 @@ bismark --bowtie2 --bam --phred33-quals -N 1 -p 2 genome_folder -1 [file R1.fq.g
 
 Results are reported in *bismark_bt2_PE_report.txt file!
 
-[trimgalore short manual]: https://gabbo89.github.io/EEA2024/docs/2a_trim_galore_manual.html
+[trimgalore short manual]: https://gabbo89.github.io/EEA2024/docs/2a_TrimGalore_manual.html
 [trimgalore_github]: https://github.com/FelixKrueger/TrimGalore
-[^Bismark short manual]: [Bismark short manual]: https://github.com/FelixKrueger/TrimGalore
-[^bismark_github]: https://github.com/FelixKrueger/TrimGalore
+[^Bismark short manual]: https://gabbo89.github.io/EEA2024/docs/2a_Bismark_manual.html
+[^bismark_github]: https://felixkrueger.github.io/Bismark/
