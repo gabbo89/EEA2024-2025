@@ -9,9 +9,11 @@ description: "Analisi Bioinformatica di Dati Epigenetici: tutorial"
 _Epigenetics_ refers to changes in gene expression that do not involve alterations to the underlying DNA sequence. These changes are influenced by environmental factors, lifestyle, and developmental stages.
 
 
+
+
 ----
 
-[^1]: [For any help contact me](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/creating-a-github-pages-site-with-jekyll#creating-your-site).
+[^1]: [For any help contact me](gabriele.magris@uniud.it). 
 
 [Just the Docs]: https://just-the-docs.github.io/just-the-docs/
 [GitHub Pages]: https://docs.github.com/en/pages
