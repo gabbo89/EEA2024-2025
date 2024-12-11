@@ -98,7 +98,8 @@ Open the obtained figures from the output folder in order to evaluate the qualit
 ---
 
 # 3. Alignment of fastq files 
-In order to perform the alignment we will use the Bismark suite [^1] [Bismark on Github][bismark_github].
+In order to perform the alignment we will use the Bismark suite [Bismark on Github][bismark_github]<sup>[1]</sup>.
+
 <!--
 In order to perform the alignment we will use the Bismark suite [^Bismark short manual] [Bismark short manual][bismark short manual] and [^TrimGalore on Github][trimgalore_github].
 -->
@@ -163,7 +164,10 @@ $$
 \text{Total efficiency(\%)} = \frac{(\text{Number of alignments with a unique best hit from the different alignments} + \text{sequences did not map uniquely})}{\text{Sequences in input}} \text{ (1)}
 \]
 
+> Total efficiency(%) = (Number of alignments with a unique best hit from the different alignments + sequences did not map uniquely) / Sequences in input
+
 > % methylation (context) = 100 \* methylated Cs (context) / (methylated Cs (context) + unmethylated Cs (context)).
+
 ---
 
 # 4. Deduplication and methylome extraction
@@ -233,4 +237,5 @@ Results are reported in *bismark_bt2_PE_report.txt file!
 [trimgalore short manual]: https://gabbo89.github.io/EEA2024/docs/2a_TrimGalore_manual.html
 [trimgalore_github]: https://github.com/FelixKrueger/TrimGalore
 [^1]: https://gabbo89.github.io/EEA2024/docs/2a_Bismark_manual.html
-[^bismark_github]: https://felixkrueger.github.io/Bismark/
+<sup>[1]</sup> [Bismark short manual](https://gabbo89.github.io/EEA2024/docs/2a_Bismark_manual.html)
+[bismark_github]: https://felixkrueger.github.io/Bismark/
