@@ -104,7 +104,7 @@ In order to perform the alignment we will use the Bismark suite [^Bismark short 
 {: .warning }
 > Be sure that the reference genome has the required indexes
 
-### Create the indexes required by Bismark
+### Create the indexes required by Bismark (only once)
 ```bash
 bismark_genome_preparation --path_to_bowtie bowtie2_folder --verbose genome_folder
 ```
@@ -114,13 +114,11 @@ The folder is:
 
 
 ### Perform the paired-end mapping 
-
-> bismark alignment
 ```bash
 bismark --bowtie2 --bam --phred33-quals -N 1 -p 2 genome_folder -1 [file R1.fq.gz pathway] -2 [file R2.fq.gz pathway]
 ```
 
-# the options 
+#### the options 
 - `--bowtie2 bowtie2` is used as the backend (DEFAULT).
 - `--bam` alignment is written in bam format (DEFAULT).
 - ../genome genome directory (not entered as a parameter per se, but rather directly in the line).
@@ -142,7 +140,7 @@ less -S ...
 >The most important values
 >
 >
-> Sequencesa analyzed in total
+> Sequences analyzed in total
 > Mapping efficiency
 > Number of alignments with a unique best hit from the different alignments
 > Sequences did not map uniquely
@@ -154,6 +152,12 @@ $$
 Total efficiency(%) = (Number of alignments with a unique best hit from the different alignments + sequences did not map uniquely) / Sequences in input
 $$
 
+---
+
+# 4. Deduplication and methylome extraction
+We need to remove duplicated reads from the alignment file that may have originated from PCR errors.3
+- add a comment to why duplicated reads need to be removed
+
 ### Perform deduplicate 
 ```bash
 deduplicate_bismark --bam rkatsiteli.leaves.rkatsiteli.leaves.R1_bismark_bt2_pe.bam
@@ -161,8 +165,10 @@ deduplicate_bismark --bam rkatsiteli.leaves.rkatsiteli.leaves.R1_bismark_bt2_pe.
 
 ### Extract methylation information 
 ```bash
-bismark_methylation_extractor --genome_folder /projects/novabreed/share/gmagris/collaboration/lezioni/2024/EEA/reference/ -p --bedGraph --cytosine_report --CX_context --multicore 1 --gzip rkatsiteli.leaves.rkatsiteli.leaves.R1_bismark_bt2_pe.deduplicated.bam
+bismark_methylation_extractor --genome_folder /projects/novabreed/share/gmagris/collaboration/lezioni/2024/EEA/reference/ -p --bedGraph --cytosine_report --CX_context --multicore 1 --gzip rkfatsiteli.leaves.rkatsiteli.leaves.R1_bismark_bt2_pe.deduplicated.bam
 ```
+#### the options 
+- `-p` for processing paired-end data
 
 
 {: .success-title }
@@ -179,6 +185,38 @@ bismark_methylation_extractor --genome_folder /projects/novabreed/share/gmagris/
 > Finished generating genome-wide cytosine report!'
 
 
+Several files will be produced in this last step. The most important file is the `CX_report.txt` that contain the methylome data.
+
+---
+
+# 5. Manipulating the bam file 
+The filtered bam file obtained after deduplicate_bismark, is still unsorted for coordinates.
+
+### sort the bam file 
+```bash
+samtools sort -@ 2 -o rkfatsiteli.leaves.bismark_bt2_pe.deduplicated.sort.bam rkfatsiteli.leaves.rkatsiteli.leaves.R1_bismark_bt2_pe.deduplicated.bam
+```
+### index the bam file 
+```bash
+samtools index -@ 2 rkfatsiteli.leaves.bismark_bt2_pe.deduplicated.sort.bam
+```
+
+---
+
+# 6. Manipulating the bam file 
+In order to understand if the conversion rate of the cytosine worked, we need to verify the bisulfite conversion rate. 
+We can use the chloroplast genome (or lambda genome)
+
+### Index the control reference fasta
+```bash
+bismark_genome_preparation --path_to_bowtie bowtie2_folder --verbose genome_folder
+```
+### Perform the paired-end mapping 
+```bash
+bismark --bowtie2 --bam --phred33-quals -N 1 -p 2 genome_folder -1 [file R1.fq.gz pathway] -2 [file R2.fq.gz pathway]
+```
+
+Results are reported in *bismark_bt2_PE_report.txt file!
 
 [trimgalore short manual]: https://gabbo89.github.io/EEA2024/docs/2a_trim_galore_manual.html
 [trimgalore_github]: https://github.com/FelixKrueger/TrimGalore
