@@ -78,3 +78,18 @@ We will store the data in a data.frame called CG, using the `read.table` functio
 CG=read.table(“Arabidopisis_metiloma_CG.txt ", stringsAsFactors=F, header=F, sep="\t")
 ```
 
+# rename the columns 
+```r
+names(CG)=c('chr', 'pos', 'strand', 'c', 't', 'context', 'real_context', 'methylation')
+```
+
+# add a new named `coverage` which include the total coverage
+
+```r
+CG$coverage = CG$c + CG$t
+```
+
+# add a new column `methR` which represent the methylation level calculated in a different way. T
+The values is calculated as rounded percentage with 0 decimal places
+Aggiungere una nuova colonna nominata “methR” che rappresenta la metilazione ricalcolata, con qualche accorgimento in più, dentro l’ambiente R. Il valore viene calcolato come percentuale arrotondata a 0 cifre decimali:
+> CG$methR =round(100*CG$c / CG$coverage, 0)
