@@ -4,7 +4,7 @@ title: Lesson 2 - ONT alignment
 nav_order: 2
 parent: 3. Tutorial
 description: A comprehensive guide to understanding epigenetics.
-published: false
+published: true
 ---
 
 # Perform the alignment of the filtered reads 
