@@ -20,7 +20,8 @@ The file is located at the following path
 
 The suffix of the file is `.CX_report.txt` and is as follows:
 
-> insert image with the methylome of the extracted region 
+![CTX_example]({{ "/assets/images/chr5_CTX_report.png" | relative_url }})
+
 
 The file is tab separated and the columns are in the following order:
 1 chromosome
@@ -28,8 +29,6 @@ The file is tab separated and the columns are in the following order:
 3 strand
 4 number of reads with methylation for the C
 5 number of reads without methylation 
-
-![CTX_example]({{ "/assets/images/chr5_CTX_report.png" | relative_url }})
 
 ---
 
@@ -68,13 +67,13 @@ Now that we obtained a filtered dataset (and lighter ), we can proceed with the 
 R 
 
 upload the tydiverse library 
-```r
+```{R}
 library(tidiverse)
 ```
 
 Now we can load the data and check the structure of the table.
 We will store the data in a data.frame called CG, using the `read.table` function. We will also specify the path to the file and the separator used in the file (tab).
-```r
+```{r}
 CG=read.table(“Arabidopisis_metiloma_CG.txt ", stringsAsFactors=F, header=F, sep="\t")
 ```
 
