@@ -267,7 +267,7 @@ Since the methylation percentage is _per se_ not informative of the read coverag
 4. value (methylation %)
 5. number of methylated Cs
 6. number of unmethylated Cs
-
+[link to descriptor](/docs/2a_file_formats.md)
 From this file, downstream processing of the file. 
 
 {: .note}
