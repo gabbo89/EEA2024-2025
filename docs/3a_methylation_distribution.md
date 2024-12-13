@@ -24,11 +24,11 @@ The suffix of the file is `.CX_report.txt` and is as follows:
 
 
 The file is tab separated and the columns are in the following order:
-1 chromosome
-2 coordinate
-3 strand
-4 number of reads with methylation for the C
-5 number of reads without methylation 
+1. chromosome
+2. coordinate
+3. strand
+4. number of reads with methylation for the C
+5. number of reads without methylation 
 
 ---
 
