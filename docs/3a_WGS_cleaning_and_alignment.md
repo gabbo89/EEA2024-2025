@@ -255,14 +255,14 @@ Methylation calls from OT and CTOT will be informative for cytosine methylation 
 ## BedGraph output
 The Bismark methylation extractor can optionally also output a file in bedGraph format which uses 0-based genomic start and 1- based end coordinates. 
 The columns are as follows:
-1. chromosome
-2. start position
-3. end position
+1. `chromosome`
+2. ``start position``
+3. `end position`
 4. value (methylation %)
 
 Since the methylation percentage is _per se_ not informative of the read coverage at the specific posiition, a `.cov.gz` file is also created (1-based genomic coordinates) that feature 2 additional columns:
-1. chromosome
-2. start position
+1. `chromosome`
+2. `start position`
 3. end position
 4. value (methylation %)
 5. number of methylated Cs
@@ -270,14 +270,16 @@ Since the methylation percentage is _per se_ not informative of the read coverag
 
 From this file, downstream processing of the file. 
 
-{: note}
+{: .note}
 Only performed on CG sites
 
 ## M-bias output 
 <!--
 This allows generating nice graphs by alternative means, e.g. using R or Excel. The plot is also drawn into a .png file which requires the Perl module GD::Graph (more specifically, both modules GD::Graph::lines and GD::Graph::colour are required); if GD::Graph cannot be found on the system, only the table will be printed.
 -->
-Methylation bias plot which shows the methylation proportion across each possibile position in the read (cumulativeli)[^2]
+The Bismark methylation extractor can optionally also output a file in M-bias format which uses 0-based genomic start and 1- based end coordinates.?
+Methylation bias plot which shows the methylation proportion across each possibile position in the read (cumulatively)[^2]
+
 The output is a tabular file with the following format:
 1. `read position`
 2. `count methylated`
