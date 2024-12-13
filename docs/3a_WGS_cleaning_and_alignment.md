@@ -202,11 +202,11 @@ bismark_methylation_extractor --genome_folder /projects/novabreed/share/gmagris/
 
 
 {: .success-title }
-> STDOUT of command
+> STDOUT
 >
->>> Writing genome-wide cytosine report to: rkatsiteli.leaves.rkatsiteli.leaves.R1_bismark_bt2_pe.deduplicated.CX_report.txt.gz <<<
-
->>> Writing all cytosine context summary file to: rkatsiteli.leaves.rkatsiteli.leaves.R1_bismark_bt2_pe.deduplicated.cytosine_context_summary.txt <<<
+> Writing genome-wide cytosine report to: rkatsiteli.leaves.rkatsiteli.leaves.R1_bismark_bt2_pe.deduplicated.CX_report.txt.gz
+>
+> Writing all cytosine context summary file to: rkatsiteli.leaves.rkatsiteli.leaves.R1_bismark_bt2_pe.deduplicated.cytosine_context_summary.txt
 >
 > Finished writing out cytosine report for covered chromosomes (processed 343 chromosomes/scaffolds in total)
 >
@@ -216,19 +216,18 @@ bismark_methylation_extractor --genome_folder /projects/novabreed/share/gmagris/
 > Writing cytosine report for not covered chromosome h1tg000179l
 > Finished writing out cytosine report (processed 345 chromosomes/scaffolds in total). coverage2cytosine processing complete.
 >
-> Finished generating genome-wide cytosine report!'
+> Finished generating genome-wide cytosine report!
 
 
 Several files will be produced in this last step. The most important file is the `CX_report.txt` that contain the methylome data.
 
-The files obtained have the 
-For example 
-CpG_OT_rkatsiteli.leaves.rkatsiteli.leaves.R1_bismark_bt2_pe.deduplicated.txt.gz 
-1 seq-ID
-2 methylation state
-3 chromosome
-4 start position
-5 methylation call
+The files obtained have the following structure.
+For example the file `CpG_OT_rkatsiteli.leaves.rkatsiteli.leaves.R1_bismark_bt2_pe.deduplicated.txt.gz` has the following columns:
+1. seq-ID
+2. methylation state
+3. chromosome
+4. start position
+5. methylation call
 
 Methylated Cs have `+` orientation, while unmethylated Cs have `-`
 
@@ -253,7 +252,7 @@ It will produce a strand-specific output which will use the following abbreviati
 {: .note }
 Methylation calls from OT and CTOT will be informative for cytosine methylation positions on the original top strand, calls from OB and CTOB will be informative for cytosine methylation positions on the original bottom strand. Please note that specifying the --directional (the default mode) option in the Bismark alignment step will not report any alignments to the CTOT or CTOB strands.
 
-# BedGraph output
+## BedGraph output
 The Bismark methylation extractor can optionally also output a file in bedGraph format which uses 0-based genomic start and 1- based end coordinates. 
 The columns are as follows:
 1. chromosome
@@ -274,7 +273,7 @@ From this file, downstream processing of the file.
 {: note}
 Only performed on CG sites
 
-# M-bias output 
+## M-bias output 
 <!--
 This allows generating nice graphs by alternative means, e.g. using R or Excel. The plot is also drawn into a .png file which requires the Perl module GD::Graph (more specifically, both modules GD::Graph::lines and GD::Graph::colour are required); if GD::Graph cannot be found on the system, only the table will be printed.
 -->
@@ -299,7 +298,10 @@ The filtered bam file obtained after deduplicate_bismark, is still unsorted for 
 
 ### sort the bam file 
 ```bash
-samtools sort -@ 2 -o rkfatsiteli.leaves.bismark_bt2_pe.deduplicated.sort.bam rkfatsiteli.leaves.rkatsiteli.leaves.R1_bismark_bt2_pe.deduplicated.bam
+samtools sort \
+-@ 2 \
+-o rkfatsiteli.leaves.bismark_bt2_pe.deduplicated.sort.bam \
+rkfatsiteli.leaves.rkatsiteli.leaves.R1_bismark_bt2_pe.deduplicated.bam
 ```
 ### index the bam file 
 ```bash
@@ -323,16 +325,25 @@ bismark_genome_preparation `
 ```
 
 {: .success-title }
-> on terminal
-> =========================================
+> STDOUT
+>
+>'========================================='
 >
 >Parallel genome indexing complete. Enjoy!
 
-Now we are reading to perform the aligment of the reads to the chloroplast genome
+Now we are ready to perform the aligment of the reads to the chloroplast genome
 
 ### Perform the paired-end mapping 
 ```bash
-bismark --bowtie2 --bam --phred33-quals -N 1 -p 2 genome_folder -1 [file R1.fq.gz pathway] -2 [file R2.fq.gz pathway]
+bismark \
+--bowtie2 \
+--bam \
+--phred33-quals \
+-N 1 \
+-p 2 \
+genome_folder \
+-1 [file R1.fq.gz pathway] \
+-2 [file R2.fq.gz pathway]
 ```
 
 Results are reported in *bismark_bt2_PE_report.txt file!
@@ -341,5 +352,5 @@ Results are reported in *bismark_bt2_PE_report.txt file!
 [trimgalore_github]: https://github.com/FelixKrueger/TrimGalore
 [^1]: https://gabbo89.github.io/EEA2024/docs/2a_Bismark_manual.html
 <sup>[1]</sup> [Bismark short manual](https://gabbo89.github.io/EEA2024/docs/2a_Bismark_manual.html)
-[bismark_github]: https://felixkrueger.github.io/Bismark/{: .btn }
+[bismark_github](https://felixkrueger.github.io/Bismark/){: .btn }
 [^2]: https://genomebiology.biomedcentral.com/articles/10.1186/gb-2012-13-10-r83
