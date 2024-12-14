@@ -3,10 +3,10 @@ description: Tutorial for Bioinformatic Analysis of Epigenetics Data
 theme: just-the-docs
 color_scheme: light
 nav_enabled: true
-exclude: 
-  - "backup/"
 back_to_top: true
 back_to_top_text: "Back to top"
+exclude: 
+  - "backup/"
 
 
 #url: https://gabbo89.github.io/EEA2024
