@@ -263,10 +263,10 @@ The columns are as follows:
 Since the methylation percentage is _per se_ not informative of the read coverage at the specific posiition, a `.cov.gz` file is also created (1-based genomic coordinates) that feature 2 additional columns:
 1. `chromosome`
 2. `start position`
-3. end position
-4. value (methylation %)
-5. number of methylated Cs
-6. number of unmethylated Cs
+3. `end position`
+4. `value (methylation %)`
+5. `number of methylated Cs`
+6. `number of unmethylated Cs`
 [link to descriptor](/docs/2a_file_formats.md)
 From this file, downstream processing of the file. 
 
@@ -355,4 +355,5 @@ Results are reported in *bismark_bt2_PE_report.txt file!
 [^1]: https://gabbo89.github.io/EEA2024/docs/2a_Bismark_manual.html
 <sup>[1]</sup> [Bismark short manual](https://gabbo89.github.io/EEA2024/docs/2a_Bismark_manual.html)
 [bismark_github](https://felixkrueger.github.io/Bismark/){: .btn }
+
 [^2]: https://genomebiology.biomedcentral.com/articles/10.1186/gb-2012-13-10-r83
