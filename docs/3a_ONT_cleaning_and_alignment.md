@@ -7,14 +7,16 @@ description: A comprehensive guide to understanding epigenetics.
 published: true
 ---
 
-# Perform the alignment of the filtered reads 
-ONT sequencing enable the direct detection of methylation leves, without the need of bisulfite conversion. The alignment of the reads is performed using the `ont-methylation` tool. This tool is specifically designed to handle the unique characteristics of ON
+During this lesson we will focus on the alignemnt of ONT reads to the reference genome and compare the results to wat obtained with Illumina reads.
+ONT sequencing enable the direct detection of methylation leves, without the need of bisulfite conversion. The alignment of the reads is performed using `minimap2`. This tool is specifically designed for long-range sequencing data and is able to handle the unique characteristics of ONT data. 
+
+---
 
 # Step 1: Prepare the filtered reads for alignment
-ONT sequencing data need to be in the appropriate format (usually `fastq` or `fasta`). The reference genome also need to be indexed appropriately. 
+ONT sequencing data need to be in the appropriate format (usually `fastq` or `fasta`). The reference genome also need to be indexed appropriately using `minimap2`. 
 
 # Step 2: ALignment of reads to the reference genome 
-We will use minimap2 to align the reads to the reference genome. This tool is specifically designed for long-range sequencing data and is able to handle the unique characteristics of ONT data. 
+We will use `minimap2` to align the reads to the reference genome. 
 
 
 
@@ -46,7 +48,9 @@ ${out_var}/dna_methylation/modkit/${sample}/${aligner}${sample}${hap}/${file_nam
 - `--bowtie2 bowtie2` is used as the backend (DEFAULT).
 
 
-{: .success }
+{: .success-title }
+> STDOUT message
+>
 > Finished writing out cytosine report for covered chromosomes (processed 343 chromosomes/scaffolds in total)
 >
 > Now processing chromosomes that were not covered by any methylation calls in the coverage file...

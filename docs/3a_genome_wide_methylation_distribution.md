@@ -12,9 +12,9 @@ published: true
 >
 > Obtain a graph with the window distribution of methylation values across a chromosome in three contexts `CG`, `CHG` and `CHH`.
 > 
-> We will use average values in windows in order to undersatnd the how we can represent methylation values across a chromosome as depicted in Figure 1.
+> We will use average values in windows in order to understand how we can represent methylation values across a chromosome as depicted in Figure 1.
 
-> Figure 1: Methylation values across a chromosome. Each point represents the average methylation value in
+> Figure 1: Methylation values across a chromosome. Each point represents the average methylation value in window
 
 
 The suffix of the file is `.CX_report.txt` and is as follows:
@@ -47,3 +47,49 @@ Next we need to assing each C position to a genomic window (for example the C in
 We can perform this operation in a vectorized way using the column with the genomic coordinates (from the CG data.frame) and a new vector of assigned intervals (will become a new column in the CG data.frame).
 
 We need to get the start and end of each chromosome. We can do this by using the `cut` function in `R` with the `breaks`. The `breaks` argument is used to specify the points at which to split the data. The 
+
+
+--- 
+
+We will now repeat the same analysis as done previously, but in this case the windows and raw data to be imported in `R` will be obtained using `bedtools`.
+
+Bedtools is a software package for the manipulation of genomic datasets. It is designed to be fast, flexible, and relatively easy to use. It is particularly useful for the analysis of large genomic datasets. It is written in C++ and is available for Linux, MacOS and Windows. It is free and open source. It is available at [http://bedtools.readthedocs.io/en/latest/](http://bedtools.readthedocs. 
+
+We will use the same raw table obtained from Bismark:
+
+# 1. Filtering of the dataset 
+Before reading the file in `R` we need to filter the file in order to remove positions without coverage and by selecting the methylation contexts (`CG`) of interest.
+
+```bash
+awk 'OFS="\t" {if($1=="Chr1" && ($4+$5)>0 && $6=="CG") {meth=100*($4)/($4+$5); print $0,meth}}' file > ..
+```
+
+# 2. Create the windows of a fixed size using bedtools 
+We will use `bedtools makewindows` to create the windows. It requires the size of the window and the chromosome length. We will use the same size of the window as previously.
+
+#### The chromosome size is obtained using `bedtools getfasta` with the `-fo` option to get the length of the chromosome. It is a tab separated file with the following columns:
+1. chromosome
+2. length
+
+
+```bash
+bedtools makewindows -g chromosome_size.txt -w 100000 > windows.bed
+```
+
+In order to assign the single sites to the windows we will use `bedtools intersect` with the `-wa` option. We need to create a file with the single sites in bed format (or bedgraph format).
+
+```bash
+awk 'OFS="\t" {print $1,$2-1,$2,$8}' .. > methylome.bed 
+```
+
+Now we can **intersect** the Cs sites with the windows:
+
+```bash
+bedtools intersect -a methylome.bed -b windows.bed -wa -wb > methylome_windows.bed
+```
+
+Now we have the individuals methylation values assigned to the windows. We can obtain a mean methylation value for each window by using `bedtools groupby`:
+
+```bash
+bedtools groupby -i methylome_windows.bed -g 1-3 -c 7 -o mean > methylome_windows_mean.bed
+```
