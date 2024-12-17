@@ -14,8 +14,9 @@ published: true
 > 
 > We will use average values in windows in order to understand how we can represent methylation values across a chromosome as depicted in [Figure 1](#figure-1).
 
-({{ "/assets/images/chr5_CTX_report.png" | relative_url }})
-> Figure 1: Methylation values across a chromosome. Each point represents the average methylation value in window
+
+![Figure 1: Methylation values across a chromosome. Each point represents the average methylation value in window]({{ "/assets/images/chr5_CTX_report.png" | relative_url }})
+
 <!--
 # Analysis of Methylation
 
@@ -28,7 +29,7 @@ In this analysis, we will refer to the methylation distribution shown in [Figure
 
 The suffix of the file is `.CX_report.txt` and is as follows:
 
-![CTX_example]({{ "/assets/images/chr5_CTX_report.png" | relative_url }})
+
 
 The file is tab separated and the columns are in the following order:
 1. chromosome

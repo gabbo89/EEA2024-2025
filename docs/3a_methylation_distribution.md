@@ -70,15 +70,17 @@ Now that we obtained a filtered dataset (and lighter ), we can proceed with the 
 R 
 
 upload the tydiverse library 
-```R
+```r
 library(tidiverse)
 ```
 
 Now we can load the data and check the structure of the table.
 We will store the data in a data.frame called CG, using the `read.table` function. We will also specify the path to the file and the separator used in the file (tab).
 
+
+```
 ```r
-CG=read.table(“Arabidopisis_metiloma_CG.txt ", stringsAsFactors=F, header=F, sep="\t")
+CG=read.table("Arabidopisis_metiloma_CG.txt", stringsAsFactors=F, header=F,sep="\t")
 ```
 
 # rename the columns 
