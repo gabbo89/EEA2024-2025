@@ -2,6 +2,7 @@
 layout: default
 title: Home
 nav_order: 1
+has_toc: True
 description: "Analisi Bioinformatica di Dati Epigenetici: tutorial"
 ---
 

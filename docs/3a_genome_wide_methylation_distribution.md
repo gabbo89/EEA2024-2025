@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Lesson 3 - genome wide methylation distribution analysis
-nav_order: 3
+title: Lesson 4 - genome wide methylation distribution analysis
+nav_order: 4
 parent: 3. Tutorial
 description: A comprehensive guide to understanding epigenetics.
 published: true
@@ -12,10 +12,19 @@ published: true
 >
 > Obtain a graph with the window distribution of methylation values across a chromosome in three contexts `CG`, `CHG` and `CHH`.
 > 
-> We will use average values in windows in order to understand how we can represent methylation values across a chromosome as depicted in Figure 1.
+> We will use average values in windows in order to understand how we can represent methylation values across a chromosome as depicted in [Figure 1](#figure-1).
 
+({{ "/assets/images/chr5_CTX_report.png" | relative_url }})
 > Figure 1: Methylation values across a chromosome. Each point represents the average methylation value in window
+<!--
+# Analysis of Methylation
 
+In this analysis, we will refer to the methylation distribution shown in [Figure 1](#figure-1-methylation-distribution).
+
+## Figure 1: Methylation Distribution
+
+![Methylation Distribution](path/to/your/figure.png)
+-->
 
 The suffix of the file is `.CX_report.txt` and is as follows:
 
