@@ -65,7 +65,7 @@ and
 awk '{ if (($4+$5)>0 && $6=="CHH") {meth = $4/($4+$5); print $0"\t"meth}}' file_bismark > Arabidopisis_metiloma_CHH.txt
 ```
 
-Now that we obtained a filtered dataset (and lighter ), we can proceed with the analysis of the methylation distribution. We can use `R` for this purpose.
+Now that we obtained a filtered dataset (and lighter), we can proceed with the analysis of the methylation distribution. We can use `R` for this purpose.
 ### Load the libraries and the data 
 R 
 
