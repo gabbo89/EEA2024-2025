@@ -119,6 +119,49 @@ my_labels=c(1,2,3,4,5,67,8,9,10)
 my_labels=c(10,20,30,40,50,60,70,80,90,100)
 ```
 
+The vector my_labels and my_breaks can also be created in an automatic way (little bit more tricky):
+
+```r
+# my_labels
+my_labels = c(1,2,3,4,5,6,7,8,9,10) 
+
+#can be obtained 
+
+my_lables=1:(length(seq(0,100,by=10))-1)
+```
+
+```r
+my_breaks = seq(0,100,by=10) 
+
+#can be obtained 
+
+my_lables=my_breaks[-1]
+```
+
+So what we obtain will be:
+
+```r
+all_genomic_positions=1:100
+
+my_breaks = seq(0,100,by=10)
+
+my_labels = my_breaks[-1]
+
+cut(all_genomic_positions,breaks=my_breaks,labels=my_labels)
+```
+
+{: .success-title }
+> STDOUT message
+>
+
+If we want to apply the same to the CG data.frame
+
+```r
+maxpos=1000*ceiling(max(CG$pos)/10000)
+my_breaks=seq(0,maxpos,by=1000)
+my_labels=my_breaks[-1]
+CG$window=cut(CG$pos,breaks=my_breaks,labels=my_labels)
+```
 
 --- 
 

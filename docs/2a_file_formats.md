@@ -15,6 +15,7 @@ This is the first page
 
 ![test_figura](/assets/images/Picture3.jpg)
 
+The following file formats are the most widely used (refer to the teaching slides for extra references)
 
 
 ho fatto un'altra modifica
