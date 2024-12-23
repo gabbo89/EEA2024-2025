@@ -9,9 +9,7 @@ description: "Analisi Bioinformatica di Dati Epigenetici: tutorial"
 # This is the tutorial page for performing epigenomics analyses[^1]
 _Epigenetics_ refers to changes in gene expression that do not involve alterations to the underlying DNA sequence. These changes are influenced by environmental factors, lifestyle, and developmental stages.
 
-If you can select the color-scheme for the tutorial:console.log("Dark mode toggled");
-console.log("Current theme:", jtd.getTheme());
-<button class="btn js-toggle-dark-mode">Preview dark color scheme</button>
+If you can select the color-scheme for the tutorial: <button class="btn js-toggle-dark-mode">Preview dark color scheme</button>
 
 <script>
 const toggleDarkMode = document.querySelector('.js-toggle-dark-mode');
@@ -25,6 +23,7 @@ jtd.addEvent(toggleDarkMode, 'click', function(){
     toggleDarkMode.textContent = 'Return to the light side';
   }
 });
+</script>
 
 ----
 
