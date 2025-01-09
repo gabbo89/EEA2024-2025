@@ -11,8 +11,8 @@ exclude:
 
 #url: https://gabbo89.github.io/EEA2024
 #"https://www.sisfvg.it/sites/default/files/logoUniud-small.png"
-logo: "/assets/images/logo.jpeg"
-favicon_ico: "/assets/images/favicon.jpg"
+logo: "/assets/images/logo.png"
+favicon_ico: "/assets/images/favicon.png"
 
 url: https://gabbo89.github.io/
 baseurl: "/EEA2024"
