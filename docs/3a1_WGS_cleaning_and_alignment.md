@@ -18,7 +18,7 @@ description: A comprehensive guide to understanding epigenetics.
 
 ---
 
-# Quality control of raw fastq files
+# Quality control and trimming of raw fastq files
 Sequencing raw data are divided in read1 and read2 and store in `fastq` format. Fastq files are compressed in `gzip` format (*.fastq.gz)
 
 We need to check the quality of the raw data in order to be sure that sequencing worked!
@@ -68,13 +68,28 @@ We will use TrimGalore to remove adapter and low quality data from fastq file [T
 
 
 ```bash
-trim_galore --path_to_cutadapt cutadapt --phred33 --illumina --paired --trim1 [file R1.fastq.gz pathway] [file R2.fastq.gz pathway]
-```
-```bash
-trim_galore --path_to_cutadapt cutadapt --phred33 --illumina --paired --trim1 --clip_R1 20 --clip_R2 6 --three_prime_clip_R1 4 --three_prime_clip_R2 4 [file R1.fastq.gz pathway] [file R2.fastq.gz pathway]
+trim_galore \
+--path_to_cutadapt cutadapt \
+--phred33 --illumina \
+--paired \
+--trim1 \
+[file R1.fastq.gz pathway] [file R2.fastq.gz pathway]
 ```
 
-The most important options are:
+```bash
+trim_galore \
+--path_to_cutadapt cutadapt \
+--phred33 --illumina \
+--paired \
+--trim1 \
+--clip_R1 20 \
+--clip_R2 6 \
+--three_prime_clip_R1 4 \
+--three_prime_clip_R2 4 \
+[file R1.fastq.gz pathway] [file R2.fastq.gz pathway]
+```
+
+####The most important options are:
 
 - `--path_to_cutadapt cutadapt` trimming software loading
 - `--phred33`  Phred quality scores (DEFAULT)
@@ -96,6 +111,10 @@ fastqc ..R1.fastq.gz ...R2.fastq.gz
 Open the obtained figures from the output folder in order to evaluate the quality of the processed data. 
 
 ---
+
+# Fastq alignment and post-processing of the data
+Once the raw fastq files have been filtered in order to remove potential contaminants, we are ready to perform the alignment, given a reference genome.
+
 
 # 3. Alignment of fastq files 
 In order to perform the alignment we will use the Bismark suite [Bismark on Github][bismark_github]<sup>[1]</sup>.
@@ -120,10 +139,18 @@ The folder is:
 USAGE: bismark [options] <genome_folder> {-1 <mates1> -2 <mates2> | <singles>}
 
 ```bash
-bismark --bowtie2 --bam --phred33-quals -N 1 -p 2 genome_folder -1 [file R1.fq.gz pathway] -2 [file R2.fq.gz pathway]
+bismark \
+--bowtie2 \
+--bam \
+--phred33-quals \
+-N 1 \
+-p 2 \
+genome_folder \
+-1 [file R1.fq.gz pathway] \
+-2 [file R2.fq.gz pathway]
 ```
 
-#### the options 
+####The most important options are:
 - `--bowtie2 bowtie2` is used as the backend (DEFAULT).
 - `--bam` alignment is written in bam format (DEFAULT).
 - ../genome genome directory (not entered as a parameter per se, but rather directly in the line).
@@ -136,14 +163,14 @@ bismark --bowtie2 --bam --phred33-quals -N 1 -p 2 genome_folder -1 [file R1.fq.g
 The ouput of the aligment process is a `bam file` containing mapping results that can be read using `samtools`.
 `Samtools` is a suite of commands that can be used for manipulating sam/bam files. 
 
-Also a .txt file is stored with the report of mapping efficiency that can be read with a normal textual reader command:
+Also a .txt file is written together with the report of mapping efficiency that can be read with a normal textual reader command:
 For example:
 ```bash
 less -S ...
 ```
 
 {: .note-title }
->The most important values are:
+>The most important values in the file are:
 >
 >> Sequences analyzed in total
 >
@@ -154,7 +181,8 @@ less -S ...
 >> Sequences did not map uniquely 
 
 
-It is possible to calculate:
+Base on the values it is possible to calculate:
+
 <!--
 $$
 Total efficiency(%) = (Number of alignments with a unique best hit from the different alignments + sequences did not map uniquely) / Sequences in input
@@ -168,37 +196,52 @@ $$
 \text{Total efficiency(\%)} = \frac{(\text{Number of alignments with a unique best hit from the different alignments} + \text{sequences did not map uniquely})}{\text{Sequences in input}} \text{ (1)}
 \]
 -->
+
 > Total efficiency(%) = (Number of alignments with a unique best hit from the different alignments + sequences did not map uniquely) / Sequences in input
+
 <!--
 > % methylation (context) = 100 \* methylated Cs (context) / (methylated Cs (context) + unmethylated Cs (context)).
 -->
+
 ---
 
 # 4. Deduplication and methylome extraction
-We need to remove duplicated reads from the alignment file that may have originated from PCR errors.3
+We need to remove duplicated reads from the alignment file that may have originated from PCR errors.
 - add a comment to why duplicated reads need to be removed
 
 ### Perform deduplicate 
 ```bash
-deduplicate_bismark --bam rkatsiteli.leaves.rkatsiteli.leaves.R1_bismark_bt2_pe.bam
+deduplicate_bismark \
+--bam rkatsiteli.leaves.rkatsiteli.leaves.R1_bismark_bt2_pe.bam
 ```
+This will create a filtered bam file with only the reads that passed the deduplication step. 
+
+### Extract methylation information 
 In order to extract methylation information we will run the command `bismark_methylation_extractor`. The script will operate on Bismark result files and extracts the methylation call for every single C analysed. 
 
 The position of every single C will be written to a new output file, dependending on the context (CG, CHG or CHH), whereby methylated Cs will be labelled as forward read (+) and non-methylated Cs as reverse reads (-). 
 
-### Extract methylation information 
+
 ```bash
-bismark_methylation_extractor --genome_folder /projects/novabreed/share/gmagris/collaboration/lezioni/2024/EEA/reference/ -p --bedGraph --cytosine_report --CX_context --multicore 1 --gzip rkfatsiteli.leaves.rkatsiteli.leaves.R1_bismark_bt2_pe.deduplicated.bam
+bismark_methylation_extractor \
+--genome_folder /projects/novabreed/share/gmagris/collaboration/lezioni/2024/EEA/reference/ \
+-p \
+--bedGraph \
+--cytosine_report \
+--CX_context \
+--multicore 1 \
+--gzip \
+rkatsiteli.leaves.rkatsiteli.leaves.R1_bismark_bt2_pe.deduplicated.bam
 ```
 
->#### the options 
-> `-p` for processing paired-end data
-> `--bedGraph` 
-> `--genome-folder`
-> `--cytosine_report` 
-> `--CX_context` 
-> `--multicore` 
-> `--gzip` 
+####The most important options are:
+- `-p` for processing paired-end data
+- `--bedGraph` 
+- `--genome-folder`
+- `--cytosine_report` 
+- `--CX_context` 
+- `--multicore` 
+- `--gzip` 
 
 
 {: .success-title }
@@ -258,15 +301,16 @@ The columns are as follows:
 1. `chromosome`
 2. ``start position``
 3. `end position`
-4. value (methylation %)
+4. `value (methylation %)`
 
-Since the methylation percentage is _per se_ not informative of the read coverage at the specific posiition, a `.cov.gz` file is also created (1-based genomic coordinates) that feature 2 additional columns:
+Since the methylation percentage is _per se_ not informative of the read coverage at the specific position, a `*.cov.gz` file is also created (1-based genomic coordinates) that feature 2 additional columns:
 1. `chromosome`
 2. `start position`
 3. `end position`
 4. `value (methylation %)`
 5. `number of methylated Cs`
 6. `number of unmethylated Cs`
+
 [link to descriptor](/docs/2a_file_formats.md)
 From this file, downstream processing of the file. 
 
@@ -318,7 +362,7 @@ We can use the chloroplast genome (or lambda genome)
 
 ### Index the chloroplast fasta
 ```bash
-bismark_genome_preparation `
+bismark_genome_preparation \
 --path_to_aligner /iga/scripts/dev_modules/mambaforge/envs/epigenomics/bin/ \
 --bowtie2 \
 --parallel 10 \
@@ -349,6 +393,8 @@ genome_folder \
 ```
 
 Results are reported in *bismark_bt2_PE_report.txt file!
+
+------
 
 [trimgalore short manual]: https://gabbo89.github.io/EEA2024/docs/2a_TrimGalore_manual.html
 [trimgalore_github]: https://github.com/FelixKrueger/TrimGalore

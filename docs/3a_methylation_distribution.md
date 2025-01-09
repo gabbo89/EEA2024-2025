@@ -55,6 +55,7 @@ awk '{ if (($4+$5)>0 && $6=="CG") {meth = $4/($4+$5); print $0"\t"meth}}' file_b
 ```
 
 The same `awk` command may be used to extract values for CHG and CHH contexts:
+
 ```bash
 awk '{ if (($4+$5)>0 && $6=="CHG") {meth = $4/($4+$5); print $0"\t"meth}}' file_bismark > Arabidopisis_metiloma_CHG.txt
 ```
@@ -83,12 +84,12 @@ We will store the data in a data.frame called CG, using the `read.table` functio
 CG=read.table("Arabidopisis_metiloma_CG.txt", stringsAsFactors=F, header=F,sep="\t")
 ```
 
-# rename the columns 
+### rename the columns 
 ```r
 names(CG)=c('chr', 'pos', 'strand', 'c', 't', 'context', 'real_context', 'methylation')
 ```
 
-# add a new named `coverage` which include the total coverage
+### add a new column named `coverage` which include the total coverage
 
 ```r
 CG$coverage = CG$c + CG$t

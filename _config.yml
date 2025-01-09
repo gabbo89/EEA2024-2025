@@ -10,7 +10,8 @@ exclude:
 
 
 #url: https://gabbo89.github.io/EEA2024
-logo: "https://www.sisfvg.it/sites/default/files/logoUniud-small.png"
+#"https://www.sisfvg.it/sites/default/files/logoUniud-small.png"
+logo: ![]({{ "/assets/images/logo.jpeg" | relative_url }}) 
 
 url: https://gabbo89.github.io/
 baseurl: "/EEA2024"
