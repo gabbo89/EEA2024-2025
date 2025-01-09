@@ -8,13 +8,31 @@ description: A comprehensive guide to understanding epigenetics.
 
 # Brief description of the lesson
 
+You can select the color-scheme for the tutorial: <button class="btn js-toggle-dark-mode">Preview dark color scheme</button>
+
+<script>
+const toggleDarkMode = document.querySelector('.js-toggle-dark-mode');
+
+jtd.addEvent(toggleDarkMode, 'click', function(){
+  if (jtd.getTheme() === 'dark') {
+    jtd.setTheme('light');
+    toggleDarkMode.textContent = 'Preview dark color scheme';
+  } else {
+    jtd.setTheme('dark');
+    toggleDarkMode.textContent = 'Return to the light side';
+  }
+});
+</script>
 
 ## Table of contents
 
-- [Quality control](# 1. First step check fastq quality using fastqc software )
+- [Quality control](#1.-First-step-check-fastq-quality-using-fastqc-software)
     - [FastQC](#fasta)
-- [Trimming](# 2. Second step: perform trimming of raw data )
-    - [TrimGalore](#Trimgalore)
+- [Trimming](#2.-Second-step:-perform-trimming-of-raw-data)
+    - [Trimgalore](https://gabbo89.github.io/EEA2024/docs/2a_TrimGalore_manual.html)
+- [Alignment](#3.-Alignment-of-fastq-files)
+    - [Bismark](#)
+
 
 ---
 
@@ -116,7 +134,7 @@ Open the obtained figures from the output folder in order to evaluate the qualit
 Once the raw fastq files have been filtered in order to remove potential contaminants, we are ready to perform the alignment, given a reference genome.
 
 
-# 3. Alignment of fastq files 
+## 3. Alignment of fastq files 
 In order to perform the alignment we will use the Bismark suite [Bismark on Github][bismark_github]<sup>[1]</sup>.
 
 <!--
@@ -128,7 +146,9 @@ In order to perform the alignment we will use the Bismark suite [^Bismark short 
 
 ### Create the indexes required by Bismark (only once)
 ```bash
-bismark_genome_preparation --path_to_bowtie bowtie2_folder --verbose genome_folder
+bismark_genome_preparation \
+--path_to_bowtie bowtie2_folder \
+--verbose genome_folder
 ```
 1. bowtie2_folder is the folder containing the bowtie2 software (the command requires the folder name rather the executable).
 The folder is:
