@@ -1,6 +1,6 @@
 ---
 layout: default
-title: ANALISI BIOINFORMATICA DI DATI EPIGENETICI
+title: Epigenetic data analysis
 nav_order: 1
 parent: 1. Introduction
 description: A comprehensive guide to understanding epigenetics.

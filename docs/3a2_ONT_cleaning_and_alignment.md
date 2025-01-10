@@ -1,11 +1,18 @@
 ---
 layout: default
-title: Lesson 2 - ONT alignment
+title: Lesson 2 - Oxford Nanopore Technologies alignment
 nav_order: 2
 parent: 3. Tutorial
 description: A comprehensive guide to understanding epigenetics.
 published: true
 ---
+{: .important-title }
+> Aim
+>
+> Obtain a graph with the window distribution of methylation values across a chromosome in three contexts `CG`, `CHG` and `CHH`.
+> 
+> We will use average values in windows in order to understand how we can represent methylation values across a chromosome as depicted in [Figure 1](#figure-1).
+
 
 During this lesson we will focus on the alignemnt of ONT reads to the reference genome and compare the results to wat obtained with Illumina reads.
 ONT sequencing enable the direct detection of methylation leves, without the need of bisulfite conversion. The alignment of the reads is performed using `minimap2`. This tool is specifically designed for long-range sequencing data and is able to handle the unique characteristics of ONT data. 
