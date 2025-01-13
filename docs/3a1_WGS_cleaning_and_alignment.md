@@ -53,7 +53,7 @@ jtd.addEvent(toggleDarkMode, 'click', function(){
 
 ---
 
-# Quality control and trimming of raw fastq files
+# 1. Quality control and trimming of raw fastq files
 Sequencing raw data are divided in read1 and read2 and store in `fastq` format. Fastq files are compressed in `gzip` format (*.fastq.gz)
 
 We need to check the quality of the raw data in order to be sure that sequencing worked!
@@ -62,7 +62,7 @@ We will use FastQC software to verify if raw data quality is appropriate and thu
 Fastqc is available both as graphical and textual interface (we will use the textual).  
 ---
 
-## 1. Check fastq quality using fastqc software 
+## a. Check fastq quality using fastqc software 
 
 ### Activate the conda environment
 {: .no_toc }
@@ -96,7 +96,7 @@ Refer to the presentation for additional informations.
 
 ----
 
-## 2. Perform trimming of raw data 
+## b. Perform trimming of raw data 
 
 Once the quality is evaluated we can procede by removing low quality bases from the fastq files.
 Native reads will be subject to quailty and adapter trimming before the alignment. Clipping of additional bases at 5' and/or 3' end may deemed necessary in certain circumstances.
@@ -151,7 +151,7 @@ Open the obtained figures from the output folder in order to evaluate the qualit
 
 ---
 
-## 3. Alignment of fastq files and post-processing of the data
+# 2. Alignment of fastq files and post-processing of the data
 Once the raw fastq files have been filtered in order to remove potential contaminants, we are ready to perform the alignment, given a reference genome.
 
 
@@ -247,7 +247,7 @@ $$
 
 ---
 
-# 4. Deduplication and methylome extraction
+# 3. Deduplication and methylome extraction
 We need to remove duplicated reads from the alignment file that may have originated from PCR errors.
 - add a comment to why duplicated reads need to be removed
 
@@ -386,7 +386,7 @@ It represent a summary of the splitting step executed by bismark_methylation_ext
 
 ---
 
-# 5. Manipulating the bam file 
+# 4. Manipulating the bam file 
 The filtered bam file obtained after deduplicate_bismark, is still unsorted for coordinates.
 
 ### sort the bam file 
@@ -405,7 +405,7 @@ samtools index -@ 2 rkfatsiteli.leaves.bismark_bt2_pe.deduplicated.sort.bam
 
 ---
 
-# 6. Conversion rate evaluation 
+# 5. Conversion rate evaluation 
 In order to understand if the conversion rate of the cytosine worked, we need to verify the bisulfite conversion rate. 
 We can use the chloroplast genome (or lambda genome)
 

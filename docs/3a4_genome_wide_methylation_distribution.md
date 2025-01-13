@@ -4,6 +4,7 @@ title: Lesson 4 - Genome wide methylation distribution analysis
 nav_order: 4
 parent: 3. Tutorial
 description: A comprehensive guide to understanding epigenetics.
+has_children: true
 published: true
 ---
 
