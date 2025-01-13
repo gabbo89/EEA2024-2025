@@ -1,7 +1,9 @@
 ---
+layout: default
 title: Genome wide methylation distribution analysis with __R__
 parent: Lesson 4 - Genome wide methylation distribution analysis
 nav_order: 1
+description: A comprehensive guide to understanding epigenetics.
 published: true
 ---
 
