@@ -30,22 +30,25 @@ jtd.addEvent(toggleDarkMode, 'click', function(){
 > 
 
 
-# Brief description of the lesson
-
-
 ## Table of contents
 {: .no_toc .text-delta }
 
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
 1. TOC
 {:toc}
+</details>
 
 ---
 
-- [Quality control](# 1.-First-step-check-fastq-quality-using-fastqc-software)
+- [Quality control](#1-First-step-check-fastq-quality-using-fastqc-software)
     - [FastQC](#fasta)
 - [Trimming](#2-second-step-perform-trimming-of-raw-data)
     - [Trimgalore](https://gabbo89.github.io/EEA2024/docs/2a_TrimGalore_manual.html)
-- [Alignment](#3.-Alignment-of-fastq-files)
+- [Alignment](#3-Alignment-of-fastq-files)
     - [Bismark](https://gabbo89.github.io/EEA2024/docs/2a_Bismark_manual.html)
 
 
