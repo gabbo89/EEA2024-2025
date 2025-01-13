@@ -4,6 +4,7 @@ title: Bismark manual
 nav_order: 3
 parent: 2. General Guides
 description: A brief description of the software used for performing methylation analyses
+published: true
 ---
 
 Bismark is a program to map bisulfite treated sequencing reads to a genome of interest and perform methylation calls in a single step. It's main features are:
