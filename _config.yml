@@ -25,6 +25,7 @@ baseurl: "/EEA2024"
 
 # Color scheme currently only supports "dark", "light"/nil (default), or a custom scheme that you define
 #color_scheme: nil
+remote_theme: pdmosses/just-the-docs@light-switch
 
 callouts_level: quiet # or loud
 callouts:

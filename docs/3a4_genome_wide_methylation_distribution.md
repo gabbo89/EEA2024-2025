@@ -40,3 +40,5 @@ The file is tab separated and the columns are in the following order:
 5. number of reads without methylation
 6. methylation context (CG, CHG, CHH)
 7. genomic context
+
+Now we will perform the analysis of the methylation distribution in the three contexts `CG`, `CHG` and `CHH` across a chromosome. We will use two different approaches: one using the `R` library and the other using the `bedtools` package.
