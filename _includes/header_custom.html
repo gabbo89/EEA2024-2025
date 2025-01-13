@@ -1,15 +1,38 @@
-<button class="btn js-toggle-dark-mode">Preview dark color scheme</button>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toggle Dark Mode</title>
+  <style>
+    /* Set the button's background to white */
+    .btn {
+      background-color: white;
+      color: black;
+      border: 1px solid #ccc;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
 
-<script>
-const toggleDarkMode = document.querySelector('.js-toggle-dark-mode');
+    .btn:hover {
+      background-color: #f0f0f0; /* Slightly darker shade on hover */
+    }
+  </style>
+</head>
+<body>
+  <button class="btn js-toggle-dark-mode">Preview dark color scheme</button>
 
-jtd.addEvent(toggleDarkMode, 'click', function(){
-  if (jtd.getTheme() === 'dark') {
-    jtd.setTheme('light');
-    toggleDarkMode.textContent = 'Preview dark color scheme';
-  } else {
-    jtd.setTheme('dark');
-    toggleDarkMode.textContent = 'Return to the light side';
-  }
-});
-</script>
+  <script>
+    const toggleDarkMode = document.querySelector('.js-toggle-dark-mode');
+
+    jtd.addEvent(toggleDarkMode, 'click', function() {
+      if (jtd.getTheme() === 'dark') {
+        jtd.setTheme('light');
+        toggleDarkMode.textContent = 'Preview dark color scheme';
+      } else {
+        jtd.setTheme('dark');
+        toggleDarkMode.textContent = 'Return to the light side';
+      }
+    });
+  </script>
+</body>
