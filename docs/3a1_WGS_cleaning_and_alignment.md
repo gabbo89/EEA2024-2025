@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Lesson 1 - Raw data cleaning and alignment
+title: Lesson 1 - WGBS raw data cleaning and alignment
 nav_order: 1
 parent: 3. Tutorial
 description: A comprehensive guide to understanding epigenetics.
@@ -30,9 +30,6 @@ jtd.addEvent(toggleDarkMode, 'click', function(){
 > 
 
 
-## Table of contents
-{: .no_toc .text-delta }
-
 <details open markdown="block">
   <summary>
     Table of contents
@@ -42,6 +39,7 @@ jtd.addEvent(toggleDarkMode, 'click', function(){
 {:toc}
 </details>
 
+<!--
 ---
 
 - [Quality control](#1-First-step-check-fastq-quality-using-fastqc-software)
@@ -51,6 +49,7 @@ jtd.addEvent(toggleDarkMode, 'click', function(){
 - [Alignment](#3-Alignment-of-fastq-files)
     - [Bismark](https://gabbo89.github.io/EEA2024/docs/2a_Bismark_manual.html)
 
+-->
 
 ---
 
@@ -63,42 +62,45 @@ We will use FastQC software to verify if raw data quality is appropriate and thu
 Fastqc is available both as graphical and textual interface (we will use the textual).  
 ---
 
-## 1. First step check fastq quality using fastqc software 
+## 1. Check fastq quality using fastqc software 
 
 ### Activate the conda environment
+{: .no_toc }
 ```bash
 conda activate epigenomics
 ```
 
 #### Test if fastqc is working
+{: .no_toc }
 ```bash
 fastqc --help
 ```
 # add succes 
-
-### Copy the raw data from the folder to our working directory 
+{: .no_toc }
+### Copy the raw data from the folder to our working directory
+{: .no_toc }
 ```bash
 cp ... /data2/student_space/st24_01_folder/...
 ```
 
 ### Run Fastqc 
-
+{: .no_toc }
 ```bash
 fastqc ..R1.fastq.gz ...R2.fastq.gz
 ```
 
-#### Check the output files obtained 
+#### Check the output files obtained
+{: .no_toc }
 Refer to the presentation for additional informations.  
 
 
 ----
 
-## 2. Second step: perform trimming of raw data 
+## 2. Perform trimming of raw data 
 
 Once the quality is evaluated we can procede by removing low quality bases from the fastq files.
 Native reads will be subject to quailty and adapter trimming before the alignment. Clipping of additional bases at 5' and/or 3' end may deemed necessary in certain circumstances.
 
-### Peform trimming of raw data
 We will use TrimGalore to remove adapter and low quality data from fastq file [TrimGalore short manual][trimgalore short manual] and [TrimGalore on Github][trimgalore_github]
 
 
@@ -138,8 +140,9 @@ trim_galore \
 - `--three_prime_clip_R2 4`  cut 4 additional nt in 3’ because adapters clipping leads to residual low-quality bases
 
 ### Perform a second round of quality control on the trimmed data
-
+{: .no_toc }
 ### Run fastQC on the trimmed files
+{: .no_toc }
 ```bash
 fastqc ..R1.fastq.gz ...R2.fastq.gz
 ```
@@ -148,12 +151,11 @@ Open the obtained figures from the output folder in order to evaluate the qualit
 
 ---
 
-# Fastq alignment and post-processing of the data
+## 3. Alignment of fastq files and post-processing of the data
 Once the raw fastq files have been filtered in order to remove potential contaminants, we are ready to perform the alignment, given a reference genome.
 
 
-## 3. Alignment of fastq files 
-In order to perform the alignment we will use the Bismark suite [Bismark on Github][bismark_github]<sup>[1]</sup>.
+In order to perform the alignment we will use the Bismark suite [Bismark short manual](https://gabbo89.github.io/EEA2024/docs/2a_Bismark_manual.html) {: .btn } [Bismark on github](https://felixkrueger.github.io/Bismark/){: .btn }
 
 <!--
 In order to perform the alignment we will use the Bismark suite [^Bismark short manual] [Bismark short manual][bismark short manual] and [^TrimGalore on Github][trimgalore_github].
@@ -163,6 +165,7 @@ In order to perform the alignment we will use the Bismark suite [^Bismark short 
 > Be sure that the reference genome has the required indexes
 
 ### Create the indexes required by Bismark (only once)
+{: .no_toc }
 ```bash
 bismark_genome_preparation \
 --path_to_bowtie bowtie2_folder \
@@ -174,6 +177,7 @@ The folder is:
 
 
 ### Perform the paired-end mapping 
+{: .no_toc }
 USAGE: bismark [options] <genome_folder> {-1 <mates1> -2 <mates2> | <singles>}
 
 ```bash
@@ -247,14 +251,16 @@ $$
 We need to remove duplicated reads from the alignment file that may have originated from PCR errors.
 - add a comment to why duplicated reads need to be removed
 
-### Perform deduplicate 
+### Perform deduplicate
+{: .no_toc }
 ```bash
 deduplicate_bismark \
 --bam rkatsiteli.leaves.rkatsiteli.leaves.R1_bismark_bt2_pe.bam
 ```
 This will create a filtered bam file with only the reads that passed the deduplication step. 
 
-### Extract methylation information 
+### Extract methylation information
+{: .no_toc }
 In order to extract methylation information we will run the command `bismark_methylation_extractor`. The script will operate on Bismark result files and extracts the methylation call for every single C analysed. 
 
 The position of every single C will be written to a new output file, dependending on the context (CG, CHG or CHH), whereby methylated Cs will be labelled as forward read (+) and non-methylated Cs as reverse reads (-). 
@@ -334,6 +340,7 @@ It will produce a strand-specific output which will use the following abbreviati
 Methylation calls from OT and CTOT will be informative for cytosine methylation positions on the original top strand, calls from OB and CTOB will be informative for cytosine methylation positions on the original bottom strand. Please note that specifying the --directional (the default mode) option in the Bismark alignment step will not report any alignments to the CTOT or CTOB strands.
 
 ## BedGraph output
+{: .no_toc }
 The Bismark methylation extractor can optionally also output a file in bedGraph format which uses 0-based genomic start and 1- based end coordinates. 
 The columns are as follows:
 1. `chromosome`
@@ -356,6 +363,7 @@ From this file, downstream processing of the file.
 Only performed on CG sites
 
 ## M-bias output 
+{: .no_toc }
 <!--
 This allows generating nice graphs by alternative means, e.g. using R or Excel. The plot is also drawn into a .png file which requires the Perl module GD::Graph (more specifically, both modules GD::Graph::lines and GD::Graph::colour are required); if GD::Graph cannot be found on the system, only the table will be printed.
 -->
@@ -371,7 +379,8 @@ The output is a tabular file with the following format:
 
 
 
-# splitting_report
+## splitting_report
+{: .no_toc }
 It represent a summary of the splitting step executed by bismark_methylation_extractor. It the report the % of methylated Cs in the different contexts. 
 
 
@@ -381,6 +390,7 @@ It represent a summary of the splitting step executed by bismark_methylation_ext
 The filtered bam file obtained after deduplicate_bismark, is still unsorted for coordinates.
 
 ### sort the bam file 
+{: .no_toc }
 ```bash
 samtools sort \
 -@ 2 \
@@ -388,6 +398,7 @@ samtools sort \
 rkfatsiteli.leaves.rkatsiteli.leaves.R1_bismark_bt2_pe.deduplicated.bam
 ```
 ### index the bam file 
+{: .no_toc }
 ```bash
 samtools index -@ 2 rkfatsiteli.leaves.bismark_bt2_pe.deduplicated.sort.bam
 ```
@@ -399,6 +410,7 @@ In order to understand if the conversion rate of the cytosine worked, we need to
 We can use the chloroplast genome (or lambda genome)
 
 ### Index the chloroplast fasta
+{: .no_toc }
 ```bash
 bismark_genome_preparation \
 --path_to_aligner /iga/scripts/dev_modules/mambaforge/envs/epigenomics/bin/ \
@@ -417,7 +429,8 @@ bismark_genome_preparation \
 
 Now we are ready to perform the aligment of the reads to the chloroplast genome
 
-### Perform the paired-end mapping 
+### Perform the paired-end mapping
+{: .no_toc } 
 ```bash
 bismark \
 --bowtie2 \
@@ -437,7 +450,7 @@ Results are reported in *bismark_bt2_PE_report.txt file!
 [trimgalore short manual]: https://gabbo89.github.io/EEA2024/docs/2a_TrimGalore_manual.html
 [trimgalore_github]: https://github.com/FelixKrueger/TrimGalore
 [^1]: https://gabbo89.github.io/EEA2024/docs/2a_Bismark_manual.html
-<sup>[1]</sup> [Bismark short manual](https://gabbo89.github.io/EEA2024/docs/2a_Bismark_manual.html)
-[bismark_github](https://felixkrueger.github.io/Bismark/){: .btn }
+<sup>[1]</sup> 
+
 
 [^2]: https://genomebiology.biomedcentral.com/articles/10.1186/gb-2012-13-10-r83
