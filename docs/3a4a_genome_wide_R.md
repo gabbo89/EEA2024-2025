@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Genome wide methylation distribution analysis with __R__
+title: Using R 
 parent: Lesson 4 - Genome wide methylation distribution analysis
 nav_order: 1
 description: A comprehensive guide to understanding epigenetics.
@@ -10,7 +10,7 @@ published: true
 # 1. Filtering of the dataset 
 Before reading the file in `R` we need to filter the file in order to remove positions without coverage and by selecting the methylation contexts (`CG`) of interest.
 
-awk command 
+awk ***command*** 
 
 # 2. Upload the data in `R`
 
