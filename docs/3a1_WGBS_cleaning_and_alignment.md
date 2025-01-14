@@ -75,6 +75,7 @@ conda activate epigenomics
 ```bash
 fastqc --help
 ```
+
 {: .success-title }
 > STDOUT
 >
@@ -193,6 +194,7 @@ trim_galore \
 -->
 
 ##### REMEMBER TO REPLACE IT 
+
 {: .success-title }
 > STDOUT
 >
