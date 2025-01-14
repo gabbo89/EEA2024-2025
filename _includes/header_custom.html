@@ -37,3 +37,29 @@
     });
   </script>
 </body> -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toggle Dark Mode</title>
+  <style>
+    /* Set the button's background to white */
+    .btn {
+      background-color: #f0f0f0;
+      color: black;
+      border: none; 
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+  </style>
+  {% include dark-mode-script1.html %}
+</head>
+
+<body>
+  <!-- Your existing body content -->
+  <div style="display: flex; justify-content: center; align-items: center; height: 100vh; background-color: white;">
+    <button class="btn js-toggle-dark-mode" id="theme-toggle" onclick="modeSwitcher()">Toggle Theme</button>
+  </div>
+  {% include dark-mode-script2.html %}
+</body>
