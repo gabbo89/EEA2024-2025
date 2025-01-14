@@ -21,9 +21,9 @@ baseurl: "/EEA2024-2025"
 #aux_links:
 #  "Analisi di Dati Epigenetici on GitHub":
 #    - "//github.com/gabbo89/EEA2024"
-aux_links:
-  "Preview dark color scheme":
-    - "<button id='theme-toggle' class='btn js-toggle-dark-mode' onclick='modeSwitcher()'>Toggle Theme</button>"
+#aux_links:
+#  "Preview dark color scheme":
+#    - "<button id='theme-toggle' class='btn js-toggle-dark-mode' onclick='modeSwitcher()'>Toggle Theme</button>"
 
 # Color scheme currently only supports "dark", "light"/nil (default), or a custom scheme that you define
 #color_scheme: nil
