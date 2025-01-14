@@ -77,6 +77,7 @@ fastqc --help
 ```
 {: .success-title }
 > STDOUT
+>
 >            FastQC - A high throughput sequence QC analysis tool
 >
 >SYNOPSIS
@@ -117,7 +118,7 @@ You should see different plot, for example:
 
 | **Per base sequence quality** | **Per base sequence content** |
 |:--------:|:---:|
-|  ![seq_qual]({{/assets/images/per_base_sequence_quality.png | relative_url }})  | ![seq_cont]({{/assets/images/per_base_sequence_content.png | relative_url }})  |
+|  ![seq_qual]({{"/assets/images/per_base_sequence_quality.png" | relative_url }})  | ![seq_cont]({{"/assets/images/per_base_sequence_content.png" | relative_url }})  |
 
 
  The most important are the following:
