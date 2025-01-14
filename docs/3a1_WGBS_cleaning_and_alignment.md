@@ -70,13 +70,23 @@ Fastqc is available both as graphical and textual interface (we will use the tex
 conda activate epigenomics
 ```
 
-#### Test if fastqc is working
+### Test if fastqc is working
 {: .no_toc }
 ```bash
 fastqc --help
 ```
-# add succes 
-{: .no_toc }
+{: .success-title }
+> STDOUT
+>            FastQC - A high throughput sequence QC analysis tool
+>
+>SYNOPSIS
+>
+>        fastqc seqfile1 seqfile2 .. seqfileN
+>
+>    fastqc [-o output dir] [--(no)extract] [-f fastq|bam|sam]
+>           [-c contaminant file] seqfile1 .. seqfileN
+>
+
 ### Copy the raw data from the folder to our working directory
 {: .no_toc }
 ```bash
@@ -107,7 +117,7 @@ You should see different plot, for example:
 
 | **Per base sequence quality** | **Per base sequence content** |
 |:--------:|:---:|
-|  ![image]({{/assets/images/per_base_sequence_quality.png | relative_url }})  | ![image]({{/assets/images/per_base_sequence_content.png | relative_url }})  |
+|  ![seq_qual]({{/assets/images/per_base_sequence_quality.png | relative_url }})  | ![seq_cont]({{/assets/images/per_base_sequence_content.png | relative_url }})  |
 
 
  The most important are the following:
@@ -148,9 +158,9 @@ We will use it with a reduced set of options, but remember that there are many o
 - `--phred33`  Phred quality scores (DEFAULT)
 - `--illumina` for Illumina adapters
 - `--paired` for paired sequences
-- `--trim1` to elude the software that discards overlapping reads
+<!--- `--trim1` to elude the software that discards overlapping reads-->
 
-While this options can be used to trim the reads both at 5' and 3' end.
+This extra options can be used to trim the reads both at 5' and/or 3' end.
 
 - `--clip_R1 20` cut 20 nt in R1 (5’)
 - `--clip_R2 6` cut 6 nt in R2 (5’)
@@ -162,6 +172,8 @@ trim_galore \
 --path_to_cutadapt cutadapt \
 --phred33 --illumina \
 --paired \
+--three_prime_clip_R1 2 \
+--three_prime_clip_R2 2 \
 rkatsiteli.leaves.R1.fastq.gz rkatsiteli.leaves.R2.fastq.gz
 ```
 <!--
@@ -179,7 +191,7 @@ trim_galore \
 ```
 -->
 
-
+##### REMEMBER TO REPLACE IT 
 {: .success-title }
 > STDOUT
 >
@@ -203,7 +215,7 @@ trim_galore \
 >
 >====================================================================================================
 
-
+TrimGalore will create different files. Validated reads will be saved in `rkatsiteli.leaves.R1_val_1.fq.gz and rkatsiteli.leaves.R2_val_2.fq.gz` files. Additionally a report is also created separately for `R1` and `R2` files. The report will contain information about the number of sequences removed because of the length of the reads or because of the presence of adapters.
 
 
 ### Perform a second round of quality control on the trimmed data
@@ -211,15 +223,15 @@ trim_galore \
 ### Run fastQC on the trimmed files
 {: .no_toc }
 ```bash
-fastqc ..R1.fastq.gz ...R2.fastq.gz
+fastqc rkatsiteli.leaves.R1_val_1.fq.gz rkatsiteli.leaves.R2_val_2.fq.gz -o rkatsiteli.leaves
 ```
 
-Open the obtained figures from the output folder in order to evaluate the quality of the processed data. 
+Open the obtained figures from the output folder in order to evaluate the quality of the processed data. If you compare with the previous results, you should see a slight improvement in the quality of the data. 
 
 ---
 
 # 2. Alignment of fastq files and post-processing of the data
-Once the raw fastq files have been filtered in order to remove potential contaminants, we are ready to perform the alignment, given a reference genome.
+Once the raw fastq files have been filtered in order to remove potential contaminants and adapters, we are ready to perform the alignment, given a reference genome.
 
 
 In order to perform the alignment we will use the Bismark suite [Bismark short manual](https://gabbo89.github.io/EEA2024/docs/2a_Bismark_manual.html){: .btn } [Bismark on github](https://felixkrueger.github.io/Bismark/){: .btn }
@@ -231,16 +243,45 @@ In order to perform the alignment we will use the Bismark suite [^Bismark short 
 {: .warning }
 > Be sure that the reference genome has the required indexes
 
+We need to create the index files required by Bismark. The reference that we will use is a subset of the original reference. It contains only one chromosome (chr05) and the size is approx. 26.9 Mbp. The file is in fasta format.[^1]
+
+
+### Copy the reference sequence file to our working directory
+{: .no_toc }
+```bash
+mkdir -p reference # create the reference directory
+cp ... /data2/student_space/st24_16_folder/epigenomics/wgbs/reference
+```
+
 ### Create the indexes required by Bismark (only once)
 {: .no_toc }
 ```bash
 bismark_genome_preparation \
---path_to_bowtie bowtie2_folder \
---verbose genome_folder
+--bowtie2 \
+--parallel 2 \
+--verbose \
+/projects/novabreed/share/gmagris/collaboration/lezioni/2024/EEA/wgbs/teaching_dataset/reference
 ```
+
+####The options used are:
+
+- `--bowtie2` create bisulfite indexes for bowtie2
+- `--parallel` define the number of threads for each indexing process (is run already twice in parallel for the **top** and **bottom** strands)
+- `--verbose` print a verbose output with more details 
+- the last option define the folder containing the reference fasta file. The preparation command should create and additional folder, inside, called `Bisulfite_Genome`
+
 1. bowtie2_folder is the folder containing the bowtie2 software (the command requires the folder name rather the executable).
 The folder is:
 2. genome_folder is the folder containing the reference fasta file. The preparation command should create and additional folder, inside the `genome_folder`, called `Bisulfite_Genome` > Bisulfite_Genome
+
+{: .success-title }
+> STDOUT
+>
+>Parallel genome indexing complete. Enjoy!
+>
+
+The `bismark_genome_preparation` will produce several files in the provided path, into a subfolder called **Bisulfite_Genome**. In the folder you will find the indexes for the reference genome. The indexes are in the format of the bowtie2 indexes.
+Now we are ready to perform the reads alignment.
 
 
 ### Perform the paired-end mapping 
@@ -513,6 +554,9 @@ genome_folder \
 Results are reported in *bismark_bt2_PE_report.txt file!
 
 ------
+
+[^1]: [file formats](/docs/2b_file_formats.md). 
+
 
 [trimgalore short manual]: https://gabbo89.github.io/EEA2024/docs/2a_TrimGalore_manual.html
 [trimgalore_github]: https://github.com/FelixKrueger/TrimGalore
