@@ -7,6 +7,56 @@
     .btn {
       background-color: #f0f0f0;
       color: black;
+      /*border: 1px solid #ccc;*/
+      border: none; 
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .btn:hover {
+      background-color: #f0f0f01e; /* Slightly darker shade on hover */
+    }
+  </style>
+</head>
+<body>
+  <button class="btn js-toggle-dark-mode">Preview dark color scheme</button>
+
+  <script>
+    const toggleDarkMode = document.querySelector('.js-toggle-dark-mode');
+
+    jtd.addEvent(toggleDarkMode, 'click', function() {
+      if (jtd.getTheme() === 'dark') {
+        jtd.setTheme('light');
+        toggleDarkMode.textContent = 'Preview dark color scheme';
+      } else {
+        jtd.setTheme('dark');
+        toggleDarkMode.textContent = 'Return to the light side';
+      }
+    });
+  </script>
+</body>
+</body> 
+
+
+
+
+
+
+
+
+
+<!--
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toggle Dark Mode</title>
+  <style>
+    /* Set the button's background to white */
+    .btn {
+      background-color: #f0f0f0;
+      color: black;
       border: none; 
       padding: 10px 20px;
       border-radius: 5px;
@@ -23,7 +73,7 @@
   </div>
   {% include dark-mode-script2.html %}
 </body>
-
+-->
 <!--
 <head>
   <meta charset="UTF-8">
