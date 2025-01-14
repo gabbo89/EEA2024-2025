@@ -80,40 +80,91 @@ fastqc --help
 ### Copy the raw data from the folder to our working directory
 {: .no_toc }
 ```bash
-cp ... /data2/student_space/st24_01_folder/...
+cp ... /data2/student_space/st24_01_folder/epigenomics/wgbs
 ```
+<!--
+cd /projects/novabreed/share/gmagris/collaboration/lezioni/2024/EEA/wgbs/teaching_dataset
+-->
 
 ### Run Fastqc 
 {: .no_toc }
+In order to store the output of fastqc in a subfolder, we need to create first the directory
+
 ```bash
-fastqc ..R1.fastq.gz ...R2.fastq.gz
+mkdir -p rkatsiteli.leaves
+```
+
+```bash
+fastqc rkatsiteli.leaves.R1.fastq.gz rkatsiteli.leaves.R2.fastq.gz -o rkatsiteli.leaves
 ```
 
 #### Check the output files obtained
 {: .no_toc }
-Refer to the presentation for additional informations.  
+The output of fastqc is a html file with different plots. It is possible to open it with a browser. Browse to the location where the files are located. You should see a folder with the name of the sample and inside it a html file with the name. Open it with a browser. 
 
+You should see different plot, for example:
+
+
+| **Per base sequence quality** | **Per base sequence content** |
+|:--------:|:---:|
+|  ![image](/assets/images/per_base_sequence_quality.png)  | ![image](/assets/images/per_base_sequence_content.png)  |
+
+
+ The most important are the following:
+- **Per base sequence quality**: This plot shows the quality of each base in the sequence. The quality is measured in Phred score. The higher the score, the better the quality. The average quality of the bases should be above 20. If the average quality is below 20, it means that the sequencing was not good and the data should be discarded.
+- **Per sequence quality scores**: This plot shows the quality of each sequence. The quality is measured in Phred score. The higher the score, the better the quality. The average quality of the sequences should be above 20. If the average quality is below 20, it means that the sequencing was not good and the data should be discarded.
+- **Per base sequence content**: This plot shows the frequency of each base in the sequence. The frequency of each base should be around 25%. If the frequency of a base is higher or lower than 25%, it means that there is a bias in the sequencing and the data should be discarded.
+- **Per sequence GC content**: This plot shows the GC content of each sequence.
+- **Sequence length distribution**: This plot shows the length of each sequence. The length of the sequences should be around the same size. 
+- **Sequence duplication levels**: This plot shows the level of duplication in the sequences. The level of duplication should be low (around 1). If the level of duplication is high, it means that the data may have some contamination and thus further filter may be required.
+- **Overrepresented sequences**: This plot shows the sequences that are overrepresented in the data. If there are sequences that are overrepresented, it means that there is a bias in the sequencing and the data should be discarded.
+
+{: .note }
+It is important to look at the different plots to evaluate the quality of the data. If the quality of the data is good, it can be used for further analysis. If the quality of the data is not good, we have different options.
+
+{: .note }
+The quality of the data can be improved by trimming the data. Trimming removes low quality bases from the data. Trimming can be done with software such as Trim Galore.
+
+{: .note }
+ If the data is not good quality, it should be discarded. 
+
+
+Refer to the powerpoint presentation for additional informations.  
 
 ----
 
 ## b. Perform trimming of raw data 
 
 Once the quality is evaluated we can procede by removing low quality bases from the fastq files.
-Native reads will be subject to quailty and adapter trimming before the alignment. Clipping of additional bases at 5' and/or 3' end may deemed necessary in certain circumstances.
+Native reads will be subject to quality and adapter trimming before the alignment. Clipping of additional bases at 5' and/or 3' end may deemed necessary in certain circumstances.
 
-We will use TrimGalore to remove adapter and low quality data from fastq file [TrimGalore short manual][trimgalore short manual] and [TrimGalore on Github][trimgalore_github]
+We will use TrimGalore to remove adapter and low quality data from fastq file [TrimGalore short manual][trimgalore short manual]{: .btn } and [TrimGalore on Github][trimgalore_github]{: .btn }
 
+We will use it with a reduced set of options, but remember that there are many options available that can be used to customize the trimming process.
 
+####The most important options are:
+
+- `--path_to_cutadapt cutadapt` trimming software loading
+- `--phred33`  Phred quality scores (DEFAULT)
+- `--illumina` for Illumina adapters
+- `--paired` for paired sequences
+- `--trim1` to elude the software that discards overlapping reads
+
+While this options can be used to trim the reads both at 5' and 3' end.
+
+- `--clip_R1 20` cut 20 nt in R1 (5’)
+- `--clip_R2 6` cut 6 nt in R2 (5’)
+- `--three_prime_clip_R1 4`  cut 4 additional nt in 3’ because adapters clipping leads to residual low-quality bases
+- `--three_prime_clip_R2 4`  cut 4 additional nt in 3’ because adapters clipping leads to residual low-quality bases
 
 ```bash
 trim_galore \
 --path_to_cutadapt cutadapt \
 --phred33 --illumina \
 --paired \
---trim1 \
-[file R1.fastq.gz pathway] [file R2.fastq.gz pathway]
+rkatsiteli.leaves.R1.fastq.gz rkatsiteli.leaves.R2.fastq.gz
 ```
-
+<!--
 ```bash
 trim_galore \
 --path_to_cutadapt cutadapt \
@@ -126,18 +177,34 @@ trim_galore \
 --three_prime_clip_R2 4 \
 [file R1.fastq.gz pathway] [file R2.fastq.gz pathway]
 ```
+-->
 
-####The most important options are:
 
-- `--path_to_cutadapt cutadapt` trimming software loading
-- `--phred33`  Phred quality scores (DEFAULT)
-- `--illumina` for Illumina adapters
-- `--paired` for paired sequences
-- `--trim1` to elude the software that discards overlapping reads
-- `--clip_R1 20` cut 20 nt in R1 (5’)
-- `--clip_R2 6` cut 6 nt in R2 (5’)
-- `--three_prime_clip_R1 4`  cut 4 additional nt in 3’ because adapters clipping leads to residual low-quality bases
-- `--three_prime_clip_R2 4`  cut 4 additional nt in 3’ because adapters clipping leads to residual low-quality bases
+{: .success-title }
+> STDOUT
+>
+>311195 sequences processed in total
+>
+>The length threshold of paired-end sequences gets evaluated later on (in the validation step)
+>
+>Validate paired-end files rkatsiteli.leaves.R1.teaching_dataset_trimmed.fq.gz and rkatsiteli.leaves.R2_trimmed.fq.gz
+>file_1: rkatsiteli.leaves.R1.teaching_dataset_trimmed.fq.gz, file_2: rkatsiteli.leaves.R2.teaching_dataset_trimmed.fq.gz
+>
+>Now validing the length of the 2 paired-end infiles: rkatsiteli.leaves.R1_trimmed.fq.gz and rkatsiteli.leaves.R2_trimmed.fq.gz
+>
+>Writing validated paired-end Read 1 reads to rkatsiteli.leaves.R1.teaching_dataset_val_1.fq.gz
+>Writing validated paired-end Read 2 reads to rkatsiteli.leaves.R2.teaching_dataset_val_2.fq.gz
+>
+>Total number of sequences analysed: 311195
+>
+>Number of sequence pairs removed because at least one read was shorter than the length cutoff (20 bp): 56 (0.02%)
+>
+>Deleting both intermediate output files rkatsiteli.leaves.R1.teaching_dataset_trimmed.fq.gz and rkatsiteli.leaves.R2.teaching_dataset_trimmed.fq.gz
+>
+>====================================================================================================
+
+
+
 
 ### Perform a second round of quality control on the trimmed data
 {: .no_toc }
@@ -155,7 +222,7 @@ Open the obtained figures from the output folder in order to evaluate the qualit
 Once the raw fastq files have been filtered in order to remove potential contaminants, we are ready to perform the alignment, given a reference genome.
 
 
-In order to perform the alignment we will use the Bismark suite [Bismark short manual](https://gabbo89.github.io/EEA2024/docs/2a_Bismark_manual.html) {: .btn } [Bismark on github](https://felixkrueger.github.io/Bismark/){: .btn }
+In order to perform the alignment we will use the Bismark suite [Bismark short manual](https://gabbo89.github.io/EEA2024/docs/2a_Bismark_manual.html){: .btn } [Bismark on github](https://felixkrueger.github.io/Bismark/){: .btn }
 
 <!--
 In order to perform the alignment we will use the Bismark suite [^Bismark short manual] [Bismark short manual][bismark short manual] and [^TrimGalore on Github][trimgalore_github].
