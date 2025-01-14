@@ -1,4 +1,5 @@
 <script>
+    const theme = localStorage.getItem('theme');
     const userPrefers = getComputedStyle(document.documentElement).getPropertyValue('content');
   
     if (theme === "dark") {
