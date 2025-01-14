@@ -1,4 +1,4 @@
-<!-- <head>
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Toggle Dark Mode</title>
@@ -19,6 +19,7 @@
       background-color: #f0f0f01e; /* Slightly darker shade on hover */
     }
   </style>
+  {% include dark-mode-script1.html %}
 </head>
 <body>
   <button class="btn js-toggle-dark-mode">Preview dark color scheme</button>
@@ -36,7 +37,11 @@
       }
     });
   </script>
-</body> -->
+  {% include dark-mode-script2.html %}
+</body>
+
+<!-- 
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -57,9 +62,10 @@
 </head>
 
 <body>
-  <!-- Your existing body content -->
+  <!-- Your existing body content 
   <div style="display: flex; justify-content: center; align-items: center; height: 100vh; background-color: white;">
     <button class="btn js-toggle-dark-mode" id="theme-toggle" onclick="modeSwitcher()">Toggle Theme</button>
   </div>
   {% include dark-mode-script2.html %}
-</body>
+</body> 
+-->
