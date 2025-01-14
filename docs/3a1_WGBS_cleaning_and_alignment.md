@@ -107,7 +107,7 @@ You should see different plot, for example:
 
 | **Per base sequence quality** | **Per base sequence content** |
 |:--------:|:---:|
-|  ![image](/assets/images/per_base_sequence_quality.png)  | ![image](/assets/images/per_base_sequence_content.png)  |
+|  ![image]({{/assets/images/per_base_sequence_quality.png | relative_url }})  | ![image]({{/assets/images/per_base_sequence_content.png | relative_url }})  |
 
 
  The most important are the following:
