@@ -18,19 +18,3 @@
   margin: 0;        /* Remove default margins */
 }
 
-:root {
-  --background-color-light: white;
-  --background-color-dark: black;
-  --text-color-light: black;
-  --text-color-dark: white;
-}
-
-[data-theme="light"] {
-  background-color: var(--background-color-light);
-  color: var(--text-color-light);
-}
-
-[data-theme="dark"] {
-  background-color: var(--background-color-dark);
-  color: var(--text-color-dark);
-}
