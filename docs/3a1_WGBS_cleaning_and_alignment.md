@@ -89,10 +89,17 @@ fastqc --help
 >           [-c contaminant file] seqfile1 .. seqfileN
 >
 
+### Set the working directory
+{: .no_toc }
+```bash
+mkdir -p /data2/student_space/st24_16_folder/epigenomics/wgbs/sequences
+cd /data2/student_space/st24_16_folder/epigenomics/wgbs/sequences
+```
+
 ### Copy the raw data from the folder to our working directory
 {: .no_toc }
 ```bash
-cp ... /data2/student_space/st24_01_folder/epigenomics/wgbs
+cp ... .
 ```
 <!--
 cd /projects/novabreed/share/gmagris/collaboration/lezioni/2024/EEA/wgbs/teaching_dataset
@@ -164,10 +171,10 @@ We will use it with a reduced set of options, but remember that there are many o
 
 This extra options can be used to trim the reads both at 5' and/or 3' end.
 
-- `--clip_R1 20` cut 20 nt in R1 (5’)
-- `--clip_R2 6` cut 6 nt in R2 (5’)
-- `--three_prime_clip_R1 4`  cut 4 additional nt in 3’ because adapters clipping leads to residual low-quality bases
-- `--three_prime_clip_R2 4`  cut 4 additional nt in 3’ because adapters clipping leads to residual low-quality bases
+- `--clip_R1 1` cut 1 nt in R1 at 5’ end
+- `--clip_R2 1` cut 1 nt in R2 at 5’ end
+- `--three_prime_clip_R1 4`  cut 4 additional nt at 3’ end
+- `--three_prime_clip_R2 4`  cut 4 additional nt at 3’ end
 
 ```bash
 trim_galore \
@@ -176,6 +183,8 @@ trim_galore \
 --paired \
 --three_prime_clip_R1 2 \
 --three_prime_clip_R2 2 \
+--clip_R1 1 \
+--clip_R2 1 \
 rkatsiteli.leaves.R1.fastq.gz rkatsiteli.leaves.R2.fastq.gz
 ```
 <!--
@@ -198,23 +207,12 @@ trim_galore \
 {: .success-title }
 > STDOUT
 >
->311195 sequences processed in total
->
->The length threshold of paired-end sequences gets evaluated later on (in the validation step)
->
->Validate paired-end files rkatsiteli.leaves.R1.teaching_dataset_trimmed.fq.gz and rkatsiteli.leaves.R2_trimmed.fq.gz
->file_1: rkatsiteli.leaves.R1.teaching_dataset_trimmed.fq.gz, file_2: rkatsiteli.leaves.R2.teaching_dataset_trimmed.fq.gz
->
->Now validing the length of the 2 paired-end infiles: rkatsiteli.leaves.R1_trimmed.fq.gz and rkatsiteli.leaves.R2_trimmed.fq.gz
->
->Writing validated paired-end Read 1 reads to rkatsiteli.leaves.R1.teaching_dataset_val_1.fq.gz
->Writing validated paired-end Read 2 reads to rkatsiteli.leaves.R2.teaching_dataset_val_2.fq.gz
->
 >Total number of sequences analysed: 311195
 >
->Number of sequence pairs removed because at least one read was shorter than the length cutoff (20 bp): 56 (0.02%)
+>Number of sequence pairs removed because at least one read was shorter than the length cutoff (20 bp): 64 (0.02%)
 >
->Deleting both intermediate output files rkatsiteli.leaves.R1.teaching_dataset_trimmed.fq.gz and rkatsiteli.leaves.R2.teaching_dataset_trimmed.fq.gz
+>Deleting both intermediate output files rkatsiteli.leaves.R1_trimmed.fq.gz and rkatsiteli.leaves.R2_trimmed.fq.gz
+>
 >
 >====================================================================================================
 
@@ -230,6 +228,10 @@ fastqc rkatsiteli.leaves.R1_val_1.fq.gz rkatsiteli.leaves.R2_val_2.fq.gz -o rkat
 ```
 
 Open the obtained figures from the output folder in order to evaluate the quality of the processed data. If you compare with the previous results, you should see a slight improvement in the quality of the data. 
+
+| **Per base sequence quality** | **Per base sequence content** |
+|:--------:|:---:|
+|  ![seq_qual]({{"/assets/images/per_base_sequence_quality_trimmed.png" | relative_url }})  | ![seq_cont]({{"/assets/images/per_base_sequence_content_trimmed.png" | relative_url }})  |
 
 ---
 
@@ -252,18 +254,42 @@ We need to create the index files required by Bismark. The reference that we wil
 ### Copy the reference sequence file to our working directory
 {: .no_toc }
 ```bash
-mkdir -p reference # create the reference directory
-cp ... /data2/student_space/st24_16_folder/epigenomics/wgbs/reference
+# move back to the previous directory
+cd ..
+
+# create the reference directory
+mkdir -p reference 
+
+# copy the fasta file to the reference directory
+cp ... reference
 ```
 
 ### Create the indexes required by Bismark (only once)
 {: .no_toc }
+
+Show the available options for the command
+```bash
+bismark_genome_preparation --help
+```
+{: .note }
+>DESCRIPTION
+>
+>This script is supposed to convert a specified reference genome into two different bisulfite converted
+>versions and index them for alignments with Bowtie 2 (default), HISAT2 or Minimap2. The first bisulfite
+>genome will have all Cs converted to Ts (C->T), and the other one will have all Gs converted to As (G->A).
+>Both bisulfite genomes will be stored in subfolders within the reference genome folder. Once the bisulfite
+>conversion has been completed, the program will fork and launch two simultaneous instances of the Bowtie 2,
+>HISAT2 or minimap2 indexer (bowtie2-build or hisat2-build or minimap2 -d, resepctively). Be aware that the
+>indexing process can take up to several hours; this will mainly depend on genome size and system resources.
+>
+>   USAGE: bismark_genome_preparation [options] <argument
+
 ```bash
 bismark_genome_preparation \
 --bowtie2 \
 --parallel 2 \
 --verbose \
-/projects/novabreed/share/gmagris/collaboration/lezioni/2024/EEA/wgbs/teaching_dataset/reference
+reference
 ```
 
 ####The options used are:
@@ -273,13 +299,10 @@ bismark_genome_preparation \
 - `--verbose` print a verbose output with more details 
 - the last option define the folder containing the reference fasta file. The preparation command should create and additional folder, inside, called `Bisulfite_Genome`
 
-1. bowtie2_folder is the folder containing the bowtie2 software (the command requires the folder name rather the executable).
-The folder is:
-2. genome_folder is the folder containing the reference fasta file. The preparation command should create and additional folder, inside the `genome_folder`, called `Bisulfite_Genome` > Bisulfite_Genome
-
 {: .success-title }
 > STDOUT
 >
+>=========================================
 >Parallel genome indexing complete. Enjoy!
 >
 
@@ -289,7 +312,11 @@ Now we are ready to perform the reads alignment.
 
 ### Perform the paired-end mapping 
 {: .no_toc }
-USAGE: bismark [options] <genome_folder> {-1 <mates1> -2 <mates2> | <singles>}
+
+{: .note }
+>
+>    USAGE: bismark [options] <genome_folder> {-1 <mates1> -2 <mates2> | <singles>}
+>
 
 ```bash
 bismark \
@@ -298,13 +325,13 @@ bismark \
 --phred33-quals \
 -N 1 \
 -p 2 \
-genome_folder \
--1 [file R1.fq.gz pathway] \
--2 [file R2.fq.gz pathway]
+reference \
+-1 sequences/rkatsiteli.leaves.R1_val_1.fq.gz \
+-2 sequences/rkatsiteli.leaves.R2_val_2.fq.gz
 ```
 
-####The most important options are:
-- `--bowtie2 bowtie2` is used as the backend (DEFAULT).
+####The options used are:
+- `--bowtie2 bowtie2` is used as the backend [DEFAULT].
 - `--bam` alignment is written in bam format (DEFAULT).
 - ../genome genome directory (not entered as a parameter per se, but rather directly in the line).
 - `--phred33-quals` Quality format: ASCII chars equal to the Phred quality plus 33 (valid for current Illumina data) (DEFAULT).
