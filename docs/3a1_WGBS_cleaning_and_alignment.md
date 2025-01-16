@@ -296,7 +296,7 @@ bismark_genome_preparation --help
 >HISAT2 or minimap2 indexer (bowtie2-build or hisat2-build or minimap2 -d, resepctively). Be aware that the
 >indexing process can take up to several hours; this will mainly depend on genome size and system resources.
 >
->   USAGE: bismark_genome_preparation [options] <argument
+>   USAGE: bismark_genome_preparation [options] \<argument\>
 
 
 ```bash
@@ -730,10 +730,10 @@ Results are reported in *bismark_bt2_PE_report.txt file!
 [trimgalore short manual]: https://gabbo89.github.io/EEA2024/docs/2a_TrimGalore_manual.html
 [trimgalore_github]: https://github.com/FelixKrueger/TrimGalore
 
-
-
+<!--
 [^3]: https://gabbo89.github.io/EEA2024/docs/2a_Bismark_manual.html
 <sup>[1]</sup> 
 
 
 [^2]: https://genomebiology.biomedcentral.com/articles/10.1186/gb-2012-13-10-r83
+-->
