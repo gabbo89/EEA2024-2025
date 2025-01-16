@@ -171,7 +171,7 @@ We will use TrimGalore to remove adapter and low quality data from fastq file [T
 
 We will use it with a reduced set of options, but remember that there are many options available that can be used to customize the trimming process.
 
-####The most important options are:
+##### The options used are:
 
 - `--path_to_cutadapt cutadapt` trimming software loading
 - `--phred33`  Phred quality scores (DEFAULT)
@@ -215,7 +215,6 @@ trim_galore \
 ```
 -->
 
-##### REMEMBER TO REPLACE IT 
 
 {: .success-title }
 > STDOUT
@@ -306,7 +305,7 @@ bismark_genome_preparation \
 reference
 ```
 
-#### The options used are:
+##### The options used are:
 
 - `--bowtie2` create bisulfite indexes for bowtie2
 - `--parallel` define the number of threads for each indexing process (is run already twice in parallel for the **top** and **bottom** strands)
@@ -730,6 +729,7 @@ Results are reported in *bismark_bt2_PE_report.txt file!
 
 [trimgalore short manual]: https://gabbo89.github.io/EEA2024/docs/2a_TrimGalore_manual.html
 [trimgalore_github]: https://github.com/FelixKrueger/TrimGalore
+
 [^1]: https://gabbo89.github.io/EEA2024/docs/2a_Bismark_manual.html
 <sup>[1]</sup> 
 
