@@ -332,7 +332,7 @@ Now we are ready to perform the reads alignment.
 
 {: .note }
 >
->    USAGE: bismark [options] \<genome_folder\> {-1 \<mates1\> -2 \<mates2\> | \<singles\>}
+>    USAGE: bismark [options] \<genome_folder\> {-1 \<mates1\> -2 \<mates2\> \| \<singles\>}
 >
 
 #### The options used are:
@@ -364,7 +364,7 @@ reference \
 
 {: .success-title }
 >STDOUT
-
+>
 >Final Alignment report
 >======================
 >Sequence pairs analysed in total:       311131
@@ -392,7 +392,7 @@ reference \
 >Final Cytosine Methylation Report
 >=================================
 >Total number of C's analysed:   4176041
-
+>
 >Total methylated C's in CpG context:    158410
 >Total methylated C's in CHG context:    114782
 >Total methylated C's in CHH context:    39548
@@ -416,7 +416,7 @@ reference \
 The ouput of the aligment process is a `bam file` containing mapping results that can be read using `samtools`.
 `Samtools` is a suite of commands that can be used for manipulating sam/bam files. In order to visualize the content we can use the `samtools view` command.
 
-
+<a id="bismark-bam"></a>
 Bismark bam file is a tab separate textual file (in binary format if `bam`) and for a detailed description check [Bismark file description](https://gabbo89.github.io/EEA2024/docs/2a_Bismark_file_descr.html){: .btn }
 
 <!--

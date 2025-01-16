@@ -30,7 +30,7 @@ By default, Bismark generates SAM output for all alignment modes. Please note th
 
 The mate read of paired-end alignments is written out as an additional separate line in the same format.
 
-[Back to the turial](https://gabbo89.github.io/EEA2024/docs/3a1_WGBS_cleaning_and_alignment.html#Perform-the-paired-end-mapping)
+[Back to the tutorial](https://gabbo89.github.io/EEA2024/docs/3a1_WGBS_cleaning_and_alignment.html#bismark-bam)
 
 
 ### Methylation call
@@ -46,3 +46,5 @@ The methylation call string contains a dot `.` for every position in the BS-read
 - `u` - C in Unknown context (CN or CHN) - unmethylated
 - `U` - C in Unknown context (CN or CHN) - methylated
 - `.` - not a C or irrelevant position
+
+[Back to the tutorial](https://gabbo89.github.io/EEA2024/docs/3a1_WGBS_cleaning_and_alignment.html#bismark-bam)
