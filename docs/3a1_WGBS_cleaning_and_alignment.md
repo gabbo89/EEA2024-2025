@@ -60,7 +60,7 @@ We need to check the quality of the raw data in order to be sure that sequencing
 
 We will use FastQC software to verify if raw data quality is appropriate and thus planning the quality trimming.
 Fastqc is available both as graphical and textual interface (we will use the textual).  
----
+
 
 ## a. Check fastq quality using fastqc software 
 
@@ -79,6 +79,7 @@ fastqc --help
 {: .success-title }
 > STDOUT
 >
+>
 >            FastQC - A high throughput sequence QC analysis tool
 >
 >SYNOPSIS
@@ -92,14 +93,20 @@ fastqc --help
 ### Set the working directory
 {: .no_toc }
 ```bash
-mkdir -p /data2/student_space/st24_16_folder/epigenomics/wgbs/sequences
-cd /data2/student_space/st24_16_folder/epigenomics/wgbs/sequences
+# move to the working directory
+cd /data2/student_space/st24_16_folder
+
+# create the folder structure
+mkdir -p epigenomics/wgbs/sequences
+
+# move to the new working directory
+cd epigenomics/wgbs
 ```
 
 ### Copy the raw data from the folder to our working directory
 {: .no_toc }
 ```bash
-cp ... .
+cp /data2/biotecnologie_molecolari_magris/epigenomics/wgbs/sequences/rkatsiteli.leaves.R*.fastq.gz sequences/
 ```
 <!--
 cd /projects/novabreed/share/gmagris/collaboration/lezioni/2024/EEA/wgbs/teaching_dataset
@@ -110,11 +117,14 @@ cd /projects/novabreed/share/gmagris/collaboration/lezioni/2024/EEA/wgbs/teachin
 In order to store the output of fastqc in a subfolder, we need to create first the directory
 
 ```bash
-mkdir -p rkatsiteli.leaves
+mkdir -p sequences/rkatsiteli_leaves
 ```
 
 ```bash
-fastqc rkatsiteli.leaves.R1.fastq.gz rkatsiteli.leaves.R2.fastq.gz -o rkatsiteli.leaves
+fastqc \
+sequences/rkatsiteli.leaves.R1.fastq.gz \
+sequences/rkatsiteli.leaves.R2.fastq.gz \
+-o sequences/rkatsiteli_leaves
 ```
 
 #### Check the output files obtained
@@ -167,6 +177,7 @@ We will use it with a reduced set of options, but remember that there are many o
 - `--phred33`  Phred quality scores (DEFAULT)
 - `--illumina` for Illumina adapters
 - `--paired` for paired sequences
+- `--output_dir` define the output directory instead of the current directory
 <!--- `--trim1` to elude the software that discards overlapping reads-->
 
 This extra options can be used to trim the reads both at 5' and/or 3' end.
@@ -185,7 +196,9 @@ trim_galore \
 --three_prime_clip_R2 2 \
 --clip_R1 1 \
 --clip_R2 1 \
-rkatsiteli.leaves.R1.fastq.gz rkatsiteli.leaves.R2.fastq.gz
+--output_dir sequences/ \
+--basename rkatsiteli.leaves \
+sequences/rkatsiteli.leaves.R1.fastq.gz sequences/rkatsiteli.leaves.R2.fastq.gz
 ```
 <!--
 ```bash
@@ -211,23 +224,25 @@ trim_galore \
 >
 >Number of sequence pairs removed because at least one read was shorter than the length cutoff (20 bp): 64 (0.02%)
 >
->Deleting both intermediate output files rkatsiteli.leaves.R1_trimmed.fq.gz and rkatsiteli.leaves.R2_trimmed.fq.gz
+>Deleting both intermediate output files rkatsiteli.leaves_R1_trimmed.fq.gz and rkatsiteli.leaves_R2_trimmed.fq.gz
 >
 >
 >====================================================================================================
 
-TrimGalore will create different files. Validated reads will be saved in `rkatsiteli.leaves.R1_val_1.fq.gz and rkatsiteli.leaves.R2_val_2.fq.gz` files. Additionally a report is also created separately for `R1` and `R2` files. The report will contain information about the number of sequences removed because of the length of the reads or because of the presence of adapters.
+TrimGalore will create different files. Validated reads will be saved in `rkatsiteli.leaves_val_1.fq.gz and rkatsiteli.leaves_val_2.fq.gz` files. Additionally a report is also created separately for `R1` and `R2` files. The report will contain information about the number of sequences removed because of the length of the reads or because of the presence of adapters.
 
 
-### Perform a second round of quality control on the trimmed data
+### Perform a second round of quality control on the trimmed data using fastQC
 {: .no_toc }
-### Run fastQC on the trimmed files
-{: .no_toc }
+
 ```bash
-fastqc rkatsiteli.leaves.R1_val_1.fq.gz rkatsiteli.leaves.R2_val_2.fq.gz -o rkatsiteli.leaves
+fastqc \
+sequences/rkatsiteli.leaves_val_1.fq.gz \
+sequences/rkatsiteli.leaves_val_2.fq.gz \
+-o sequences/rkatsiteli_leaves
 ```
 
-Open the obtained figures from the output folder in order to evaluate the quality of the processed data. If you compare with the previous results, you should see a slight improvement in the quality of the data. 
+Check the obtained figures from the output folder in order to evaluate the quality of the processed data. If you compare with the previous results, you should see a slight improvement in the quality of the data. 
 
 | **Per base sequence quality** | **Per base sequence content** |
 |:--------:|:---:|
@@ -254,14 +269,11 @@ We need to create the index files required by Bismark. The reference that we wil
 ### Copy the reference sequence file to our working directory
 {: .no_toc }
 ```bash
-# move back to the previous directory
-cd ..
-
 # create the reference directory
 mkdir -p reference 
 
 # copy the fasta file to the reference directory
-cp ... reference
+cp /data2/biotecnologie_molecolari_magris/epigenomics/wgbs/reference/vitis_vinifera.fasta reference/
 ```
 
 ### Create the indexes required by Bismark (only once)
@@ -271,6 +283,7 @@ Show the available options for the command
 ```bash
 bismark_genome_preparation --help
 ```
+
 {: .note }
 >DESCRIPTION
 >
@@ -284,6 +297,7 @@ bismark_genome_preparation --help
 >
 >   USAGE: bismark_genome_preparation [options] <argument
 
+
 ```bash
 bismark_genome_preparation \
 --bowtie2 \
@@ -292,7 +306,7 @@ bismark_genome_preparation \
 reference
 ```
 
-####The options used are:
+#### The options used are:
 
 - `--bowtie2` create bisulfite indexes for bowtie2
 - `--parallel` define the number of threads for each indexing process (is run already twice in parallel for the **top** and **bottom** strands)
@@ -303,6 +317,7 @@ reference
 > STDOUT
 >
 >=========================================
+>
 >Parallel genome indexing complete. Enjoy!
 >
 
@@ -315,7 +330,7 @@ Now we are ready to perform the reads alignment.
 
 {: .note }
 >
->    USAGE: bismark [options] <genome_folder> {-1 <mates1> -2 <mates2> | <singles>}
+>    USAGE: bismark [options] \<genome_folder\> {-1 \<mates1\> -2 \<mates2\> | \<singles\>}
 >
 
 ```bash
@@ -325,28 +340,109 @@ bismark \
 --phred33-quals \
 -N 1 \
 -p 2 \
+-o alignments/ \
+-B rkatsiteli.leaves \
 reference \
--1 sequences/rkatsiteli.leaves.R1_val_1.fq.gz \
--2 sequences/rkatsiteli.leaves.R2_val_2.fq.gz
+-1 sequences/rkatsiteli.leaves_val_1.fq.gz \
+-2 sequences/rkatsiteli.leaves_val_2.fq.gz
 ```
 
-####The options used are:
-- `--bowtie2 bowtie2` is used as the backend [DEFAULT].
-- `--bam` alignment is written in bam format (DEFAULT).
-- ../genome genome directory (not entered as a parameter per se, but rather directly in the line).
-- `--phred33-quals` Quality format: ASCII chars equal to the Phred quality plus 33 (valid for current Illumina data) (DEFAULT).
+#### The options used are:
+- `--bowtie2` is used as the backend [DEFAULT].
+- `--bam` alignment is written in bam format [DEFAULT].
+- `--phred33-quals` Quality format: ASCII chars equal to the Phred quality plus 33 (valid for current Illumina data) [DEFAULT].
 - `-N 1` Sets the number of mismatches to be allowed in a seed alignment during multiseed alignment (a bowtie2 property that allows for higher sensitivity).
 - `-p 2` Number of cores used for bowtie alignment.
+- `-o alignments` Define the output folder for the alignments (if doesn't exist it will create it).
+- `-B` Define basename of output files.
+- `genome_folder` directory (not entered as a parameter per se, but rather directly in the line).
 - `-1` read1 file
 - `-2` read2 file
 
-The ouput of the aligment process is a `bam file` containing mapping results that can be read using `samtools`.
-`Samtools` is a suite of commands that can be used for manipulating sam/bam files. 
+{: .success-title }
+>STDOUT
 
-Also a .txt file is written together with the report of mapping efficiency that can be read with a normal textual reader command:
+>Final Alignment report
+>======================
+>Sequence pairs analysed in total:       311131
+>Number of paired-end alignments with a unique best hit: 102258
+>Mapping efficiency:     32.9%
+>
+>Sequence pairs with no alignments under any condition:  207739
+>Sequence pairs did not map uniquely:    1134
+>Sequence pairs which were discarded because genomic sequence could not be extracted:    0
+>
+>Number of sequence pairs with unique best (first) alignment came from the bowtie output:
+>CT/GA/CT:       51598   ((converted) top strand)
+>GA/CT/CT:       0       (complementary to (converted) top strand)
+>GA/CT/GA:       0       (complementary to (converted) bottom strand)
+>CT/GA/GA:       50660   ((converted) bottom strand)
+>
+>Number of alignments to (merely theoretical) complementary strands being rejected in total:     0
+>
+
+
+
+{: .success-title }
+> STDOUT
+>
+>Final Cytosine Methylation Report
+>=================================
+>Total number of C's analysed:   4176041
+
+>Total methylated C's in CpG context:    158410
+>Total methylated C's in CHG context:    114782
+>Total methylated C's in CHH context:    39548
+>Total methylated C's in Unknown context:        37
+>
+>Total unmethylated C's in CpG context:  151747
+>Total unmethylated C's in CHG context:  475941
+>Total unmethylated C's in CHH context:  3235613
+>Total unmethylated C's in Unknown context:      1693
+>
+>C methylated in CpG context:    51.1%
+>C methylated in CHG context:    19.4%
+>C methylated in CHH context:    1.2%
+>C methylated in Unknown context (CN or CHN):    2.1%
+>
+>====================
+>Bismark run complete
+>====================
+
+
+The ouput of the aligment process is a `bam file` containing mapping results that can be read using `samtools`.
+`Samtools` is a suite of commands that can be used for manipulating sam/bam files. In order to visualize the content we can use the `samtools view` command.
+
+
+Bismark bam file is a tab separate textual file (in binary format if `bam`) and the columns are as follows:
+
+
+ (1) QNAME  (read name)
+ (2) FLAG   (this flag tries to take the strand a bisulfite read originated from into account (this is different from ordinary DNA alignment flags!))
+ (3) RNAME  (reference chromosome) 
+ (4) POS    (start position)
+ (5) MAPQ   (always 255 for use with Bowtie)
+ (6) CIGAR
+ (7) RNEXT
+ (8) PNEXT
+ (9) TLEN
+(10) SEQ
+(11) QUAL   (Phred33 scale)
+(12) NM-tag (edit distance to the reference)
+(13) MD-tag (base-by-base mismatches to the reference (handles indels))
+(14) XM-tag (methylation call string)
+(15) XR-tag (read conversion state for the alignment)
+(16) XG-tag (genome conversion state for the alignment)
+(17) XA/XB-tag (non-bisulfite mismatches) (optional!)
+
+#Need to add a check for reads from input fastq to output bam file (for flag setting)
+#ADD a description of XM-tag
+
+Also a `*_PE_report.txt` file is written together with the report of mapping efficiency that can be read with a normal textual reader command:
+
 For example:
 ```bash
-less -S ...
+less alignments/rkatsiteli.leaves_PE_report.txt
 ```
 
 {: .note-title }
@@ -387,22 +483,66 @@ $$
 
 # 3. Deduplication and methylome extraction
 We need to remove duplicated reads from the alignment file that may have originated from PCR errors.
-- add a comment to why duplicated reads need to be removed
+Duplicated reads may arise from excessive PCR amplification, and can be identified since they have the same sequence and the same mapping position.
+
+{: .warning }
+> Remember that sequencing should be casual, but keep in mind the protocol used for the library preparation!
+
+Deduplication is not reccomended for RRBS or other methods based on an enrichment protocol. For paired end reads the chromosome, start-coordinate of the reads and strand are considered for dedupliaction. For single end reads only the chromosome, strand and start-coordinate of the reads are considered. Paired-end `bam` file expect the read1 and read2 to follow each other in consecutive lines.
+
 
 ### Perform deduplicate
 {: .no_toc }
+
+This will create a filtered bam file with only the reads that passed the deduplication step. 
+
 ```bash
 deduplicate_bismark \
---bam rkatsiteli.leaves.rkatsiteli.leaves.R1_bismark_bt2_pe.bam
+--bam alignments/rkatsiteli.leaves_pe.bam
 ```
-This will create a filtered bam file with only the reads that passed the deduplication step. 
+
+{: .success-title }
+> STDOUT
+>
+>Total number of alignments analysed in alignments/rkatsiteli.leaves_pe.bam:     102258
+>Total number duplicated alignments removed:     9869 (9.65%)
+>Duplicated alignments were found at:    9020 different position(s)
+>
+>Total count of deduplicated leftover sequences: 92389 (90.35% of total)
+>
+
+
 
 ### Extract methylation information
 {: .no_toc }
 In order to extract methylation information we will run the command `bismark_methylation_extractor`. The script will operate on Bismark result files and extracts the methylation call for every single C analysed. 
 
+???
 The position of every single C will be written to a new output file, dependending on the context (CG, CHG or CHH), whereby methylated Cs will be labelled as forward read (+) and non-methylated Cs as reverse reads (-). 
+???
 
+The methylation extractor outputs result files for cytosines in CpG, CHG and CHH
+context (this distinction is actually already made in Bismark itself). As the methylation
+information for every C analysed can produce files which easily have tens or even hundreds of
+millions of lines, file sizes can become very large and more difficult to handle. The C
+methylation info additionally splits cytosine methylation calls up into one of the four possible
+strands a given bisulfite read aligned against
+             OT      original top strand
+             CTOT    complementary to original top strand
+
+             OB      original bottom strand
+             CTOB    complementary to original bottom strand
+
+By default twelve individual output files are being generated per input file.
+The output files are in the following format (tab delimited):
+
+<sequence_id>     <strand>      <chromosome>     <position>     <methylation call>
+
+
+USAGE: bismark_methylation_extractor [options] <filenames>
+
+{: .failed }
+> i am an error
 
 ```bash
 bismark_methylation_extractor \
@@ -416,12 +556,12 @@ bismark_methylation_extractor \
 rkatsiteli.leaves.rkatsiteli.leaves.R1_bismark_bt2_pe.deduplicated.bam
 ```
 
-####The most important options are:
-- `-p` for processing paired-end data
+#### The most important options are:
+- `-p` Data generated from paired-end data (will be determined automatically)
 - `--bedGraph` 
 - `--genome-folder`
-- `--cytosine_report` 
-- `--CX_context` 
+- `--cytosine_report` Genome-wide methylation report for all Cs, 1 based coordinates.
+- `--CX_context` Irrespective of its context.
 - `--multicore` 
 - `--gzip` 
 
@@ -525,7 +665,7 @@ It represent a summary of the splitting step executed by bismark_methylation_ext
 ---
 
 # 4. Manipulating the bam file 
-The filtered bam file obtained after deduplicate_bismark, is still unsorted for coordinates.
+The filtered bam file obtained after deduplicate_bismark, is still unsorted for coordinates. We can use the samtools `Samtools` is a suite of commands that can be used for manipulating sam/bam files. 
 
 ### sort the bam file 
 {: .no_toc }
