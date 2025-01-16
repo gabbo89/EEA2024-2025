@@ -4,6 +4,7 @@ title: Bismark manual
 nav_order: 3
 parent: 2. General Guides
 description: A brief description of the software used for performing methylation analyses
+has_children: true
 published: true
 ---
 

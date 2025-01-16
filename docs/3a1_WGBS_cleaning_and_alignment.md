@@ -114,13 +114,13 @@ cd /projects/novabreed/share/gmagris/collaboration/lezioni/2024/EEA/wgbs/teachin
 
 ### Run Fastqc 
 {: .no_toc }
-In order to store the output of fastqc in a subfolder, we need to create first the directory
+
 
 ```bash
+# Create the output directory where the fastqc results will be stored
 mkdir -p sequences/rkatsiteli_leaves
-```
 
-```bash
+# run fastqc specifying the input fastq files 
 fastqc \
 sequences/rkatsiteli.leaves.R1.fastq.gz \
 sequences/rkatsiteli.leaves.R2.fastq.gz \
@@ -129,6 +129,7 @@ sequences/rkatsiteli.leaves.R2.fastq.gz \
 
 #### Check the output files obtained
 {: .no_toc }
+
 The output of fastqc is a html file with different plots. It is possible to open it with a browser. Browse to the location where the files are located. You should see a folder with the name of the sample and inside it a html file with the name. Open it with a browser. 
 
 You should see different plot, for example:
@@ -334,6 +335,19 @@ Now we are ready to perform the reads alignment.
 >    USAGE: bismark [options] \<genome_folder\> {-1 \<mates1\> -2 \<mates2\> | \<singles\>}
 >
 
+#### The options used are:
+- `--bowtie2` is used as the backend [DEFAULT].
+- `--bam` alignment is written in bam format [DEFAULT].
+- `--phred33-quals` Quality format: ASCII chars equal to the Phred quality plus 33 (valid for current Illumina data) [DEFAULT].
+- `-N 1` Sets the number of mismatches to be allowed in a seed alignment during multiseed alignment (a bowtie2 property that allows for higher sensitivity).
+- `-p 2` Number of cores used for bowtie alignment.
+- `-o alignments` Define the output folder for the alignments (if doesn't exist it will create it).
+- `-B` Define basename of output files.
+- `genome_folder` directory (not entered as a parameter per se, but rather directly in the line).
+- `-1` read1 file
+- `-2` read2 file
+
+
 ```bash
 bismark \
 --bowtie2 \
@@ -347,18 +361,6 @@ reference \
 -1 sequences/rkatsiteli.leaves_val_1.fq.gz \
 -2 sequences/rkatsiteli.leaves_val_2.fq.gz
 ```
-
-#### The options used are:
-- `--bowtie2` is used as the backend [DEFAULT].
-- `--bam` alignment is written in bam format [DEFAULT].
-- `--phred33-quals` Quality format: ASCII chars equal to the Phred quality plus 33 (valid for current Illumina data) [DEFAULT].
-- `-N 1` Sets the number of mismatches to be allowed in a seed alignment during multiseed alignment (a bowtie2 property that allows for higher sensitivity).
-- `-p 2` Number of cores used for bowtie alignment.
-- `-o alignments` Define the output folder for the alignments (if doesn't exist it will create it).
-- `-B` Define basename of output files.
-- `genome_folder` directory (not entered as a parameter per se, but rather directly in the line).
-- `-1` read1 file
-- `-2` read2 file
 
 {: .success-title }
 >STDOUT
@@ -415,9 +417,9 @@ The ouput of the aligment process is a `bam file` containing mapping results tha
 `Samtools` is a suite of commands that can be used for manipulating sam/bam files. In order to visualize the content we can use the `samtools view` command.
 
 
-Bismark bam file is a tab separate textual file (in binary format if `bam`) and the columns are as follows:
+Bismark bam file is a tab separate textual file (in binary format if `bam`) and for a detailed description check [Bismark file description](https://gabbo89.github.io/EEA2024/docs/2a_Bismark_file_descr.html){: .btn }
 
-
+<!--
  (1) QNAME  (read name)
  (2) FLAG   (this flag tries to take the strand a bisulfite read originated from into account (this is different from ordinary DNA alignment flags!))
  (3) RNAME  (reference chromosome) 
@@ -438,6 +440,7 @@ Bismark bam file is a tab separate textual file (in binary format if `bam`) and 
 
 #Need to add a check for reads from input fastq to output bam file (for flag setting)
 #ADD a description of XM-tag
+-->
 
 Also a `*_PE_report.txt` file is written together with the report of mapping efficiency that can be read with a normal textual reader command:
 
@@ -499,7 +502,8 @@ This will create a filtered bam file with only the reads that passed the dedupli
 
 ```bash
 deduplicate_bismark \
---bam alignments/rkatsiteli.leaves_pe.bam
+--bam alignments/rkatsiteli.leaves_pe.bam \
+-o alignments/ # output eitherwise is written to current directory
 ```
 
 {: .success-title }
@@ -527,62 +531,96 @@ context (this distinction is actually already made in Bismark itself). As the me
 information for every C analysed can produce files which easily have tens or even hundreds of
 millions of lines, file sizes can become very large and more difficult to handle. The C
 methylation info additionally splits cytosine methylation calls up into one of the four possible
-strands a given bisulfite read aligned against
-             OT      original top strand
-             CTOT    complementary to original top strand
-
-             OB      original bottom strand
-             CTOB    complementary to original bottom strand
+strands a given bisulfite read aligned against:
+- OT      original top strand
+- CTOT    complementary to original top strand
+- OB      original bottom strand
+- CTOB    complementary to original bottom strand
 
 By default twelve individual output files are being generated per input file.
-The output files are in the following format (tab delimited):
 
-<sequence_id>     <strand>      <chromosome>     <position>     <methylation call>
+{: .note }
+>
+>    USAGE: bismark_methylation_extractor [options] \<filenames\>
+>
 
 
-USAGE: bismark_methylation_extractor [options] <filenames>
 
 {: .failed }
 > i am an error
+>
 
 ```bash
 bismark_methylation_extractor \
---genome_folder /projects/novabreed/share/gmagris/collaboration/lezioni/2024/EEA/reference/ \
+-o meth_extr/ \
 -p \
---bedGraph \
---cytosine_report \
---CX_context \
 --multicore 1 \
 --gzip \
-rkatsiteli.leaves.rkatsiteli.leaves.R1_bismark_bt2_pe.deduplicated.bam
+--bedGraph \
+--CX_context \
+--cytosine_report \
+--genome_folder reference \
+alignments/rkatsiteli.leaves_pe.deduplicated.bam
 ```
 
 #### The most important options are:
+- `-o` Directory to write output files to. 
 - `-p` Data generated from paired-end data (will be determined automatically)
-- `--bedGraph` 
-- `--genome-folder`
+- `--multicore` Define the number of cores to be used.
+- `--gzip` Write `gzip` compressed output files
+- `--bedGraph` Write methylation calls (%) in bedGraph format
+- `--CX_context` Write methylation calls for all contexts, in bedGraph format.
+- `--genome-folder` Path to the reference fasta file [is mandatory]
 - `--cytosine_report` Genome-wide methylation report for all Cs, 1 based coordinates.
-- `--CX_context` Irrespective of its context.
-- `--multicore` 
-- `--gzip` 
 
 
 {: .success-title }
 > STDOUT
 >
-> Writing genome-wide cytosine report to: rkatsiteli.leaves.rkatsiteli.leaves.R1_bismark_bt2_pe.deduplicated.CX_report.txt.gz
+> Writing genome-wide cytosine report to: rkatsiteli.leaves_pe.deduplicated.CX_report.txt.gz
 >
-> Writing all cytosine context summary file to: rkatsiteli.leaves.rkatsiteli.leaves.R1_bismark_bt2_pe.deduplicated.cytosine_context_summary.txt
+> Writing all cytosine context summary file to: rkatsiteli.leaves_pe.deduplicated.cytosine_context_summary.txt
 >
 > Finished writing out cytosine report for covered chromosomes (processed 343 chromosomes/scaffolds in total)
 >
 > Now processing chromosomes that were not covered by any methylation calls in the coverage file...
+> All chromosomes in the genome were covered by at least some reads. coverage2cytosine processing complete.
 >
-> Writing cytosine report for not covered chromosome h1tg000079l
-> Writing cytosine report for not covered chromosome h1tg000179l
-> Finished writing out cytosine report (processed 345 chromosomes/scaffolds in total). coverage2cytosine processing complete.
->
-> Finished generating genome-wide cytosine report!
+> Finished generating genome-wide cytosine report
+
+The output files are in the following format (tab delimited):
+
+<sequence_id>     <strand>      <chromosome>     <position>     <methylation call>
+
+OUTPUT:
+
+The bismark_methylation_extractor output is in the form:
+========================================================
+<seq-ID>  <methylation state*>  <chromosome>  <start position (= end position)>  <methylation call>
+
+* Methylated cytosines receive a '+' orientation,
+* Unmethylated cytosines receive a '-' orientation.
+The bedGraph output (optional) looks like this (tab-delimited; 0-based start coords, 1-based end coords):
+=========================================================================================================
+
+track type=bedGraph (header line)
+
+<chromosome>  <start position>  <end position>  <methylation percentage>
+
+
+The coverage output looks like this (tab-delimited, 1-based genomic coords; zero-based half-open coordinates available with '--zero_based'):
+============================================================================================================================================
+
+<chromosome>  <start position>  <end position>  <methylation percentage>  <count methylated>  <count non-methylated>
+
+
+
+
+The genome-wide cytosine methylation output file is tab-delimited in the following format:
+==========================================================================================
+<chromosome>  <position>  <strand>  <count methylated>  <count non-methylated>  <C-context>  <trinucleotide context>
+
+
 
 
 Several files will be produced in this last step. The most important file is the `CX_report.txt` that contain the methylome data.

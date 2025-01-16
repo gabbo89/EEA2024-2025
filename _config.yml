@@ -50,3 +50,6 @@ callouts:
     color: grey-dk
 
 footer_content: "Copyright &copy; 2025 Gabriele Magris."
+
+# For copy button on code
+enable_copy_code_button: true
