@@ -221,9 +221,11 @@ trim_galore \
 >
 >Total number of sequences analysed: 311195
 >
->Number of sequence pairs removed because at least one read was shorter than the length cutoff (20 bp): 64 (0.02%)
+>Number of sequence pairs removed because at least one read was shorter 
+>than the length cutoff (20 bp): 64 (0.02%)
 >
->Deleting both intermediate output files rkatsiteli.leaves_R1_trimmed.fq.gz and rkatsiteli.leaves_R2_trimmed.fq.gz
+>Deleting both intermediate output files rkatsiteli.leaves_R1_trimmed.fq.gz 
+>and rkatsiteli.leaves_R2_trimmed.fq.gz
 >
 >
 >====================================================================================================
@@ -725,12 +727,12 @@ Results are reported in *bismark_bt2_PE_report.txt file!
 ------
 
 [^1]: [file formats](/docs/2b_file_formats.md). 
-
-
 [trimgalore short manual]: https://gabbo89.github.io/EEA2024/docs/2a_TrimGalore_manual.html
 [trimgalore_github]: https://github.com/FelixKrueger/TrimGalore
 
-[^1]: https://gabbo89.github.io/EEA2024/docs/2a_Bismark_manual.html
+
+
+[^3]: https://gabbo89.github.io/EEA2024/docs/2a_Bismark_manual.html
 <sup>[1]</sup> 
 
 
