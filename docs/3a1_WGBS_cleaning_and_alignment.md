@@ -172,7 +172,7 @@ We will use TrimGalore to remove adapter and low quality data from fastq file [T
 
 We will use it with a reduced set of options, but remember that there are many options available that can be used to customize the trimming process.
 
-##### The options used are:
+##### The options we will use:
 
 - `--path_to_cutadapt cutadapt` trimming software loading
 - `--phred33`  Phred quality scores (DEFAULT)
@@ -286,7 +286,7 @@ Show the available options for the command
 bismark_genome_preparation --help
 ```
 
-{: .note }
+{: .note-title }
 >DESCRIPTION
 >
 >This script is supposed to convert a specified reference genome into two different bisulfite converted
@@ -300,6 +300,13 @@ bismark_genome_preparation --help
 >   USAGE: bismark_genome_preparation [options] \<argument\>
 
 
+##### The options we will use:
+
+- `--bowtie2` create bisulfite indexes for bowtie2
+- `--parallel` define the number of threads for each indexing process (is run already twice in parallel for the **top** and **bottom** strands)
+- `--verbose` print a verbose output with more details 
+- the last option define the folder containing the reference fasta file. The preparation command should create and additional folder, inside, called `Bisulfite_Genome`
+
 ```bash
 bismark_genome_preparation \
 --bowtie2 \
@@ -307,13 +314,6 @@ bismark_genome_preparation \
 --verbose \
 reference
 ```
-
-##### The options used are:
-
-- `--bowtie2` create bisulfite indexes for bowtie2
-- `--parallel` define the number of threads for each indexing process (is run already twice in parallel for the **top** and **bottom** strands)
-- `--verbose` print a verbose output with more details 
-- the last option define the folder containing the reference fasta file. The preparation command should create and additional folder, inside, called `Bisulfite_Genome`
 
 {: .success-title }
 > STDOUT
@@ -335,7 +335,8 @@ Now we are ready to perform the reads alignment.
 >    USAGE: bismark [options] \<genome_folder\> {-1 \<mates1\> -2 \<mates2\> \| \<singles\>}
 >
 
-#### The options used are:
+##### The options we will use:
+
 - `--bowtie2` is used as the backend [DEFAULT].
 - `--bam` alignment is written in bam format [DEFAULT].
 - `--phred33-quals` Quality format: ASCII chars equal to the Phred quality plus 33 (valid for current Illumina data) [DEFAULT].
@@ -365,8 +366,8 @@ reference \
 {: .success-title }
 >STDOUT
 >
->Final Alignment report
->======================
+>**Final Alignment report**
+>
 >Sequence pairs analysed in total:       311131
 >Number of paired-end alignments with a unique best hit: 102258
 >Mapping efficiency:     32.9%
@@ -389,8 +390,8 @@ reference \
 {: .success-title }
 > STDOUT
 >
->Final Cytosine Methylation Report
->=================================
+>**Final Cytosine Methylation Report**
+>
 >Total number of C's analysed:   4176041
 >
 >Total methylated C's in CpG context:    158410
@@ -417,7 +418,7 @@ The ouput of the aligment process is a `bam file` containing mapping results tha
 `Samtools` is a suite of commands that can be used for manipulating sam/bam files. In order to visualize the content we can use the `samtools view` command.
 
 <a id="bismark-bam"></a>
-Bismark bam file is a tab separate textual file (in binary format if `bam`) and for a detailed description check [Bismark file description](https://gabbo89.github.io/EEA2024/docs/2a_Bismark_file_descr.html){: .btn }
+Bismark bam file is a tab separate textual file (in binary format if `bam`) and for a detailed description check [Bismark file description](https://gabbo89.github.io/EEA2024/docs/2a_Bismark_file_descr.html)
 
 <!--
  (1) QNAME  (read name)
@@ -461,7 +462,7 @@ less alignments/rkatsiteli.leaves_PE_report.txt
 >> Sequences did not map uniquely 
 
 
-Base on the values it is possible to calculate:
+Based on the values it is possible to calculate the following equation:
 
 <!--
 $$
@@ -503,7 +504,7 @@ This will create a filtered bam file with only the reads that passed the dedupli
 ```bash
 deduplicate_bismark \
 --bam alignments/rkatsiteli.leaves_pe.bam \
--o alignments/ # output eitherwise is written to current directory
+-o alignments/ # eitherwise the output is written to current directory
 ```
 
 {: .success-title }
@@ -522,9 +523,9 @@ deduplicate_bismark \
 {: .no_toc }
 In order to extract methylation information we will run the command `bismark_methylation_extractor`. The script will operate on Bismark result files and extracts the methylation call for every single C analysed. 
 
-???
+
 The position of every single C will be written to a new output file, dependending on the context (CG, CHG or CHH), whereby methylated Cs will be labelled as forward read (+) and non-methylated Cs as reverse reads (-). 
-???
+
 
 The methylation extractor outputs result files for cytosines in CpG, CHG and CHH
 context (this distinction is actually already made in Bismark itself). As the methylation
@@ -537,7 +538,8 @@ strands a given bisulfite read aligned against:
 - OB      original bottom strand
 - CTOB    complementary to original bottom strand
 
-By default twelve individual output files are being generated per input file.
+By default twelve individual output files are being generated per input file when non-directional. Please note that specifying the `--directional` (the default mode) option in the Bismark alignment step will not report any alignments to the CTOT or CTOB strands, and thus six files will be generated.
+
 
 {: .note }
 >
@@ -545,11 +547,24 @@ By default twelve individual output files are being generated per input file.
 >
 
 
-
+<!--
 {: .failed }
-> i am an error
 >
+> i am an error
+-->
 
+##### The options we will use:
+
+- `-o` Directory to write output files to. 
+- `-p` Data generated from paired-end data (will be determined automatically)
+- `--multicore` Define the number of cores to be used.
+- `--gzip` Write `gzip` compressed output files
+- `--bedGraph` Write methylation calls (%) in bedGraph format
+- `--CX_context` Write methylation calls for all contexts, in bedGraph format.
+- `--genome-folder` Path to the reference fasta file [is mandatory]
+- `--cytosine_report` Genome-wide methylation report for all Cs, 1 based coordinates.
+
+<br><br>
 ```bash
 bismark_methylation_extractor \
 -o meth_extr/ \
@@ -562,17 +577,6 @@ bismark_methylation_extractor \
 --genome_folder reference \
 alignments/rkatsiteli.leaves_pe.deduplicated.bam
 ```
-
-#### The most important options are:
-- `-o` Directory to write output files to. 
-- `-p` Data generated from paired-end data (will be determined automatically)
-- `--multicore` Define the number of cores to be used.
-- `--gzip` Write `gzip` compressed output files
-- `--bedGraph` Write methylation calls (%) in bedGraph format
-- `--CX_context` Write methylation calls for all contexts, in bedGraph format.
-- `--genome-folder` Path to the reference fasta file [is mandatory]
-- `--cytosine_report` Genome-wide methylation report for all Cs, 1 based coordinates.
-
 
 {: .success-title }
 > STDOUT
@@ -588,117 +592,26 @@ alignments/rkatsiteli.leaves_pe.deduplicated.bam
 >
 > Finished generating genome-wide cytosine report
 
+<a id="bismark-meth_extract"></a>
+Several files will be produced in this last step, for a detailed description check [Bismark file description](https://gabbo89.github.io/EEA2024/docs/2a_Bismark_file_descr.html#meth_extract)
+
+The most important file is the `CX_report.txt` that contain the methylome data,
+
+
+<!--
 The output files are in the following format (tab delimited):
 
 <sequence_id>     <strand>      <chromosome>     <position>     <methylation call>
 
-OUTPUT:
-
-The bismark_methylation_extractor output is in the form:
-========================================================
-<seq-ID>  <methylation state*>  <chromosome>  <start position (= end position)>  <methylation call>
-
-* Methylated cytosines receive a '+' orientation,
-* Unmethylated cytosines receive a '-' orientation.
-The bedGraph output (optional) looks like this (tab-delimited; 0-based start coords, 1-based end coords):
-=========================================================================================================
-
-track type=bedGraph (header line)
-
-<chromosome>  <start position>  <end position>  <methylation percentage>
-
-
-The coverage output looks like this (tab-delimited, 1-based genomic coords; zero-based half-open coordinates available with '--zero_based'):
-============================================================================================================================================
-
-<chromosome>  <start position>  <end position>  <methylation percentage>  <count methylated>  <count non-methylated>
-
-
-
-
-The genome-wide cytosine methylation output file is tab-delimited in the following format:
-==========================================================================================
-<chromosome>  <position>  <strand>  <count methylated>  <count non-methylated>  <C-context>  <trinucleotide context>
-
-
-
-
-Several files will be produced in this last step. The most important file is the `CX_report.txt` that contain the methylome data.
-
-The files obtained have the following structure.
-For example the file `CpG_OT_rkatsiteli.leaves.rkatsiteli.leaves.R1_bismark_bt2_pe.deduplicated.txt.gz` has the following columns:
-1. seq-ID
-2. methylation state
-3. chromosome
-4. start position
-5. methylation call
-
-Methylated Cs have `+` orientation, while unmethylated Cs have `-`
-
-For example: 
-
->SEQILMN03:348:CAG91ANXX:8:1101:13304:1989_1:N:0:TGGTGA  +       chr17   13398887        Z
->SEQILMN03:348:CAG91ANXX:8:1101:13304:1989_1:N:0:TGGTGA  +       chr17   13398905        Z
->SEQILMN03:348:CAG91ANXX:8:1101:13304:1989_1:N:0:TGGTGA  +       chr17   13398949        Z
->SEQILMN03:348:CAG91ANXX:8:1101:14588:1992_1:N:0:TGGTGA  +       chr18   34541292        Z
->SEQILMN03:348:CAG91ANXX:8:1101:14588:1992_1:N:0:TGGTGA  +       chr18   34541341        Z
->SEQILMN03:348:CAG91ANXX:8:1101:14588:1992_1:N:0:TGGTGA  +       chr18   34541361        Z
->SEQILMN03:348:CAG91ANXX:8:1101:14588:1992_1:N:0:TGGTGA  +       chr18   34541344        Z
->SEQILMN03:348:CAG91ANXX:8:1101:19965:1990_1:N:0:TGGTGA  -       chr18   35977426        z
-
-It will produce a strand-specific output which will use the following abbreviations in the output file name that indicate the strand the alignment came from:
-
-> OT    - original `TOP` strand
-> CTOT  - complementary to original `TOP` strand
-> OB    - original `BOTTOM` strand
-> CTOB  - complementary to original `BOTTOM` strand
-
-{: .note }
-Methylation calls from OT and CTOT will be informative for cytosine methylation positions on the original top strand, calls from OB and CTOB will be informative for cytosine methylation positions on the original bottom strand. Please note that specifying the --directional (the default mode) option in the Bismark alignment step will not report any alignments to the CTOT or CTOB strands.
-
-## BedGraph output
-{: .no_toc }
-The Bismark methylation extractor can optionally also output a file in bedGraph format which uses 0-based genomic start and 1- based end coordinates. 
-The columns are as follows:
-1. `chromosome`
-2. ``start position``
-3. `end position`
-4. `value (methylation %)`
-
-Since the methylation percentage is _per se_ not informative of the read coverage at the specific position, a `*.cov.gz` file is also created (1-based genomic coordinates) that feature 2 additional columns:
-1. `chromosome`
-2. `start position`
-3. `end position`
-4. `value (methylation %)`
-5. `number of methylated Cs`
-6. `number of unmethylated Cs`
-
-[link to descriptor](/docs/2a_file_formats.md)
-From this file, downstream processing of the file. 
-
-{: .note}
-Only performed on CG sites
-
-## M-bias output 
-{: .no_toc }
-<!--
-This allows generating nice graphs by alternative means, e.g. using R or Excel. The plot is also drawn into a .png file which requires the Perl module GD::Graph (more specifically, both modules GD::Graph::lines and GD::Graph::colour are required); if GD::Graph cannot be found on the system, only the table will be printed.
 -->
-The Bismark methylation extractor can optionally also output a file in M-bias format which uses 0-based genomic start and 1- based end coordinates.?
-Methylation bias plot which shows the methylation proportion across each possibile position in the read (cumulatively)[^2]
-
-The output is a tabular file with the following format:
-1. `read position`
-2. `count methylated`
-3. `count unmethylated`
-4. `% methylation`
-5. `total coverage`
 
 
 
-## splitting_report
-{: .no_toc }
-It represent a summary of the splitting step executed by bismark_methylation_extractor. It the report the % of methylated Cs in the different contexts. 
+
+
+
+
+
 
 
 ---
@@ -773,5 +686,5 @@ Results are reported in *bismark_bt2_PE_report.txt file!
 <sup>[1]</sup> 
 
 
-[^2]: https://genomebiology.biomedcentral.com/articles/10.1186/gb-2012-13-10-r83
+
 -->
