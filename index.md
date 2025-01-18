@@ -9,6 +9,17 @@ description: "Analisi Bioinformatica di Dati Epigenetici: tutorial"
 # This is the tutorial page for performing epigenomics analyses[^1]
 _Epigenetics_ refers to changes in gene expression that do not involve alterations to the underlying DNA sequence. These changes are influenced by environmental factors, lifestyle, and developmental stages.
 
+The aim of this website is to provide a step-by-step guide to the analysis of epigenetic data, including DNA methylation and histone modification data. 
+For each lesson (arguments) we will explore a different aspect of epigenomics analysis:
+- **Lesson 1: Introduction to Epigenomics**
+- **Lesson 2: DNA Methylation Analysis**
+- **Lesson 3: Histone Modification Analysis**
+
+
+---
+
+If you need any help, contact me at: gabriele.magris@uniud.it
+
 <!--
 You can select the color-scheme for the tutorial: <button class="btn js-toggle-dark-mode">Preview dark color scheme</button>
 

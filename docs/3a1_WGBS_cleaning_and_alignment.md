@@ -45,9 +45,9 @@ jtd.addEvent(toggleDarkMode, 'click', function(){
 - [Quality control](#1-First-step-check-fastq-quality-using-fastqc-software)
     - [FastQC](#fasta)
 - [Trimming](#2-second-step-perform-trimming-of-raw-data)
-    - [Trimgalore](https://gabbo89.github.io/EEA2024/docs/2a_TrimGalore_manual.html)
+    - [Trimgalore](https://gabbo89.github.io/EEA2024-2025/docs/2a_TrimGalore_manual.html)
 - [Alignment](#3-Alignment-of-fastq-files)
-    - [Bismark](https://gabbo89.github.io/EEA2024/docs/2a_Bismark_manual.html)
+    - [Bismark](https://gabbo89.github.io/EEA2024-2025/docs/2a_Bismark_manual.html)
 
 -->
 
@@ -256,7 +256,7 @@ Check the obtained figures from the output folder in order to evaluate the quali
 Once the raw fastq files have been filtered in order to remove potential contaminants and adapters, we are ready to perform the alignment, given a reference genome.
 
 
-In order to perform the alignment we will use the Bismark suite [Bismark short manual](https://gabbo89.github.io/EEA2024/docs/2a_Bismark_manual.html){: .btn } [Bismark on github](https://felixkrueger.github.io/Bismark/){: .btn }
+In order to perform the alignment we will use the Bismark suite [Bismark short manual](https://gabbo89.github.io/EEA2024-2025/docs/2a_Bismark_manual.html){: .btn } [Bismark on github](https://felixkrueger.github.io/Bismark/){: .btn }
 
 <!--
 In order to perform the alignment we will use the Bismark suite [^Bismark short manual] [Bismark short manual][bismark short manual] and [^TrimGalore on Github][trimgalore_github].
@@ -419,7 +419,7 @@ The ouput of the aligment process is a `bam file` containing mapping results tha
 `Samtools` is a suite of commands that can be used for manipulating sam/bam files. In order to visualize the content we can use the `samtools view` command.
 
 <a id="bismark-bam"></a>
-Bismark bam file is a tab separate textual file (in binary format if `bam`) and for a detailed description check [Bismark file description](https://gabbo89.github.io/EEA2024/docs/2a_Bismark_file_descr.html)
+Bismark bam file is a tab separate textual file (in binary format if `bam`) and for a detailed description check [Bismark file description](https://gabbo89.github.io/EEA2024-2025/docs/2a_Bismark_file_descr.html)
 
 <!--
  (1) QNAME  (read name)
@@ -565,8 +565,12 @@ By default twelve individual output files are being generated per input file whe
 - `--CX_context` Write methylation calls for all contexts, in bedGraph format.
 - `--genome-folder` Path to the reference fasta file [is mandatory]
 - `--cytosine_report` Genome-wide methylation report for all Cs, 1 based coordinates.
-
+<!--
+ADD extra white line 
 <br><br>
+--> 
+
+
 ```bash
 bismark_methylation_extractor \
 -o meth_extr/ \
@@ -576,7 +580,7 @@ bismark_methylation_extractor \
 --bedGraph \
 --CX_context \
 --cytosine_report \
---genome_folder reference \
+--genome_folder /data2/student_space/st24_16_folder/epigenomics/wgbs/reference/ \
 alignments/rkatsiteli.leaves_pe.deduplicated.bam
 ```
 
@@ -595,7 +599,7 @@ alignments/rkatsiteli.leaves_pe.deduplicated.bam
 > Finished generating genome-wide cytosine report
 
 <a id="bismark-meth_extract"></a>
-Several files will be produced in this last step, for a detailed description check [Bismark file description](https://gabbo89.github.io/EEA2024/docs/2a_Bismark_file_descr.html#meth_extract)
+Several files will be produced in this last step, for a detailed description check [Bismark file description](https://gabbo89.github.io/EEA2024-2025/docs/2a_Bismark_file_descr.html#meth_extract)
 
 The most important file is the `CX_report.txt` that contain the methylome data,
 
@@ -680,11 +684,11 @@ Results are reported in *bismark_bt2_PE_report.txt file!
 ------
 
 [^1]: [file formats](/docs/2b_file_formats.md). 
-[trimgalore short manual]: https://gabbo89.github.io/EEA2024/docs/2a_TrimGalore_manual.html
+[trimgalore short manual]: https://gabbo89.github.io/EEA2024-2025/docs/2a_TrimGalore_manual.html
 [trimgalore_github]: https://github.com/FelixKrueger/TrimGalore
 
 <!--
-[^3]: https://gabbo89.github.io/EEA2024/docs/2a_Bismark_manual.html
+[^3]: https://gabbo89.github.io/EEA2024-2025/docs/2a_Bismark_manual.html
 <sup>[1]</sup> 
 
 

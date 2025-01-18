@@ -30,7 +30,7 @@ By default, Bismark generates SAM output for all alignment modes. Please note th
 
 The mate read of paired-end alignments is written out as an additional separate line in the same format.
 
-[Back to the tutorial](https://gabbo89.github.io/EEA2024/docs/3a1_WGBS_cleaning_and_alignment.html#bismark-bam)
+[Back to the tutorial](https://gabbo89.github.io/EEA2024-2025/docs/3a1_WGBS_cleaning_and_alignment.html#bismark-bam)
 
 
 ### Methylation call
@@ -50,7 +50,7 @@ The methylation call string contains a dot `.` for every position in the BS-read
 - `U` - C in Unknown context (CN or CHN) - methylated
 - `.` - not a C or irrelevant position
 
-[Back to the tutorial](https://gabbo89.github.io/EEA2024/docs/3a1_WGBS_cleaning_and_alignment.html#bismark-bam)
+[Back to the tutorial](https://gabbo89.github.io/EEA2024-2025/docs/3a1_WGBS_cleaning_and_alignment.html#bismark-bam)
 
 
 
@@ -140,13 +140,12 @@ The ouput of the methylation extractor can be optionally trasformed into a genom
 7. trinucleotide context
 
 
-## (Optional) M-bias output 
+## M-bias output 
 {: .no_toc }
 <!--
 This allows generating nice graphs by alternative means, e.g. using R or Excel. The plot is also drawn into a .png file which requires the Perl module GD::Graph (more specifically, both modules GD::Graph::lines and GD::Graph::colour are required); if GD::Graph cannot be found on the system, only the table will be printed.
 -->
-The Bismark methylation extractor can optionally also output a file in M-bias format which uses 0-based genomic start and 1- based end coordinates. The file shows the methylation proportion across each possibile position in the read (cumulatively)[^2]
-Methylation bias plot which shows the methylation proportion 
+The Bismark methylation extractor produces a file in M-bias format which uses 0-based genomic start and 1- based end coordinates. The file shows the methylation proportion across each possibile position in the read (cumulatively)[^2]
 
 The output is a tabular file with the following format:
 1. `read position`
@@ -155,13 +154,14 @@ The output is a tabular file with the following format:
 4. `% methylation`
 5. `total coverage`
 
+This allows generating nice graphs by alternative means, e.g. using R or Excel.
 
-## splitting_report
+## Splitting_report
 {: .no_toc }
 It represent a summary of the splitting step executed by bismark_methylation_extractor. It the report the % of methylated Cs in the different contexts. 
 
 
-[Back to the tutorial](https://gabbo89.github.io/EEA2024/docs/3a1_WGBS_cleaning_and_alignment.html#bismark-meth_extract)
+[Back to the tutorial](https://gabbo89.github.io/EEA2024-2025/docs/3a1_WGBS_cleaning_and_alignment.html#bismark-meth_extract)
 
 
 

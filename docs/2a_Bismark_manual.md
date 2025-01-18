@@ -37,3 +37,6 @@ Bismark was written by Felix Krueger, part of the [Babraham Bioinformatics](http
 ## Licences
 
 Bismark itself is free software, `bismark2report` and `bismark2summary` produce HTML graphs powered by [Plot.ly](https://plot.ly/javascript/) which are also free to use and look at!
+
+
+[Back to the tutorial](https://gabbo89.github.io/EEA2024/docs/3a1_WGBS_cleaning_and_alignment.html#bismark-meth_extract)

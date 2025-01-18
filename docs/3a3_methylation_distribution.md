@@ -12,11 +12,11 @@ published: true
 >
 > Obtain a graph with the distribution of methylation values in three contexts `CG`, `CHG` and `CHH`.
 
-We will us the methylation table obtained froom Bismark.
+We will use the methylation table obtained from Bismark. The file represent the result of wgbs performed in _Arabidopsis thaliana_ samples.
 
 The file is located at the following path
 
-`/data2/biotecnologie_molecolari_gmagris/bismark_methylome/...CX_report.txt`
+`/data2/biotecnologie_molecolari_magris/bismark_methylome/...CX_report.txt`
 
 The suffix of the file is `.CX_report.txt` and the structure is as follows:
 
@@ -39,12 +39,12 @@ The first step is to filter the data in order to select:
 
 We can opt to use `R`, but since the file is quite large, we will use `linux` commands (in particular `awk`).
 
-The input file is located at `/data2/biotecnologie_molecolari_gmagris/bismark_methyl`
+The input file is located at `/data2/biotecnologie_molecolari_magris/bismark_methyl`
 
 ### Copy the table of interest to your working directory
 
 ```bash
-cp /data2/biotecnologie_molecolari_gmagris/bismark_methylome/... /data2/student_space/st24_01_folder/epigenomics/methylation distribution
+cp /data2/biotecnologie_molecolari_magris/bismark_methylome/... /data2/student_space/st24_01_folder/epigenomics/methylation distribution
 ```
 
 ### Filter the data and calculate the methylation level
@@ -66,22 +66,27 @@ and
 awk '{ if (($4+$5)>0 && $6=="CHH") {meth = $4/($4+$5); print $0"\t"meth}}' file_bismark > Arabidopisis_metiloma_CHH.txt
 ```
 
-Now that we obtained a filtered dataset (and lighter), we can proceed with the analysis of the methylation distribution. We can use `R` for this purpose.
+Now that we obtained a **filtered** dataset (and lighter), we can proceed with the analysis of the methylation distribution. We can use `R` for this purpose.
+
 ### Load the libraries and the data 
 R 
 
-upload the tydiverse library 
+
 ```r
-library(tidiverse)
+# Load the tidyverse library 
+library(tidyverse)
 ```
 
-Now we can load the data and check the structure of the table.
-We will store the data in a data.frame called CG, using the `read.table` function. We will also specify the path to the file and the separator used in the file (tab).
+Now we can load the data and check the structure of the table from the command line.
+We will store the table in a data.frame called CG, using the `read.table` function. We will also specify the path to the file and the separator used in the file (tab).
 
 
-```
 ```r
+# read the input file, which is missing the header
 CG=read.table("Arabidopisis_metiloma_CG.txt", stringsAsFactors=F, header=F,sep="\t")
+
+# we can now check the data.frame using for example the head() function
+head(CG)
 ```
 
 ### rename the columns 
@@ -92,6 +97,7 @@ names(CG)=c('chr', 'pos', 'strand', 'c', 't', 'context', 'real_context', 'methyl
 ### add a new column named `coverage` which include the total coverage
 
 ```r
+# total coverage is calculated by summing the columns c and t
 CG$coverage = CG$c + CG$t
 ```
 
@@ -100,18 +106,21 @@ Add now a new column named `methR` which represent the methylation level calcula
 ```r
 CG$methR = round(100*CG$c / CG$coverage, 0)
 ```
-Now we can filter the table by removing the rows where the coverage is lower than a certain threshold (e.g. 10). We haven't done it previously with AWK in order to test the different coverage thresholds in R. Removing the non covered positions (done with [awk](#filter-the-data-and-calculate-the-methylation-level)) can be done at the beginning because they are not informative. 
 
-We will use the `dplyr` library (from the `tidyverse` package) to filter the data.
+Now we can filter the table by removing the rows where the coverage is lower than a certain threshold (e.g. 10). We haven't done it previously with `awk` in order to test the different coverage thresholds in R. Removing the non covered positions (done previously with [awk](#filter-the-data-and-calculate-the-methylation-level)) can be done at the beginning because they are not informative. 
+
+We will use now the `dplyr` library (from the `tidyverse` package) to filter the data.
 
 
 ```r
+# select only the rows where the coverage is higher than 10
 CG_coverage_filtered = CG %>% filter(coverage > 10)
 ```
 
 If, as commonly happens, the number of Cs with methylation values = 0 is extremely high, the graph may appear compressed and hard to understand on the __X__ axis. Thus it might be useful to remove the rows where the methylation is 0. This can be done with the following command:
 
 ```r
+# select only the rows where the methylation is higher than 0 and the coverage is higher than 10
 CG_coverage_filtered = CG %>% filter(coverage > 10 & methR > 0)
 ```
 
@@ -123,21 +132,23 @@ CG_coverage_filtered = CG %>% filter(coverage > 10 & methR > 0)
 
 
 # Draw the plot in R
-We need to upload the necessary libraries . We will use `ggplot2` for the plot and `dplyr` for the filtering. We will also use `tidyverse` for the data manipulation. We will load the libraries with the following command:
+We need to upload the necessary libraries. We will use `ggplot2` for the plot and `dplyr` for the filtering. We will also use `tidyverse` for the data manipulation. 
 
 ```r
+# load the required packages 
 library(ggplot2)
 library(dplyr)
 ```
 
-Draw the graph as histogram:
+###### Draw the graph as histogram:
+ggplot use the filtered dataset to draw the histogram. The `geom_histogram` function is used to draw the histogram. The `fill` argument is used to specify the color of the bars. 
 
 ```r
 ggplot(CG_coverage_filtered,aes(x=methR)) + \
 geom_histogram(colour=4,fill="white",binwidth=1)
 ```
 
-Draw the graph as density plot:
+##### Draw the graph as density plot:
 
 ```r
 ggplot(CG_coverage_filtered,aes(x=methR)) + \

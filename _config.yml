@@ -9,13 +9,13 @@ exclude:
   - "backup/"
 
 
-url: https://gabbo89.github.io/EEA2024-2025
+#url: https://gabbo89.github.io/EEA2024-2025
 #"https://www.sisfvg.it/sites/default/files/logoUniud-small.png"
 logo: "/assets/images/logo.png"
 favicon_ico: "/assets/images/favicon.png"
 
-#url: https://gabbo89.github.io/
-#baseurl: "/EEA2024-2025"
+url: https://gabbo89.github.io/
+baseurl: "/EEA2024-2025"
 
 ##aux_links:
 ##  Template Repository: https://github.com/just-the-docs/just-the-docs-template
