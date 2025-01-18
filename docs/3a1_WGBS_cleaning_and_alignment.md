@@ -127,7 +127,7 @@ sequences/rkatsiteli.leaves.R2.fastq.gz \
 -o sequences/rkatsiteli_leaves
 ```
 
-#### Check the output files obtained
+##### Check the output files obtained
 {: .no_toc }
 
 The output of fastqc is a html file with different plots. It is possible to open it with a browser. Browse to the location where the files are located. You should see a folder with the name of the sample and inside it a html file with the name. Open it with a browser. 
@@ -330,7 +330,8 @@ Now we are ready to perform the reads alignment.
 ### Perform the paired-end mapping 
 {: .no_toc }
 
-{: .note }
+{: .note-title }
+>DESCRIPTION
 >
 >    USAGE: bismark [options] \<genome_folder\> {-1 \<mates1\> -2 \<mates2\> \| \<singles\>}
 >
@@ -541,7 +542,8 @@ strands a given bisulfite read aligned against:
 By default twelve individual output files are being generated per input file when non-directional. Please note that specifying the `--directional` (the default mode) option in the Bismark alignment step will not report any alignments to the CTOT or CTOB strands, and thus six files will be generated.
 
 
-{: .note }
+{: .note-title }
+>DESCRIPTION
 >
 >    USAGE: bismark_methylation_extractor [options] \<filenames\>
 >
