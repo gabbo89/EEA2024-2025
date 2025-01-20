@@ -39,42 +39,79 @@ The first step is to filter the data in order to select:
 
 We can opt to use `R`, but since the file is quite large, we will use `linux` commands (in particular `awk`).
 
-The input file is located at `/data2/biotecnologie_molecolari_magris/bismark_methyl`
+The input file is located at `/data2/biotecnologie_molecolari_magris/epigenomics/meth_distribution/arabidopsis_wgbs.CX_report.txt`
+
+### Activate the conda environment
+{: .no_toc }
+```bash
+conda activate epigenomics
+```
+
+### Set the working directory
+{: .no_toc }
+```bash
+# move to the working directory
+cd /data2/student_space/st24_16_folder
+
+# create the folder structure
+mkdir -p epigenomics/methylation_distribution
+
+# move to the new working directory
+cd epigenomics/methylation_distribution
+```
 
 ### Copy the table of interest to your working directory
 
 ```bash
-cp /data2/biotecnologie_molecolari_magris/bismark_methylome/... /data2/student_space/st24_01_folder/epigenomics/methylation distribution
+cp /data2/biotecnologie_molecolari_magris/epigenomics/meth_distribution/arabidopsis_wgbs.CX_report.txt .
+
+# in order to check the file format, read the first rows of the tabular file
+head arabidopsis_wgbs.CX_report.txt
 ```
 
+
+{: success }
+>Chr3    101     +       0       0       CHH     CCC
+>Chr3    102     +       0       0       CHH     CCT
+>Chr3    103     +       0       0       CHH     CTA
+>Chr3    108     +       0       0       CHH     CCC
+>Chr3    109     +       0       0       CHH     CCT
+>Chr3    110     +       0       0       CHH     CTA
+>Chr3    115     +       0       0       CHH     CCC
+>Chr3    116     +       0       0       CHH     CCT
+>Chr3    117     +       0       0       CHH     CTA
+>Chr3    122     +       0       0       CHH     CCC
+
+
 ### Filter the data and calculate the methylation level
-If I want to select only C in CG context and with a coverage greater than 0, i can use `awk` in order to filter the table and select data of interest:
+If we want to select only C in CG context and with a coverage greater than 0, we can use `awk` in order to filter the table and select data of interest:
 
 ```bash
-awk '{ if (($4+$5)>0 && $6=="CG") {meth = $4/($4+$5); print $0"\t"meth}}' file_bismark > Arabidopisis_metiloma_CG.txt
+awk '{ if (($4+$5)>0 && $6=="CG") {meth = $4/($4+$5); print $0"\t"meth}}' arabidopsis_wgbs.CX_report.txt > arabidopisis_metilome_CG.txt
 ```
 
 The same `awk` command may be used to extract values for CHG and CHH contexts:
 
 ```bash
-awk '{ if (($4+$5)>0 && $6=="CHG") {meth = $4/($4+$5); print $0"\t"meth}}' file_bismark > Arabidopisis_metiloma_CHG.txt
+awk '{ if (($4+$5)>0 && $6=="CHG") {meth = $4/($4+$5); print $0"\t"meth}}' arabidopsis_wgbs.CX_report.txt > arabidopisis_metilome_CHG.txt
 ```
 
 and 
 
 ```bash
-awk '{ if (($4+$5)>0 && $6=="CHH") {meth = $4/($4+$5); print $0"\t"meth}}' file_bismark > Arabidopisis_metiloma_CHH.txt
+awk '{ if (($4+$5)>0 && $6=="CHH") {meth = $4/($4+$5); print $0"\t"meth}}' arabidopsis_wgbs.CX_report.txt > arabidopisis_metilome_CHH.txt
 ```
 
-Now that we obtained a **filtered** dataset (and lighter), we can proceed with the analysis of the methylation distribution. We can use `R` for this purpose.
+Now that we obtained a **filtered** dataset (that impact less memory), we can proceed with the analysis of the methylation distribution. We will use `R` for this purpose.
 
-### Load the libraries and the data 
+### Load the R environment
+```bash
 R 
-
+```
 
 ```r
-# Load the tidyverse library 
-library(tidyverse)
+# Load the dplyr library 
+library(dplyr)
 ```
 
 Now we can load the data and check the structure of the table from the command line.
@@ -83,11 +120,14 @@ We will store the table in a data.frame called CG, using the `read.table` functi
 
 ```r
 # read the input file, which is missing the header
-CG=read.table("Arabidopisis_metiloma_CG.txt", stringsAsFactors=F, header=F,sep="\t")
+CG=read.table("arabidopisis_metilome_CG.txt", stringsAsFactors=F, header=F,sep="\t")
 
 # we can now check the data.frame using for example the head() function
 head(CG)
 ```
+![Figure 1: header of the CG data frame]({{ "/assets/images/3a3_methylation_distribution_arabidopsis.png" | relative_url }})
+**Figure 1:** This figure shows the header of the CG data frame.
+
 
 ### rename the columns 
 ```r
@@ -101,13 +141,20 @@ names(CG)=c('chr', 'pos', 'strand', 'c', 't', 'context', 'real_context', 'methyl
 CG$coverage = CG$c + CG$t
 ```
 
-Add now a new column named `methR` which represent the methylation level calculated in a different way in the R environment. The value is calculated as % value, rounded to 0 decimal places:
+Add now a new column named `methR` which represent the methylation level calculated in a different way. The value is calculated as % value, rounded to 0 decimal places:
 
 ```r
 CG$methR = round(100*CG$c / CG$coverage, 0)
+
+# check now the new dataframe
+head(CG)
 ```
 
-Now we can filter the table by removing the rows where the coverage is lower than a certain threshold (e.g. 10). We haven't done it previously with `awk` in order to test the different coverage thresholds in R. Removing the non covered positions (done previously with [awk](#filter-the-data-and-calculate-the-methylation-level)) can be done at the beginning because they are not informative. 
+![Figure 2: header of the modified CG data frame]({{ "/assets/images/3a3-2_methylation_distribution_arabidopsis.png" | relative_url }})
+**Figure 2:** This figure shows the header of the modified CG data frame.
+
+
+Now we can filter the table by removing the rows where the coverage is lower than a certain threshold (e.g. 10). We haven't done it previously with `awk` in order to test the different coverage thresholds in `R`. Removing the non covered positions (done previously with [awk](#filter-the-data-and-calculate-the-methylation-level)) can be done at the beginning because they are not informative. 
 
 We will use now the `dplyr` library (from the `tidyverse` package) to filter the data.
 
@@ -132,36 +179,45 @@ CG_coverage_filtered = CG %>% filter(coverage > 10 & methR > 0)
 
 
 # Draw the plot in R
-We need to upload the necessary libraries. We will use `ggplot2` for the plot and `dplyr` for the filtering. We will also use `tidyverse` for the data manipulation. 
+We will use `ggplot2` in order to draw the plot.
 
 ```r
 # load the required packages 
 library(ggplot2)
-library(dplyr)
 ```
 
 ###### Draw the graph as histogram:
 ggplot use the filtered dataset to draw the histogram. The `geom_histogram` function is used to draw the histogram. The `fill` argument is used to specify the color of the bars. 
 
 ```r
-ggplot(CG_coverage_filtered,aes(x=methR)) + \
+ggplot(CG_coverage_filtered,aes(x=methR)) +
 geom_histogram(colour=4,fill="white",binwidth=1)
 ```
 
 ##### Draw the graph as density plot:
 
-```r
-ggplot(CG_coverage_filtered,aes(x=methR)) + \
+```{r}
+ggplot(CG_coverage_filtered,aes(x=methR)) +
 geom_density(alpha=.2,fill="#FF6666")
 ```
 
+The obtained graphs should look like: 
+
+| **histogram** | **density** |
+|:--------:|:---:|
+|  ![histo]({{"/assets/images/3a3-3_methylation_distribution_arabidopsis.png" | relative_url }})  | ![density]({{"/assets/images/3a3-4_methylation_distribution_arabidopsis.png" | relative_url }})  |
+
+
 #### Repeat now the same for CHG and CHH.
 
-We can save the graph in a pdf file with the following command:
+
+
+Until now we have only seen the graphs in an interactive way, but what if we want to save them?
+We can save the graph in a pdf file by using the `pdf()` function. 
 
 ```r
 pdf("CG_density.pdf",paper="A4")
-ggplot(CG_coverage_filtered,aes(x=methR)) + \
+ggplot(CG_coverage_filtered,aes(x=methR)) +
 geom_density(alpha=.2,fill="#FF6666")
 dev.off()
 ```
@@ -170,16 +226,18 @@ Or we can save all the plots in a single file:
 
 ```r
 pdf("CG_density.pdf",paper="A4")
-ggplot(CG_coverage_filtered,aes(x=methR)) + \
+ggplot(CG_coverage_filtered,aes(x=methR)) +
 geom_density(alpha=.2,fill="#FF6666")
 
-ggplot(CHG_coverage_filtered,aes(x=methR)) + \
+ggplot(CHG_coverage_filtered,aes(x=methR)) +
 geom_density(alpha=.2,fill="#FF6666")
 
-ggplot(CHH_coverage_filtered,aes(x=methR)) + \
+ggplot(CHH_coverage_filtered,aes(x=methR)) +
 geom_density(alpha=.2,fill="#FF6666")
 
 dev.off()
 ```
 
-We need to pair `pdf()` and `dev.off()` in order to open (draw the graph) and close the pdf file. We can also use `png()` or `jpeg()` to save the plots in a png or jpeg file. With `png()` or `jpeg()` we need an extra step to arrange the figures in multiple panels.
+{: .note}
+>We need to pair `pdf()` and `dev.off()` in order to open (draw the graph) and close the pdf file. We can also use `png()` or `jpeg()` to save the plots in a png or jpeg format. With `png()` or `jpeg()` we need an extra step to arrange the figures in multiple panels.
+
