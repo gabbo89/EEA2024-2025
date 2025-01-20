@@ -12,16 +12,29 @@ published: true
 >
 > Obtain a graph with the distribution of methylation values in three contexts `CG`, `CHG` and `CHH`.
 
-We will use the methylation table obtained from Bismark. The file represent the result of wgbs performed in _Arabidopsis thaliana_ samples.
+<!--
+<br><br>
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+-->
 
-The file is located at the following path
+We will use the methylation table obtained from Bismark. The file represent the result of wgbs performed in _Arabidopsis thaliana_ sample.
 
-`/data2/biotecnologie_molecolari_magris/bismark_methylome/...CX_report.txt`
+The file is located at the following path:
 
-The suffix of the file is `.CX_report.txt` and the structure is as follows:
+`/data2/biotecnologie_molecolari_magris/epigenomics/meth_distribution/arabidopsis_wgbs.CX_report.txt`
 
-![CTX_example]({{ "/assets/images/chr5_CTX_report.png" | relative_url }})
+The suffix of the file is `.CX_report.txt` as already seen in the previous lessons.
+The structure is as follows:
 
+![Figure 1: header of the modified CG data frame]({{ "/assets/images/3a3-0_methylation_distribution_arabidopsis.png" | relative_url }})
+**Figure 1:** This figure shows the first rows of the file.
 
 The file is tab separated and the columns are in the following order:
 1. chromosome
@@ -38,8 +51,6 @@ The first step is to filter the data in order to select:
 - calculate the methylation level for each position (and append to the table)
 
 We can opt to use `R`, but since the file is quite large, we will use `linux` commands (in particular `awk`).
-
-The input file is located at `/data2/biotecnologie_molecolari_magris/epigenomics/meth_distribution/arabidopsis_wgbs.CX_report.txt`
 
 ### Activate the conda environment
 {: .no_toc }
@@ -70,7 +81,7 @@ head arabidopsis_wgbs.CX_report.txt
 ```
 
 
-{: success }
+{: .success }
 >Chr3    101     +       0       0       CHH     CCC
 >Chr3    102     +       0       0       CHH     CCT
 >Chr3    103     +       0       0       CHH     CTA
@@ -125,16 +136,16 @@ CG=read.table("arabidopisis_metilome_CG.txt", stringsAsFactors=F, header=F,sep="
 # we can now check the data.frame using for example the head() function
 head(CG)
 ```
-![Figure 1: header of the CG data frame]({{ "/assets/images/3a3_methylation_distribution_arabidopsis.png" | relative_url }})
-**Figure 1:** This figure shows the header of the CG data frame.
+![Figure 2: header of the CG data frame]({{ "/assets/images/3a3-1_methylation_distribution_arabidopsis.png" | relative_url }})
+**Figure 2:** This figure shows the first rows of the CG data frame.
 
 
-### rename the columns 
+### Rename the columns 
 ```r
 names(CG)=c('chr', 'pos', 'strand', 'c', 't', 'context', 'real_context', 'methylation')
 ```
 
-### add a new column named `coverage` which include the total coverage
+### Add a new column named `coverage` which include the total coverage
 
 ```r
 # total coverage is calculated by summing the columns c and t
@@ -150,8 +161,8 @@ CG$methR = round(100*CG$c / CG$coverage, 0)
 head(CG)
 ```
 
-![Figure 2: header of the modified CG data frame]({{ "/assets/images/3a3-2_methylation_distribution_arabidopsis.png" | relative_url }})
-**Figure 2:** This figure shows the header of the modified CG data frame.
+![Figure 3: header of the modified CG data frame]({{ "/assets/images/3a3-2_methylation_distribution_arabidopsis.png" | relative_url }})
+**Figure 3:** This figure shows the first rows of the modified CG data frame.
 
 
 Now we can filter the table by removing the rows where the coverage is lower than a certain threshold (e.g. 10). We haven't done it previously with `awk` in order to test the different coverage thresholds in `R`. Removing the non covered positions (done previously with [awk](#filter-the-data-and-calculate-the-methylation-level)) can be done at the beginning because they are not informative. 
@@ -177,6 +188,7 @@ CG_coverage_filtered = CG %>% filter(coverage > 10 & methR > 0)
 
 ## CHH
 
+---
 
 # Draw the plot in R
 We will use `ggplot2` in order to draw the plot.
@@ -186,7 +198,7 @@ We will use `ggplot2` in order to draw the plot.
 library(ggplot2)
 ```
 
-###### Draw the graph as histogram:
+### Draw the graph as histogram:
 ggplot use the filtered dataset to draw the histogram. The `geom_histogram` function is used to draw the histogram. The `fill` argument is used to specify the color of the bars. 
 
 ```r
@@ -194,9 +206,9 @@ ggplot(CG_coverage_filtered,aes(x=methR)) +
 geom_histogram(colour=4,fill="white",binwidth=1)
 ```
 
-##### Draw the graph as density plot:
+### Draw the graph as density plot:
 
-```{r}
+```r
 ggplot(CG_coverage_filtered,aes(x=methR)) +
 geom_density(alpha=.2,fill="#FF6666")
 ```
@@ -208,33 +220,45 @@ The obtained graphs should look like:
 |  ![histo]({{"/assets/images/3a3-3_methylation_distribution_arabidopsis.png" | relative_url }})  | ![density]({{"/assets/images/3a3-4_methylation_distribution_arabidopsis.png" | relative_url }})  |
 
 
-#### Repeat now the same for CHG and CHH.
+## Repeat now the same for CHG and CHH.
 
 
-
+{: .note}
 Until now we have only seen the graphs in an interactive way, but what if we want to save them?
+
 We can save the graph in a pdf file by using the `pdf()` function. 
 
 ```r
+# open the pdf device (already present in r-base)
 pdf("CG_density.pdf",paper="A4")
+
+# draw the plot with ggplot
 ggplot(CG_coverage_filtered,aes(x=methR)) +
 geom_density(alpha=.2,fill="#FF6666")
+
+# close the device
 dev.off()
 ```
 
-Or we can save all the plots in a single file:
+In this way we will create a pdf document with a single page (A4) where the plot of the CG density is reported.
+We can save all the plots (`CG`, `CHG` and `CHH` contexts) in a single file (as separate pages) by combining multiple plot operations:
 
 ```r
-pdf("CG_density.pdf",paper="A4")
+# open the pdf device 
+pdf("arabidopsis_methylation_density.pdf",paper="A4")
+# add the plot of CG context
 ggplot(CG_coverage_filtered,aes(x=methR)) +
 geom_density(alpha=.2,fill="#FF6666")
 
+# add the plot of CHG context
 ggplot(CHG_coverage_filtered,aes(x=methR)) +
 geom_density(alpha=.2,fill="#FF6666")
 
+# add the plot of CHH context
 ggplot(CHH_coverage_filtered,aes(x=methR)) +
 geom_density(alpha=.2,fill="#FF6666")
 
+# close the device
 dev.off()
 ```
 

@@ -281,8 +281,9 @@ cp /data2/biotecnologie_molecolari_magris/epigenomics/wgbs/reference/vitis_vinif
 ### Create the indexes required by Bismark (only once)
 {: .no_toc }
 
-Show the available options for the command
+
 ```bash
+# Show the available options for the command
 bismark_genome_preparation --help
 ```
 
