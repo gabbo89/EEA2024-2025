@@ -34,6 +34,7 @@ The suffix of the file is `.CX_report.txt` as already seen in the previous lesso
 The structure is as follows:
 
 ![Figure 1: header of the modified CG data frame]({{ "/assets/images/3a3-0_methylation_distribution_arabidopsis.png" | relative_url }})
+
 **Figure 1:** This figure shows the first rows of the file.
 
 The file is tab separated and the columns are in the following order:
@@ -87,14 +88,23 @@ head arabidopsis_wgbs.CX_report.txt
 
 {: .success }
 >Chr3    101     +       0       0       CHH     CCC
+>
 >Chr3    102     +       0       0       CHH     CCT
+>
 >Chr3    103     +       0       0       CHH     CTA
+>
 >Chr3    108     +       0       0       CHH     CCC
+>
 >Chr3    109     +       0       0       CHH     CCT
+>
 >Chr3    110     +       0       0       CHH     CTA
+>
 >Chr3    115     +       0       0       CHH     CCC
+>
 >Chr3    116     +       0       0       CHH     CCT
+>
 >Chr3    117     +       0       0       CHH     CTA
+>
 >Chr3    122     +       0       0       CHH     CCC
 
 
@@ -194,6 +204,8 @@ CG_coverage_filtered = CG %>% filter(coverage > 10 & methR > 0)
 ```
 
 ## Repeat now the same analysis for CHG and CHH contexts.
+{: .no_toc }
+
 ### CHG 
 {: .no_toc }
 
@@ -207,10 +219,15 @@ CHG=read.table("arabidopisis_metilome_CHG.txt", stringsAsFactors=F, header=F,sep
 
 ## CHH
 
-# 3. Draw the methylation distribution.
+```r
+# read the input file, which is missing the header
+CHG=read.table("arabidopisis_metilome_CHG.txt", stringsAsFactors=F, header=F,sep="\t")
+...
 
-# Draw the plot in R
-{: .no_toc }
+
+```
+# 3. Draw the methylation distribution in `R`.
+
 We will use `ggplot2` in order to draw the plot.
 
 ```r
