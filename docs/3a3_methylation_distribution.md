@@ -12,7 +12,7 @@ published: true
 >
 > Obtain a graph with the distribution of methylation values in three contexts `CG`, `CHG` and `CHH`.
 
-<!--
+
 <br><br>
 <details open markdown="block">
   <summary>
@@ -22,7 +22,7 @@ published: true
 - TOC
 {:toc}
 </details>
--->
+
 
 We will use the methylation table obtained from Bismark. The file represent the result of wgbs performed in _Arabidopsis thaliana_ sample.
 
@@ -45,6 +45,7 @@ The file is tab separated and the columns are in the following order:
 
 ---
 
+# 1. Filter the Bismark output file.
 The first step is to filter the data in order to select:
 - positions covered by at least 1 read
 - positions that belong to a specific context (CG, CHG, CHH)
@@ -54,12 +55,14 @@ We can opt to use `R`, but since the file is quite large, we will use `linux` co
 
 ### Activate the conda environment
 {: .no_toc }
+
 ```bash
 conda activate epigenomics
 ```
 
 ### Set the working directory
 {: .no_toc }
+
 ```bash
 # move to the working directory
 cd /data2/student_space/st24_16_folder
@@ -72,6 +75,7 @@ cd epigenomics/methylation_distribution
 ```
 
 ### Copy the table of interest to your working directory
+{: .no_toc }
 
 ```bash
 cp /data2/biotecnologie_molecolari_magris/epigenomics/meth_distribution/arabidopsis_wgbs.CX_report.txt .
@@ -95,6 +99,7 @@ head arabidopsis_wgbs.CX_report.txt
 
 
 ### Filter the data and calculate the methylation level
+{: .no_toc }
 If we want to select only C in CG context and with a coverage greater than 0, we can use `awk` in order to filter the table and select data of interest:
 
 ```bash
@@ -113,9 +118,12 @@ and
 awk '{ if (($4+$5)>0 && $6=="CHH") {meth = $4/($4+$5); print $0"\t"meth}}' arabidopsis_wgbs.CX_report.txt > arabidopisis_metilome_CHH.txt
 ```
 
+# 2. Upload the methylation table in `R`.
 Now that we obtained a **filtered** dataset (that impact less memory), we can proceed with the analysis of the methylation distribution. We will use `R` for this purpose.
 
 ### Load the R environment
+{: .no_toc }
+
 ```bash
 R 
 ```
@@ -141,11 +149,14 @@ head(CG)
 
 
 ### Rename the columns 
+{: .no_toc }
+
 ```r
 names(CG)=c('chr', 'pos', 'strand', 'c', 't', 'context', 'real_context', 'methylation')
 ```
 
 ### Add a new column named `coverage` which include the total coverage
+{: .no_toc }
 
 ```r
 # total coverage is calculated by summing the columns c and t
@@ -182,15 +193,24 @@ If, as commonly happens, the number of Cs with methylation values = 0 is extreme
 CG_coverage_filtered = CG %>% filter(coverage > 10 & methR > 0)
 ```
 
-#### Repeat now the same analysis for CHG and CHH contexts.
-## CHG 
+## Repeat now the same analysis for CHG and CHH contexts.
+### CHG 
+{: .no_toc }
 
+```r
+# read the input file, which is missing the header
+CHG=read.table("arabidopisis_metilome_CHG.txt", stringsAsFactors=F, header=F,sep="\t")
+...
+
+
+```
 
 ## CHH
 
----
+# 3. Draw the methylation distribution.
 
 # Draw the plot in R
+{: .no_toc }
 We will use `ggplot2` in order to draw the plot.
 
 ```r
@@ -199,6 +219,7 @@ library(ggplot2)
 ```
 
 ### Draw the graph as histogram:
+{: .no_toc }
 ggplot use the filtered dataset to draw the histogram. The `geom_histogram` function is used to draw the histogram. The `fill` argument is used to specify the color of the bars. 
 
 ```r
@@ -207,6 +228,7 @@ geom_histogram(colour=4,fill="white",binwidth=1)
 ```
 
 ### Draw the graph as density plot:
+{: .no_toc }
 
 ```r
 ggplot(CG_coverage_filtered,aes(x=methR)) +
@@ -221,6 +243,7 @@ The obtained graphs should look like:
 
 
 ## Repeat now the same for CHG and CHH.
+{: .no_toc }
 
 
 {: .note}
