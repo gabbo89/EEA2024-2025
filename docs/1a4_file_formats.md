@@ -1,27 +1,22 @@
 ---
 layout: default
-title: Main file formats used in bioinformatics
+title: File formats
 parent: 1. Introduction
 nav_order: 4
 published: true
 ---
 
 
-# File formats used in bioinformatics
-
-A brief introduction to various file formats used in bioinformatics.
-
-
 <details open markdown="block">
   <summary>
-    **Table of contents**
+    <strong>Table of contents</strong>
   </summary>
   {: .text-delta }
 - TOC
 {:toc}
 </details>
 
-
+<!--
 ## Table of contents
 
 - [Sequence formats](#sequence-formats)
@@ -45,19 +40,23 @@ A brief introduction to various file formats used in bioinformatics.
     - [GFF3](#gff3)
 	- [Example GFF3 file](#example-gff3-file)
 - [References](#references)
+-->
 
-## Sequence formats
+A brief introduction to various file formats used in bioinformatics.
+
+
+# Sequence formats
 
 These are file formats for storing nucleotide sequences and/or amino acid (protein) sequences.
 
-### FASTA
+## FASTA
 
 FASTA is a ubiquitous text-based format for representing nucleotide sequences or amino acid sequences. A FASTA file can contain one sequence or multiple sequences. If a FASTA file contains multiple sequences, it may sometimes be referred to as a "multi-FASTA" file.
 
 Each FASTA entry begins with a `>` (greater-than) symbol, followed by a comment on the same line describing the sequence that will follow. The actual sequence begins on the line after this comment. Another `>` (greater-than) symbol denotes the beginning of another FASTA entry (comment describing the sequence + the sequence itself).
 
-#### Example FASTA file
-
+##### Example FASTA file
+{: .no_toc }
 This example FASTA file contains two linear nucleotide sequences.
 
 ```
@@ -72,7 +71,8 @@ CAGCAGCGCATGAAGGACATGCTGTCTAACTCGCAGACCTTTATGGGCGGTAATATTCCAGGCTACAGCA
 GCACCGATCGCAGCCCATATTCGAAAGCCGAGATCTTCTCTTTGTTTGCCGAAAACAACATG
 ```
 
-#### FASTA filename extensions
+##### FASTA filename extensions
+{: .no_toc }
 
 FASTA files usually end with the extension `.fasta`. This extension is arbitrary, as the content of the file determines its format, not its extension. More descriptive filename extensions can be used instead of `.fasta`, which are useful as they describe the type of sequence(s) in the file at a glance. 
 
@@ -81,7 +81,7 @@ Here are some examples...
 - **`.faa`** can be used for **F**ASTA **a**mino **a**cids
 - **`.frn`** can be used for **F**ASTA non-coding **RN**A
 
-### FASTQ
+## FASTQ
 
 The FASTQ format is an extension of [FASTA](#fasta) that stores both biological sequences (usually nucleotide sequences) and their corresponding quality scores. Both the sequence letter and quality score are encoded with a single character for brevity.
 
@@ -91,7 +91,8 @@ A FASTQ file normally uses four lines per sequence:
 3. A line beginning with `+`, sometimes followed by the same comment as the first line
 4. A line encoding the quality values for the sequence in line 2, with the same numbers of symbols as letters in the sequence
 
-#### Example FASTQ file
+##### Example FASTQ file
+{: .no_toc}
 
 ```
 @SRR8933535.1 1 length=75
@@ -103,13 +104,21 @@ NGAGGAGTGGTGGTAGTGTTGCTTGGTGGCAAAGATGTAGTTGGTGGGAAAGCTGAAGTGGTACCGTTGGTTGGA
 +SRR8933535.2 2 length=75
 #AAAAEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEAAEEEE
 ```
+The quality values are encoded using the [Sanger Phred quality scores](https://en.wikipedia.org/wiki/Phred_quality_score), which are a way of encoding the probability of a base call being incorrect. The probability of a base call being incorrect is calculated as `10^(-Q/10)`, where `Q` is the quality score. For example, a quality score of `30` corresponds to a probability of 0.1% of the base call being incorrect.
 
-## Alignment formats
+![Phred quality]({{ "/assets/images/1a4-1_phred_quality.png" | relative_url }})
+
+The quality scores are usually encoded as ASCII characters, with higher quality scores corresponding to higher ASCII values. 
+
+![ASCII conversion]({{ "/assets/images/1a4-2_ascii_conversion.png" | relative_url }})
+
+
+# Alignment formats
 
 These are formats for storing alignments of nucleotide or amino acid sequences.
 The alignment formats discussed here can be manipulated using [SAMtools](samtools.md).
 
-### SAM
+## SAM
 
 Sequence Alignment/Map (SAM) is a text-based alignment format that supports single- and paired-end reads produced by different sequencing platforms.
 It can support short and long reads (up to 128Mbp).
@@ -138,12 +147,12 @@ The mandatory fields in a SAM file are...
 
 SAM files can be manipulated using [SAMtools](samtools.md).
 
-### BAM
+## BAM
 
 Binary Alignment Map (BAM) is a binary representation of [SAM](#sam), containing the same information in binary format for improved performance.
 A position-sorted BAM file can be indexed to allow random access.
 
-### CRAM
+## CRAM
 
 CRAM is a sequencing read file format that is highly space efficient by using reference-based compression of sequence data and offers both lossless and lossy modes of compression.
 CRAM files are typically 30 to 60% smaller than their [BAM](#bam) equivalents.
@@ -154,6 +163,7 @@ CRAM has the following major objectives:
 3. Effortless transition to CRAM from using BAM files
 4. Support for controlled loss of BAM data
 
+<!--
 ### Stockholm format
 
 The Stockholm format is a system for marking up features in a multiple alignment, used by [HMMER](http://hmmer.org/), [Pfam](https://pfam.xfam.org/), and [Rfam](https://rfam.xfam.org/).
@@ -198,8 +208,11 @@ H2NS04_PONAB/5-91              KANKDLISAGLKEF....SVLLNQ.........QVFNDPL.ISEEDMVT
 #=GC seq_cons                  QuNKDLISsGhKEF....slLLNQ.........QVFs-Ph.ISEEsMVTVVsDWVNFYlNYY+pploGEQQEQDRALQELpQELsTLAsPFLsKYRsFLKS
 //
 ```
+-->
 
-### VCF
+# Variation
+
+## VCF
 
 Variant Call Format (VCF) is a format for storing variations between a reference genome and sequences aligned to it, based on SAM/BAM alignments.
 VCF files begin with a header section: lines in the header section begin with `##`.
@@ -216,11 +229,11 @@ The last line in the header section begins with `#`; this line gives the headers
 9. `FORMAT` An (optional) extensible list of fields for describing the samples.
 10. `SAMPLEs` For each (optional) sample described in the file, values are given for the fields listed in FORMAT. If multiple samples have been aligned to the reference sequence, each sample will have its own column.
 
-### BCF
+## BCF
 
 Binary Call Format (BCF) is a binary representation of [VCF](#vcf), containing the same information in binary format for improved performance.
 
-## Generic Feature Formats
+# Annotations
 
 The Generic Feature Formats (`.gff`) are tab-delimited text file formats used for describing genes and other features of DNA, RNA and protein sequences.
 GFF files are used to annotate genomes, as they describe functional regions of genomes.
@@ -230,7 +243,7 @@ There are two widely used versions of the GFF file format:
 1. [Gene Transfer Format](#gtf), a variation of GFF version 2.
 2. [Generic Feature Format version 3 (GFF3)](#gff3).
 
-### GFF general structure
+## Generic Feature Format (GFF) general structure
 
 All GFF formats (GFF2, GFF3 and GTF) are tab delimited with 9 fields per line. They all share the same structure for the first 7 fields, while differing in the content and format of the ninth field. The general structure is as follows: 
 
@@ -244,7 +257,7 @@ All GFF formats (GFF2, GFF3 and GTF) are tab delimited with 9 fields per line. T
 8. `phase` Phase of coding sequence (CDS) features, indicating where the feature starts in relation to the reading frame. It can be either one of `0`, `1`, `2` (for CDS features) or `.` (for everything else).
 9. `attributes` All the other information pertaining to this feature. The format, structure and content of this field is the one which varies the most between GFF formats.
 
-### GTF
+## GTF
 
 GTF files (`.gtf`) have the following tab-delimited fields (see also [GFF general structure](#gff-general-structure)):
 
@@ -263,6 +276,7 @@ Nothing beyond a hash will be parsed.
 These may occur anywhere in the file, including at the end of a feature line. 
 
 #### Example GTF file
+{: .no_toc}
 
 Here are the first 12 lines of [example_genome_annotation.gtf](../data/example_genome_annotation.gtf):
 
@@ -281,7 +295,7 @@ NC_001133.9	RefSeq	exon	2480	2707	.	+	.	gene_id "YAL067W-A"; transcript_id "NM_0
 NC_001133.9	RefSeq	CDS	2480	2704	.	+	0	gene_id "YAL067W-A"; transcript_id "NM_001184582.1"; db_xref "SGD:S000028593"; db_xref "GeneID:1466426"; gbkey "CDS"; locus_tag "YAL067W-A"; note "hypothetical protein; identified by gene-trapping, microarray-based expression analysis, and genome-wide homology searching"; product "uncharacterized protein"; protein_id "NP_878038.1"; exon_number "1"; 
 ```
 
-### GFF3
+## GFF3
 
 GFF3 files (`.gff3` or `.gff`) have the same tab-delimited fields as [GTF](#gtf), with the following differences:
 
@@ -290,8 +304,8 @@ GFF3 files (`.gff3` or `.gff`) have the same tab-delimited fields as [GTF](#gtf)
 3. All attributes that begin with an uppercase letter are reserved for later use. Attributes that begin with a lowercase letter can be used freely by applications.
 4. The attribute `Parent` indicates the parent of a feature. A parent ID can be used to group exons into transcripts, transcripts into genes, an so forth. A feature may have multiple parents. `Parent` can only be used to indicate a "part of" relationship (i.e. that a feature is a smaller *part of* a larger feature).
 
-#### Example GFF3 file
-
+##### Example GFF3 file
+{: .no_toc}
 From the [specification page for GFF3](https://github.com/The-Sequence-Ontology/Specifications/blob/master/gff3.md):
 
 ```
@@ -309,6 +323,64 @@ ctg123 . exon            5000  5500  .  +  .  ID=exon00004;Parent=mRNA00001,mRNA
 ctg123 . exon            7000  9000  .  +  .  ID=exon00005;Parent=mRNA00001,mRNA00002,mRNA00003
 ctg123 . CDS             1201  1500  .  +  0  ID=cds00001;Parent=mRNA00001;Name=edenprotein.1
 ```
+
+## Browse Extensible Data (BED)
+BED files (`.bed`) are used to store genomic features in a tab-delimited format. Each line represents a feature, with the following fields:
+1. **chromosome**: The name of the chromosome or scaffold where the feature is located.
+2. **start**: The starting position of the feature in the chromosome or scaffold.
+3. **end**: The ending position of the feature in the chromosome or scaffold.
+4. **name**: A name for the feature.
+5. **score**: A numerical value representing the score of the feature.
+6. **strand**: The strand where the feature is located, either `+` or `-`.
+7. **thickStart**: The starting position at which the feature is drawn thickly.
+8. **thickEnd**: The ending position at which the feature is drawn thickly.
+9. **itemRgb**: A comma-separated list of RGB values for the feature.
+10. **blockCount**: The number of blocks (exons) that make up the feature.
+11. **blockSizes**: A comma-separated list of the sizes of the blocks.
+12. **blockStarts**: A comma-separated list of the starting positions of the blocks relative to the start of the feature.
+
+#### Example BED file
+{: .no_toc}
+From the [UCSC Genome Browser](https://genome.ucsc.edu/FAQ/FAQformat.html#format1):
+
+```
+track name="example" description="Example BED file"
+chr7	127471196	127472363	Pos1	0	+
+chr7	127472363	127473530	Pos2	0	+
+chr7	127473530	127474697	Pos3	0	+
+chr7	127474697	127475864	Pos4	0	+
+chr7	127475864	127477031	Pos5	0	+
+```
+
+
+{: .note-title}
+>Interval types
+>
+> Different types of intervals exists, which may be classified as follows:
+> 
+> **FULLY-OPEN** 
+> 
+>![fully-open]({{ "/assets/images/1a4-3_fully-open.png" | relative_url }})
+>
+> **FULLY-CLOSED**
+>
+>![fully-open]({{ "/assets/images/1a4-4_fully-closed.png" | relative_url }})
+>
+> **HALF-OPEN**
+>![fully-open]({{ "/assets/images/1a4-5_half-open.png" | relative_url }})
+
+
+
+BED format is 0-start, half-open
+![alt text](image.png)
+
+
+# References
+
+- [SAM format specification](https://samtools.github.io/hts-specs/SAMv1.pdf)
+- [CRAM format specification (version 3.0)](
+
+
 
 ## References
 
