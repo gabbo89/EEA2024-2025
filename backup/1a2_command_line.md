@@ -2,7 +2,7 @@
 layout: default
 title: Introduction to the command line
 nav_order: 4
-parent: 2. General Guides
+parent: 1. Introduction
 description: A comprehensive guide to understanding epigenetics.
 published: true
 ---
@@ -47,23 +47,22 @@ Once you are using a UNIX operating system (i.e. a Mac system, a Linux system, o
 The terminal is the window in which the command line runs.
 
 - If you are using a Mac, click on Spotlight Search (the magnifying glass icon in the top-right corner of the screen), type "Terminal", and open the Terminal application.
-- If you are using the Ubuntu app from the Microsoft Store in Windows 10 (Windows Subsystem for Linux), you are already using the Ubuntu terminal.
-- If you are using an Ubuntu virtual machine: click on the "Show Applications" button in Ubuntu (the nine dots in the bottom left corner of the screen), click on the "Type to search..." bar at the top of the screen, type "Terminal" and press `Enter` to open the command line.
+- If you are using Windows, open the application Mobaxterm in order to interact with a terminal.
 
 The UNIX command line will look like this:
 
 ```
-(Your UNIX username)@(Your computer's alias):~$ _
+(UNIX username)@(Computer's alias):~$ _
 ```
 
 This is called the *bash prompt*...
 
-- *Your UNIX username* is the your system username.
-- *Your computer's alias* is the name UNIX uses to refer to your computer. This will likely contain the model of your computer (e.g. `Latitude-E7270`).
+- *UNIX username* is the your system username.
+- *Computer's alias* is the name UNIX uses to refer to your computer. This will likely contain the model of your computer (e.g. `Latitude-E7270`).
 - The tilde (`~`) indicates that your home directory is the current *working directory*. The home directory is located at `/home/` followed by your UNIX username.
 - The dollar sign (`$`) indicates that the terminal is using the `bash` shell language.
 
-In examples on this page, `ronan@dell:~ $` will be used as an example bash prompt.
+In examples on this page, `st24_16@banjo:~$` will be used as an example bash prompt.
 
 ## The working directory
 
@@ -77,8 +76,8 @@ This will run the "print working directory" command, which will print the path t
 In the context of command line programs, "print" means "display in the terminal".
 
 ```bash
-ronan@dell:~$ pwd
-/home/ronan
+st24_16@banjo:~$ pwd
+/home/st24_16
 ```
 
 ## Cloning the bioinfo-notebook project into your home directory

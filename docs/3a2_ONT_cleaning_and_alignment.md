@@ -9,7 +9,7 @@ published: true
 {: .important-title }
 > Aim
 >
-> Perform an alignment of Oxford Nanopore reads to the reference genome. We will compare the results obtained with these sequencing technology with the ones obtained with Illumina sequencing technology.
+> Perform an alignment of Oxford Nanopore reads to the reference genome. We will compare the results obtained with this sequencing technology with the ones obtained with Illumina sequencing technology.
 > 
 
 
@@ -17,8 +17,10 @@ During this lesson we will focus on the alignemnt of ONT reads to the reference 
 
 ---
 
-# Step 1: Prepare the filtered reads for alignment
-ONT sequencing data need to be in the appropriate format (usually `fastq` or `fasta`). The reference genome also need to be indexed appropriately using `minimap2`. 
+# 1. Prepare the filtered reads for alignment
+ONT sequencing data need to be in the appropriate format (usually `fastq` or `fasta` or `bam`). The reference genome also need to be indexed appropriately using `minimap2`.
+
+Create the index of the reference genome 
 
 # Step 2: ALignment of reads to the reference genome 
 We will use `minimap2` to align the reads to the reference genome. 
