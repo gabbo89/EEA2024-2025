@@ -325,33 +325,24 @@ ctg123 . CDS             1201  1500  .  +  0  ID=cds00001;Parent=mRNA00001;Name=
 ```
 
 ## Browse Extensible Data (BED)
-BED files (`.bed`) are used to store genomic features in a tab-delimited format. Each line represents a feature, with the following fields:
+BED files (`.bed`) are used to store genomic features in a tab-delimited format. Each line represents a feature with 3-12 columns of data. The first three fields are required:
+
 1. **chromosome**: The name of the chromosome or scaffold where the feature is located.
-2. **start**: The starting position of the feature in the chromosome or scaffold.
-3. **end**: The ending position of the feature in the chromosome or scaffold.
-4. **name**: A name for the feature.
-5. **score**: A numerical value representing the score of the feature.
-6. **strand**: The strand where the feature is located, either `+` or `-`.
-7. **thickStart**: The starting position at which the feature is drawn thickly.
-8. **thickEnd**: The ending position at which the feature is drawn thickly.
-9. **itemRgb**: A comma-separated list of RGB values for the feature.
-10. **blockCount**: The number of blocks (exons) that make up the feature.
-11. **blockSizes**: A comma-separated list of the sizes of the blocks.
-12. **blockStarts**: A comma-separated list of the starting positions of the blocks relative to the start of the feature.
+2. **start**: The starting position of the feature in the chromosome (0-based).
+3. **end**: The ending position of the feature in the chromosome.
 
-#### Example BED file
-{: .no_toc}
-From the [UCSC Genome Browser](https://genome.ucsc.edu/FAQ/FAQformat.html#format1):
 
 ```
-track name="example" description="Example BED file"
-chr7	127471196	127472363	Pos1	0	+
-chr7	127472363	127473530	Pos2	0	+
-chr7	127473530	127474697	Pos3	0	+
-chr7	127474697	127475864	Pos4	0	+
-chr7	127475864	127477031	Pos5	0	+
+chr1  213941196  213942363
+chr1  213942363  213943530
+chr1  213943530  213944697
+chr2  158364697  158365864
+chr2  158365864  158367031
+chr3  127477031  127478198
+chr3  127478198  127479365
+chr3  127479365  127480532
+chr3  127480532  127481699
 ```
-
 
 {: .note-title}
 >Interval types
@@ -367,20 +358,76 @@ chr7	127475864	127477031	Pos5	0	+
 >![fully-open]({{ "/assets/images/1a4-4_fully-closed.png" | relative_url }})
 >
 > **HALF-OPEN**
->![fully-open]({{ "/assets/images/1a4-5_half-open.png" | relative_url }})
+>
+>![half-open]({{ "/assets/images/1a4-5_half-open.png" | relative_url }})
 
 
-
-BED format is 0-start, half-open
-![alt text](image.png)
-
-
-# References
-
-- [SAM format specification](https://samtools.github.io/hts-specs/SAMv1.pdf)
-- [CRAM format specification (version 3.0)](
+{: .note-title}
+>Starting types
+> Different types of start exists
+>
+> **0-based**
+>
+> **1-based**
 
 
+Nine additional fields are optional. Columns cannot be empty, but can be filled with a dot (`.`) if the value is not applicable. The fields are:
+
+4. **name**: A name for the feature.
+5. **score**: A numerical value representing the score of the feature.
+6. **strand**: The strand where the feature is located, either `+` or `-`.
+7. **thickStart**: The starting position at which the feature is drawn thickly.
+8. **thickEnd**: The ending position at which the feature is drawn thickly.
+9. **itemRgb**: A comma-separated list of RGB values for the feature.
+10. **blockCount**: The number of blocks (exons) that make up the feature.
+11. **blockSizes**: A comma-separated list of the sizes of the blocks.
+12. **blockStarts**: A comma-separated list of the starting positions of the blocks relative to the start of the feature.
+
+#### Example BED file
+{: .no_toc}
+From the [UCSC Genome Browser](https://genome.ucsc.edu/FAQ/FAQformat.html#format1):
+
+
+```
+track name=pairedReads description="Clone Paired Reads" useScore=1
+chr22 1000 5000 cloneA 960 + 1000 5000 0 2 567,488, 0,3512
+chr22 2000 6000 cloneB 900 - 2000 6000 0 2 433,399, 0,3601
+```
+
+or
+
+```
+chr7  127471196  127472363  Pos1  0  +  127471196  127472363  255,0,0
+chr7  127472363  127473530  Pos2  0  +  127472363  127473530  255,0,0
+chr7  127473530  127474697  Pos3  0  +  127473530  127474697  255,0,0
+chr7  127474697  127475864  Pos4  0  +  127474697  127475864  255,0,0
+chr7  127475864  127477031  Neg1  0  -  127475864  127477031  0,0,255
+chr7  127477031  127478198  Neg2  0  -  127477031  127478198  0,0,255
+chr7  127478198  127479365  Neg3  0  -  127478198  127479365  0,0,255
+chr7  127479365  127480532  Pos5  0  +  127479365  127480532  255,0,0
+chr7  127480532  127481699  Neg4  0  -  127480532  127481699  0,0,255
+```
+
+## BedGraph format 
+
+BedGraph format is a suitable format for storing the density of features along a chromosome. It is a tab-delimited format, based on the BED format with four columns where the score or density is placed in column 4. 
+Data are usually preceded by a track definition line which adds a number of options for setting the default display of the track.
+
+```
+track type=bedGraph name="BedGraph Format" description="BedGraph format" visibility=full color=200,100,0 altColor=0,100,200 priority=20
+chr19 49302000 49302300 -1.0
+chr19 49302300 49302600 -0.75
+chr19 49302600 49302900 -0.50
+chr19 49302900 49303200 -0.25
+```
+
+
+BED format is 0-start, half-open, which means that the start position is inclusive and the end position is exclusive.
+`Closed-start` A is included and `Open-end` B is excluded.
+
+![bed-format]({{ "/assets/images/1a4-6_bed_format.png" | relative_url }})
+
+**1-based, fully-closed** system is more intuitive, but it is not always the most efficient method for performing calculations in bioinformatic systems, because an additional step is required to calculate the size of the bp range.
 
 ## References
 
