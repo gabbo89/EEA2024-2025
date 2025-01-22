@@ -9,7 +9,7 @@ published: true
 ---
 
 <a id="bismark-bam"></a>
-### Bismark BAM/SAM output (default)
+# Bismark BAM/SAM output (default)
 
 By default, Bismark generates SAM output for all alignment modes. Please note that reported quality values are encoded in Sanger format (Phred 33 scale), even if the input was in Phred64.
 
@@ -33,11 +33,11 @@ The mate read of paired-end alignments is written out as an additional separate 
 [Back to the tutorial](https://gabbo89.github.io/EEA2024-2025/docs/3a1_WGBS_cleaning_and_alignment.html#bismark-bam)
 
 
-### Methylation call
+## Methylation call
 
 The methylation call string contains a dot `.` for every position in the BS-read not involving a cytosine, or contains one of the following letters for the three different cytosine methylation contexts:
-**UPPER CASE = METHYLATED**
-**lower case = unmethylated**
+- **UPPER CASE = METHYLATED**
+- **lower case = unmethylated**
 
 
 - `z` - C in CpG context - unmethylated
@@ -53,9 +53,10 @@ The methylation call string contains a dot `.` for every position in the BS-read
 [Back to the tutorial](https://gabbo89.github.io/EEA2024-2025/docs/3a1_WGBS_cleaning_and_alignment.html#bismark-bam)
 
 
-
 <a id="meth_extract"></a>
-It will produce a strand-specific output which will use the following abbreviations in the output file name that indicate the strand the alignment came from:
+# Bismark methylation extractor
+
+`bismark_methylation_extractor` will produce a strand-specific output which will use the following abbreviations in the output file name that indicate the strand the alignment came from:
 
 > OT    - original `TOP` strand
 > CTOT  - complementary to original `TOP` strand
@@ -79,7 +80,7 @@ The methylation extractor output looks like this (tab separated):
 
 For example, the first rows of the file in CpG context `CpG_OT_rkatsiteli.leaves.rkatsiteli.leaves.R1_bismark_bt2_pe.deduplicated.txt.gz`:
 
-```bash
+```
 Bismark methylation extractor version v0.24.2
 SEQILMN03:348:CAG91ANXX:8:1101:20338:9310_1:N:0:TGGTGA  -       chr05   24422926        z
 SEQILMN03:348:CAG91ANXX:8:1101:20338:9310_1:N:0:TGGTGA  -       chr05   24422932        z
@@ -91,14 +92,14 @@ SEQILMN03:348:CAG91ANXX:8:1101:3795:9687_1:N:0:TGGTGA   +       chr05   24228039
 
 ## (Optional) BedGraph output
 {: .no_toc }
-The Bismark methylation extractor can optionally also output a file in bedGraph format which uses 0-based genomic start and 1- based end coordinates. The file will be sorted by chromosomal coordinates and looks like:
+The Bismark methylation extractor can optionally also output a file in bedGraph format which uses 0-based genomic start and 1- based end coordinates. The file `*bedGraph.gz` will be sorted by chromosomal coordinates and looks like:
 The columns are as follows:
-1. `chromosome`
-2. ``start position``
-3. `end position`
-4. `methylation percentage`
+1. **chromosome**
+2. **start position**
+3. **end position**
+4. **methylation percentage**
 
-Since the methylation percentage is _per se_ not informative of the read coverage at the specific position, a `*.cov.gz` file is also created (using 1-based genomic coordinates) that feature 2 additional columns, which add the read coverage of detected methylated or unmethylated reads at a position:
+Since the methylation percentage is _per se_ not informative of the read coverage at the specific position, a `*bismark.cov.gz` file is also created (using 1-based genomic coordinates) that feature 2 additional columns, which add the read coverage of detected methylated or unmethylated reads at a position:
 1. `chromosome`
 2. `start position`
 3. `end position`
@@ -106,9 +107,10 @@ Since the methylation percentage is _per se_ not informative of the read coverag
 5. `number of methylated Cs`
 6. `number of unmethylated Cs`
 
+<!--
 [link to descriptor](/docs/2a_file_formats.md)
 From this file, downstream processing of the file. 
-
+-->
 {: .note}
 Only performed (default mode) on CG sites
 

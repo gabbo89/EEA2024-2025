@@ -133,17 +133,17 @@ Optional fields are presented as key-value pairs in the format `TAG:TYPE:VALUE`.
 
 The mandatory fields in a SAM file are...
 
-1. **`QNAME`** Query template name. Reads/segments with the same QNAME are from the same template. A read may occupy multiple alignment lines when its alignment is chimeric or when multiple mappings are given.
-2. **`FLAG`** Bitwise flag (pairing, strand, mate strand, etc.).
-3. **`RNAME`** Reference sequence name.
-4. **`POS`** 1-based leftmost mapping position. The first base in a reference sequence has coordinate 1. `POS` is set to 0 for an unmapped read.
-5. **`MAPQ`** Mapping quality. If equal to 255, the mapping quality is not available.
-6. **`CIGAR`** Extended Consise Idiosyncratic Gapped Alignment Report string. `M` for match/mismatch, `I` for insertion and `D` for deletion compared with the reference, `N` for skipped bases on the reference, `S` for soft clipping, `H` for hard clipping, and `P` for padding.
-7. **`RNEXT`** Reference name of the mate/next read in the template. For the last read, the next read is the first read in the template.
-8. **`PNEXT`** Position of the primary alignment of the mate/next read.
-9. **`TLEN`** Observed template length.
-10. **`SEQ`** Segment sequence.
-11. **`QUAL`** Phred-based base quality (same as the quailty string in [FASTQ](#fastq)) plus 33.
+1. **QNAME** Query template name. Reads/segments with the same QNAME are from the same template. A read may occupy multiple alignment lines when its alignment is chimeric or when multiple mappings are given.
+2. **FLAG** Bitwise flag (pairing, strand, mate strand, etc.).
+3. **RNAME** Reference sequence name.
+4. **POS** 1-based leftmost mapping position. The first base in a reference sequence has coordinate 1. `POS` is set to 0 for an unmapped read.
+5. **MAPQ** Mapping quality. If equal to 255, the mapping quality is not available.
+6. **CIGAR** Extended Consise Idiosyncratic Gapped Alignment Report string. `M` for match/mismatch, `I` for insertion and `D` for deletion compared with the reference, `N` for skipped bases on the reference, `S` for soft clipping, `H` for hard clipping, and `P` for padding.
+7. **RNEXT** Reference name of the mate/next read in the template. For the last read, the next read is the first read in the template.
+8. **PNEXT** Position of the primary alignment of the mate/next read.
+9. **TLEN** Observed template length.
+10. **SEQ** Segment sequence.
+11. **QUAL** Phred-based base quality (same as the quailty string in [FASTQ](#fastq)) plus 33.
 
 SAM files can be manipulated using [SAMtools](samtools.md).
 
@@ -218,16 +218,16 @@ Variant Call Format (VCF) is a format for storing variations between a reference
 VCF files begin with a header section: lines in the header section begin with `##`.
 The last line in the header section begins with `#`; this line gives the headers of the columns used in the VCF file:
 
-1. `CHROM` The name of the sequence (typically a chromosome) on which the variation is being called. This sequence is usually known as 'the reference sequence', i.e. the sequence against which the given sample varies.
-2. `POS` The 1-based position of the variation on the given sequence.
-3. `ID` The identifier of the variation, e.g. a dbSNP rs identifier, or if unknown a ".". Multiple identifiers should be separated by semi-colons without white-space.
-4. `REF` The reference base (or bases in the case of an indel) at the given position on the given reference sequence.
-5. `ALT` The list of alternative alleles at this position.
-6. `QUAL` A quality score associated with the inference of the given alleles.
-7. `FILTER` A flag indicating which of a given set of filters the variation has passed.
-8. `INFO` An extensible list of key-value pairs (fields) describing the variation. Multiple fields are separated by semicolons with optional values in the format: <key>=<data>[,data].
-9. `FORMAT` An (optional) extensible list of fields for describing the samples.
-10. `SAMPLEs` For each (optional) sample described in the file, values are given for the fields listed in FORMAT. If multiple samples have been aligned to the reference sequence, each sample will have its own column.
+1. **CHROM** The name of the sequence (typically a chromosome) on which the variation is being called. This sequence is usually known as 'the reference sequence', i.e. the sequence against which the given sample varies.
+2. **POS** The 1-based position of the variation on the given sequence.
+3. **ID** The identifier of the variation, e.g. a dbSNP rs identifier, or if unknown a ".". Multiple identifiers should be separated by semi-colons without white-space.
+4. **REF** The reference base (or bases in the case of an indel) at the given position on the given reference sequence.
+5. **ALT** The list of alternative alleles at this position.
+6. **QUAL** A quality score associated with the inference of the given alleles.
+7. **FILTER** A flag indicating which of a given set of filters the variation has passed.
+8. **INFO** An extensible list of key-value pairs (fields) describing the variation. Multiple fields are separated by semicolons with optional values in the format: <key>=<data>[,data].
+9. **FORMAT** An (optional) extensible list of fields for describing the samples.
+10. **SAMPLEs** For each (optional) sample described in the file, values are given for the fields listed in FORMAT. If multiple samples have been aligned to the reference sequence, each sample will have its own column.
 
 ## BCF
 
@@ -247,29 +247,29 @@ There are two widely used versions of the GFF file format:
 
 All GFF formats (GFF2, GFF3 and GTF) are tab delimited with 9 fields per line. They all share the same structure for the first 7 fields, while differing in the content and format of the ninth field. The general structure is as follows: 
 
-1. `sequence` The name of the sequence where the feature is located.
-2. `source` Keyword identifying the source of the feature, like a program (e.g. Augustus) or an organization (e.g. [SGD](https://www.yeastgenome.org/)).
-3. `feature` The feature type name, like `gene` or `exon`. In a well-structured GFF file, all the children features always follow their parents in a single block (so all exons of a transcript are put after their parent `transcript` feature line and before any other parent transcript line).
-4. `start` Genomic start of the feature, with a 1-base offset.
-5. `end` Genomic end of the feature, with a 1-base offset.
-6. `score` Numeric value that generally indicates the confidence of the source in the annotated feature. A value of `.` (a dot) is used to define a null value.
-7. `strand` Single character that indicates the strand of the feature; it can assume the values of `+` (positive, or `5'->3'`), `-`, (negative, or `3'->5'`), `.` (undetermined).
-8. `phase` Phase of coding sequence (CDS) features, indicating where the feature starts in relation to the reading frame. It can be either one of `0`, `1`, `2` (for CDS features) or `.` (for everything else).
-9. `attributes` All the other information pertaining to this feature. The format, structure and content of this field is the one which varies the most between GFF formats.
+1. **sequence** The name of the sequence where the feature is located.
+2. **source** Keyword identifying the source of the feature, like a program (e.g. Augustus) or an organization (e.g. [SGD](https://www.yeastgenome.org/)).
+3. **feature** The feature type name, like `gene` or `exon`. In a well-structured GFF file, all the children features always follow their parents in a single block (so all exons of a transcript are put after their parent `transcript` feature line and before any other parent transcript line).
+4. **start** Genomic start of the feature, with a 1-base offset.
+5. **end** Genomic end of the feature, with a 1-base offset.
+6. **score** Numeric value that generally indicates the confidence of the source in the annotated feature. A value of `.` (a dot) is used to define a null value.
+7. **strand** Single character that indicates the strand of the feature; it can assume the values of `+` (positive, or `5'->3'`), `-`, (negative, or `3'->5'`), `.` (undetermined).
+8. **phase** Phase of coding sequence (CDS) features, indicating where the feature starts in relation to the reading frame. It can be either one of `0`, `1`, `2` (for CDS features) or `.` (for everything else).
+9. **attributes** All the other information pertaining to this feature. The format, structure and content of this field is the one which varies the most between GFF formats.
 
 ## GTF
 
 GTF files (`.gtf`) have the following tab-delimited fields (see also [GFF general structure](#gff-general-structure)):
 
-1. `seqname` The name of the sequence. Commonly, this is the chromosome ID or contig ID.
-2. `source`
-3. `feature` The following feature types are required: `CDS`, `start_codon`, `stop_codon`. The features `5UTR`, `3UTR`, `inter`, `inter_CNS`, `intron_CNS` and `exon` are optional.
-4. `start`
-5. `end`
-6. `score`
-7. `strand`
-8. `frame` Similar to `phase` in the [GFF general structure](#gff-general-structure).
-9. `attributes` All nine features have the same two mandatory attributes at the end of the record: `gene_id "value"` and `transcript_id "value"`. These are globally unique identifiers for the genomic locus of the transcript and the predicted transcript, respectively. If empty, no gene/transcript is associated with this feature. Attributes are separated by `;` (semi-colon).
+1. **seqname** The name of the sequence. Commonly, this is the chromosome ID or contig ID.
+2. **source**
+3. **feature** The following feature types are required: `CDS`, `start_codon`, `stop_codon`. The features `5UTR`, `3UTR`, `inter`, `inter_CNS`, `intron_CNS` and `exon` are optional.
+4. **start**
+5. **end**
+6. **score**
+7. **strand**
+8. **frame** Similar to `phase` in the [GFF general structure](#gff-general-structure).
+9. **attributes** All nine features have the same two mandatory attributes at the end of the record: `gene_id "value"` and `transcript_id "value"`. These are globally unique identifiers for the genomic locus of the transcript and the predicted transcript, respectively. If empty, no gene/transcript is associated with this feature. Attributes are separated by `;` (semi-colon).
 
 GTF files also support comments, beginning with `#` and running until the end of the line.
 Nothing beyond a hash will be parsed.
@@ -364,11 +364,19 @@ chr3  127480532  127481699
 
 {: .note-title}
 >Starting types
-> Different types of start exists
+>
+>Different types of start exists, which may be classified as follows:
 >
 > **0-based**
 >
 > **1-based**
+
+BED format is 0-start, half-open, which means that the start position is inclusive and the end position is exclusive.
+`Closed-start` A is included and `Open-end` B is excluded.
+
+![bed-format]({{ "/assets/images/1a4-6_bed_format.png" | relative_url }})
+
+**1-based, fully-closed** system is more intuitive, but it is not always the most efficient method for performing calculations in bioinformatic systems, because an additional step is required to calculate the size of the bp range.
 
 
 Nine additional fields are optional. Columns cannot be empty, but can be filled with a dot (`.`) if the value is not applicable. The fields are:
@@ -422,12 +430,6 @@ chr19 49302900 49303200 -0.25
 ```
 
 
-BED format is 0-start, half-open, which means that the start position is inclusive and the end position is exclusive.
-`Closed-start` A is included and `Open-end` B is excluded.
-
-![bed-format]({{ "/assets/images/1a4-6_bed_format.png" | relative_url }})
-
-**1-based, fully-closed** system is more intuitive, but it is not always the most efficient method for performing calculations in bioinformatic systems, because an additional step is required to calculate the size of the bp range.
 
 ## References
 

@@ -586,7 +586,6 @@ alignments/rkatsiteli.leaves_pe.deduplicated.bam
 ```
 
 {: .success-title }
-> STDOUT
 >
 > Writing genome-wide cytosine report to: rkatsiteli.leaves_pe.deduplicated.CX_report.txt.gz
 >
