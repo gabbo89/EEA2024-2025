@@ -13,6 +13,18 @@ published: true
 > 
 
 
+<br>
+<details open markdown="block">
+  <summary>
+    <strong>Table of contents</strong>
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+<br>
+
+
 During this lesson we will focus on the alignemnt of ONT reads to the reference genome. ONT sequencing enable the direct detection of methylation levels, without the need of bisulfite conversion. The alignment of the reads is performed using `minimap2`. This tool is specifically designed for long-range sequencing data and is able to handle the unique characteristics of ONT data. 
 
 ---

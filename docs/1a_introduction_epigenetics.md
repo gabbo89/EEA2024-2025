@@ -89,5 +89,6 @@ This illustrates how environmental factors can have multi-generational effects.
 Epigenetics bridges the gap between genetics and environmental influences, providing insight into how gene expression can adapt over a lifetime and across generations. It is a rapidly evolving field with profound implications for health, agriculture, and biology.
 
 ---
-
+<!--
 _This page is part of a Just the Docs site. Learn more about epigenetics in our [Biology section](../biology/)._  
+-->

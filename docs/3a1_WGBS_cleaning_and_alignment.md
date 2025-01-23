@@ -508,7 +508,7 @@ This will create a filtered bam file with only the reads that passed the dedupli
 ```bash
 deduplicate_bismark \
 --bam alignments/rkatsiteli.leaves_pe.bam \
--o alignments/ # eitherwise the output is written to current directory
+--output_dir alignments/ # eitherwise the output is written to current directory
 ```
 
 {: .success-title }
@@ -608,14 +608,18 @@ alignments/rkatsiteli.leaves_pe.deduplicated.bam
 <a id="bismark-meth_extract"></a>
 Several files will be produced in this last step, for a detailed description check [Bismark file description](https://gabbo89.github.io/EEA2024-2025/docs/2a_Bismark_file_descr.html#meth_extract)
 
-The most important file is the `CX_report.txt` that contain the methylome data across th 
 
-we will now run the following ssssss
+The most important file is the `*CX_report.txt` that contains the methylome data across the genome. Check the detailed description [Bismark output file description](https://gabbo89.github.io/EEA2024-2025/docs/2a_Bismark_file_descr.html#optional-genome-wide-cytosine-report-output).
+
+<a id="bismark-CX_report"></a>
+We will use this file throughout the next tutorials. 
+
 
 ### Create a summary report
-We will use the command `bismark2report` ...
+In order to create a final report with all the statistics, we will use the command `bismark2report`. This command will generate a report (in `html` format) with all the statistics for the methylation analysis. 
 
 ```bash
+# we will define all the paths, because files are in different subfolders
 bismark2report \
 --alignment_report alignments/rkatsiteli.leaves_PE_report.txt \
 --splitting_report meth_extr/rkatsiteli.leaves_pe.deduplicated_splitting_report.txt \
@@ -633,7 +637,7 @@ bismark2report \
 > ...
 >
 
-Now we can open the html file using the common browser (chrome or others).
+Now we can open the `html` file using the common browser (*chrome* or others).
 Navigate to the folder where the file is located. 
 
 <!--
@@ -675,7 +679,7 @@ samtools index -@ 2 alignments/rkatsiteli.leaves_pe.deduplicated.sort.bam
 <!-- 
 This section describes the process of uploading data to an interactive genomic viewer, such as IGV (Integrative Genomics Viewer). 
 -->
-Now we can try to upload the data to an interactive genomic viewer , as for example `igv` (Integrative Genomics Viewer).  
+Now we can try to upload the data to an interactive genomic viewer, as for example `igv` (Integrative Genomics Viewer).  
 
 We need to change the environment 
 
@@ -691,7 +695,8 @@ We need to change the environment
 
 <video src="https://github.com/gabbo89/EEA2024-2025/blob/main/assets/images/igv.mp4" width="300" />
 -->
-<video controls width="600">
+
+<video controls width="300">
   <source src="https://github.com/gabbo89/EEA2024-2025/raw/main/assets/images/igv.mp4" type="video/mp4">
 </video>
 
@@ -700,18 +705,24 @@ Or, [click here to watch the tutorial](https://github.com/gabbo89/EEA2024-2025/r
 ---
 
 # 5. Conversion rate evaluation 
-In order to understand if the conversion rate of the cytosine worked, we need to verify the bisulfite conversion rate. 
-We can use the chloroplast genome (or lambda genome)
+In order to understand if during library preparation the conversion rate of the cytosine worked, we need to verify the bisulfite conversion rate. 
+We can use the chloroplast genome (or lambda genome) in order to evaluate the performances of the bisulfite conversion. 
 
 ### Index the chloroplast fasta
 {: .no_toc }
 ```bash
+# we need to create the folder
+mkdir -p chloroplast
+
+# we need to copy the fasta file 
+cp /data2/biotecnologie_molecolari_magris/epigenomics/wgbs/chloroplast/chloroplast.fasta chloroplast/
+
+# we can now index the fasta file
 bismark_genome_preparation \
---path_to_aligner /iga/scripts/dev_modules/mambaforge/envs/epigenomics/bin/ \
 --bowtie2 \
---parallel 10 \
+--parallel 2 \
 --verbose \
-/projects/novabreed/share/gmagris/collaboration/lezioni/2024/EEA/chloroplast/
+/data2/student_space/st24_16_folder/epigenomics/wgbs/chloroplast
 ```
 
 {: .success-title }
@@ -732,12 +743,15 @@ bismark \
 --phred33-quals \
 -N 1 \
 -p 2 \
-genome_folder \
--1 [file R1.fq.gz pathway] \
--2 [file R2.fq.gz pathway]
+-o bisulfite_conversion/ \
+-B rkatsiteli.leaves \
+chloroplast \
+-1 sequences/rkatsiteli.leaves_val_1.fq.gz \
+-2 sequences/rkatsiteli.leaves_val_2.fq.gz
+
 ```
 
-Results are reported in *bismark_bt2_PE_report.txt file!
+We can take a look at the summary results, which are reported in bisulfite_conversion/rkatsiteli.leaves_PE_report.txt file!
 
 ------
 

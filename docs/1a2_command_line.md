@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Introduction to the command line
-nav_order: 4
+title: The command line
+nav_order: 3
 parent: 1. Introduction
 description: A comprehensive guide to understanding epigenetics.
 published: true

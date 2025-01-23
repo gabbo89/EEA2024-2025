@@ -2,6 +2,9 @@
 layout: default
 title: Conda environment
 parent: 1. Introduction
+nav_order: 5
+description: A comprehensive guide to understanding epigenetics.
+published: true
 ---
 
 # Conda

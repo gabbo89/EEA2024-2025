@@ -8,6 +8,19 @@ has_children: false
 published: true
 ---
 
+
+<br>
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+<br>
+
+
 <a id="bismark-bam"></a>
 # Bismark BAM/SAM output (default)
 
@@ -29,9 +42,9 @@ By default, Bismark generates SAM output for all alignment modes. Please note th
 14. `XR-tag` (read conversion state for the alignment) (16) XG-tag (genome conversion state for the alignment)
 
 The mate read of paired-end alignments is written out as an additional separate line in the same format.
-
+<!--
 [Back to the tutorial](https://gabbo89.github.io/EEA2024-2025/docs/3a1_WGBS_cleaning_and_alignment.html#bismark-bam)
-
+-->
 
 ## Methylation call
 
@@ -166,7 +179,8 @@ This allows generating nice graphs by alternative means, e.g. using R or Excel.
 
 ## Splitting_report
 {: .no_toc }
-It represent a summary of the splitting step executed by bismark_methylation_extractor. It report the % of methylated Cs in the different contexts. The file is 
+The Bismark methylation extractor produces also a reporting summary. It represent a summary of the splitting step executed by bismark_methylation_extractor. It report the % of methylated Cs in the different contexts. The file is a textual file.
+
 
 
 [Back to the tutorial](https://gabbo89.github.io/EEA2024-2025/docs/3a1_WGBS_cleaning_and_alignment.html#bismark-meth_extract)
