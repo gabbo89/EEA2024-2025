@@ -102,7 +102,7 @@ The columns are as follows:
 3. **end position**
 4. **methylation percentage**
 
-<bg>
+<br>
 
 Since the methylation percentage is _per se_ not informative of the read coverage at the specific position, a `*bismark.cov.gz` file is also created (using 1-based genomic coordinates) that feature 2 additional columns, which add the read coverage of detected methylated or unmethylated reads at a position:
 1. **chromosome**

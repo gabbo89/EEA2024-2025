@@ -16,6 +16,8 @@ For each lesson (arguments) we will explore a different aspect of epigenomics an
 - **Lesson 3: Histone Modification Analysis**
 
 
+
+
 ---
 
 If you need any help, contact me at: gabriele.magris@uniud.it
@@ -40,8 +42,9 @@ jtd.addEvent(toggleDarkMode, 'click', function(){
 
 
 ----
-
+<!--
 [^1]: [For any help contact me](gabriele.magris@uniud.it). 
+-->
 
 [Just the Docs]: https://just-the-docs.github.io/just-the-docs/
 [GitHub Pages]: https://docs.github.com/en/pages

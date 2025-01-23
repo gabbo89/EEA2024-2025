@@ -608,7 +608,9 @@ alignments/rkatsiteli.leaves_pe.deduplicated.bam
 <a id="bismark-meth_extract"></a>
 Several files will be produced in this last step, for a detailed description check [Bismark file description](https://gabbo89.github.io/EEA2024-2025/docs/2a_Bismark_file_descr.html#meth_extract)
 
-The most important file is the `CX_report.txt` that contain the methylome data,
+The most important file is the `CX_report.txt` that contain the methylome data across th 
+
+we will now run the following ssssss
 
 ### Create a summary report
 We will use the command `bismark2report` ...
@@ -631,6 +633,8 @@ bismark2report \
 > ...
 >
 
+Now we can open the html file using the common browser (chrome or others).
+Navigate to the folder where the file is located. 
 
 <!--
 The output files are in the following format (tab delimited):
@@ -682,11 +686,11 @@ We need to change the environment
 <!--
 [text](<../assets/images/2025-01-23 16-33-40.mkv>)
 -->
-
+<!--
 [IGV tutorial](https://github.com/gabbo89/EEA2024-2025/blob/main/assets/images/igv.mp4)
 
 <video src="https://github.com/gabbo89/EEA2024-2025/blob/main/assets/images/igv.mp4" width="300" />
-
+-->
 <video controls width="600">
   <source src="https://github.com/gabbo89/EEA2024-2025/raw/main/assets/images/igv.mp4" type="video/mp4">
 </video>
