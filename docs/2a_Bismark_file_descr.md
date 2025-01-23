@@ -59,8 +59,11 @@ The methylation call string contains a dot `.` for every position in the BS-read
 `bismark_methylation_extractor` will produce a strand-specific output which will use the following abbreviations in the output file name that indicate the strand the alignment came from:
 
 > OT    - original `TOP` strand
+>
 > CTOT  - complementary to original `TOP` strand
+>
 > OB    - original `BOTTOM` strand
+>
 > CTOB  - complementary to original `BOTTOM` strand
 
 {: .note }
@@ -68,11 +71,11 @@ Methylation calls from OT and CTOT will be informative for cytosine methylation 
 
 The methylation extractor output looks like this (tab separated):
 
-1. seq-ID
-2. methylation state*
-3. chromosome
-4. start position _(= end position)_
-5. methylation call
+1. **seq-ID**
+2. **methylation state***
+3. **chromosome**
+4. **start position _(= end position)_**
+5. **methylation call**
 
 * Methylated Cs receive a '+' orientation,
 * Unmethylated Cs receive a '-' orientation.
@@ -99,48 +102,50 @@ The columns are as follows:
 3. **end position**
 4. **methylation percentage**
 
+<bg>
+
 Since the methylation percentage is _per se_ not informative of the read coverage at the specific position, a `*bismark.cov.gz` file is also created (using 1-based genomic coordinates) that feature 2 additional columns, which add the read coverage of detected methylated or unmethylated reads at a position:
-1. `chromosome`
-2. `start position`
-3. `end position`
-4. `methylation percentage`
-5. `number of methylated Cs`
-6. `number of unmethylated Cs`
+1. **`chromosome`**
+2. **`start position`**
+3. **`end position`**
+4. **`methylation percentage`**
+5. **`number of methylated Cs`**
+6. **`number of unmethylated Cs`**
 
 <!--
 [link to descriptor](/docs/2a_file_formats.md)
 From this file, downstream processing of the file. 
 -->
+
 {: .note}
 Only performed (default mode) on CG sites
 
-In addition the counts of each cytosine context are recorder and stored in a file called `*.cytosine_context_summary.txt`. The report looks at 2 bp downstream, as well as 1 bp upstream of the cytosine taking part in the methylation call. This is useful for looking at methylation in specific contexts (e.g. `CpA` only), and also when using `GpC` methylases that introduce methylation in `GpC` context. The report looks like this: 
-
-```
-upstream        C-context       full context    count methylated        count unmethylated      percent methylation
-A       CAA     ACAA    2162    106714  1.99
-C       CAA     CCAA    2927    82713   3.42
-G       CAA     GCAA    1352    65155   2.03
-T       CAA     TCAA    2882    125120  2.25
-A       CAC     ACAC    338     41769   0.80
-C       CAC     CCAC    296     38560   0.76
-G       CAC     GCAC    201     26655   0.75
-T       CAC     TCAC    341     50613   0.67
-
-```
 
 ## (Optional) Genome-wide cytosine report output
 
-The ouput of the methylation extractor can be optionally trasformed into a genome-wide cytosine methylation report. The main difference compared to the bedGraph is that **every** cytosine on both the TOP and BOTTOM strands will be considered irrespective of wether they were actually covered by any reads in the experiment or not. The report is a tab-delimited file with the following columns:
+The `coverage` ouput of the methylation extractor can be trasformed into a genome-wide cytosine methylation report. The main difference compared to the bedGraph is that **EVERY** cytosine on both the TOP and BOTTOM strands will be considered irrespective of wether they were actually covered by any reads in the experiment or not. The option `--genome_folder` need to be used in combination, because it is necessary to specify the reference used for the alignment. By default, only Cs in CpG context are sorted, but the option `--CX_context` may be used to report all Cs irrespective of sequence context. The file **`*CX_report.txt.gz`** is a tab-delimited file with the following columns:
 
-1. chromosome
-2. position
-3. strand
-4. count methylated
-5. count non-methylated
-6. C-context
-7. trinucleotide context
+1. **chromosome**
+2. **position**
+3. **strand**
+4. **count methylated**
+5. **count non-methylated**
+6. **C-context**
+7. **trinucleotide context**
 
+<bg>
+In addition the counts of each cytosine context are recorder and stored in a file called `*.cytosine_context_summary.txt`. The report looks at 2 bp downstream, as well as 1 bp upstream of the cytosine taking part in the methylation call. This is useful for looking at methylation in specific contexts (e.g. `CpA` only), and also when using `GpC` methylases that introduce methylation in `GpC` context. The report looks like this: 
+
+```
+upstream  C-context  full context  count methylated  count unmethylated  percent methylation
+A         CAA        ACAA          2162              106714              1.99
+C         CAA        CCAA          2927              82713               3.42
+G         CAA        GCAA          1352              65155               2.03
+T         CAA        TCAA          2882              125120              2.25
+A         CAC        ACAC          338               41769               0.80
+C         CAC        CCAC          296               38560               0.76
+G         CAC        GCAC          201               26655               0.75
+```
 
 ## M-bias output 
 {: .no_toc }
@@ -150,17 +155,17 @@ This allows generating nice graphs by alternative means, e.g. using R or Excel. 
 The Bismark methylation extractor produces a file in M-bias format which uses 0-based genomic start and 1- based end coordinates. The file shows the methylation proportion across each possibile position in the read (cumulatively)[^2]
 
 The output is a tabular file with the following format:
-1. `read position`
-2. `count methylated`
-3. `count unmethylated`
-4. `% methylation`
-5. `total coverage`
+1. **read position**
+2. **count methylated**
+3. **count unmethylated**
+4. **% methylation**
+5. **total coverage**
 
 This allows generating nice graphs by alternative means, e.g. using R or Excel.
 
 ## Splitting_report
 {: .no_toc }
-It represent a summary of the splitting step executed by bismark_methylation_extractor. It the report the % of methylated Cs in the different contexts. 
+It represent a summary of the splitting step executed by bismark_methylation_extractor. It report the % of methylated Cs in the different contexts. 
 
 
 [Back to the tutorial](https://gabbo89.github.io/EEA2024-2025/docs/3a1_WGBS_cleaning_and_alignment.html#bismark-meth_extract)

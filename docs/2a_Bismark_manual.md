@@ -8,6 +8,9 @@ has_children: true
 published: true
 ---
 
+![Bismark figure](bismark.png)
+
+
 Bismark is a program to map bisulfite treated sequencing reads to a genome of interest and perform methylation calls in a single step. It's main features are:
 
 - Bisulfite mapping and methylation calling in one single step

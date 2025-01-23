@@ -564,7 +564,7 @@ By default twelve individual output files are being generated per input file whe
 - `--gzip` Write `gzip` compressed output files
 - `--bedGraph` Write methylation calls (%) in bedGraph format
 - `--CX_context` Write methylation calls for all contexts, in bedGraph format.
-- `--genome-folder` Path to the reference fasta file [is mandatory]
+- `--genome-folder` Path to the reference fasta file [is mandatory and need to be absolute path]
 - `--cytosine_report` Genome-wide methylation report for all Cs, 1 based coordinates.
 <!--
 ADD extra white line 
@@ -586,17 +586,22 @@ alignments/rkatsiteli.leaves_pe.deduplicated.bam
 ```
 
 {: .success-title }
+>STDOUT
 >
-> Writing genome-wide cytosine report to: rkatsiteli.leaves_pe.deduplicated.CX_report.txt.gz
+>Writing genome-wide cytosine report to: rkatsiteli.leaves_pe.deduplicated.CX_report.txt.gz
 >
-> Writing all cytosine context summary file to: rkatsiteli.leaves_pe.deduplicated.cytosine_context_summary.txt
+>Writing all cytosine context summary file to: rkatsiteli.leaves_pe.deduplicated.cytosine_context_summary.txt
 >
-> Finished writing out cytosine report for covered chromosomes (processed 343 chromosomes/scaffolds in total)
+>Finished writing out cytosine report for covered chromosomes (processed 343 chromosomes/scaffolds in total)
 >
-> Now processing chromosomes that were not covered by any methylation calls in the coverage file...
-> All chromosomes in the genome were covered by at least some reads. coverage2cytosine processing complete.
+>Storing all covered cytosine positions for chromosome: chr05
+>Writing cytosine report for last chromosome chr05 (stored 185281 different covered positions)
+>Finished writing out cytosine report for covered chromosomes (processed 1 chromosomes/scaffolds in total)
 >
-> Finished generating genome-wide cytosine report
+>Now processing chromosomes that were not covered by any methylation calls in the coverage file...
+>All chromosomes in the genome were covered by at least some reads. coverage2cytosine processing complete.
+>
+>Finished generating genome-wide cytosine report
 
 <a id="bismark-meth_extract"></a>
 Several files will be produced in this last step, for a detailed description check [Bismark file description](https://gabbo89.github.io/EEA2024-2025/docs/2a_Bismark_file_descr.html#meth_extract)
