@@ -133,7 +133,7 @@ The `coverage` ouput of the methylation extractor can be trasformed into a genom
 6. **C-context**
 7. **trinucleotide context**
 
-<bg>
+<br>
 In addition the counts of each cytosine context are recorder and stored in a file called `*.cytosine_context_summary.txt`. The report looks at 2 bp downstream, as well as 1 bp upstream of the cytosine taking part in the methylation call. This is useful for looking at methylation in specific contexts (e.g. `CpA` only), and also when using `GpC` methylases that introduce methylation in `GpC` context. The report looks like this: 
 
 ```
