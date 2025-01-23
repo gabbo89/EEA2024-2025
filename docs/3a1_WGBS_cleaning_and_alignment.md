@@ -682,13 +682,17 @@ We need to change the environment
 <!--
 [text](<../assets/images/2025-01-23 16-33-40.mkv>)
 -->
+
 [IGV tutorial](https://github.com/gabbo89/EEA2024-2025/blob/main/assets/images/igv.mp4)
 
-<p align="center">A video walkthrough of various Just the Docs features</p>
-
-
-
 <video src="https://github.com/gabbo89/EEA2024-2025/blob/main/assets/images/igv.mp4" width="300" />
+
+<video controls width="600">
+  <source src="https://github.com/gabbo89/EEA2024-2025/raw/main/assets/images/igv.mp4" type="video/mp4">
+</video>
+
+Or, [click here to watch the tutorial](https://github.com/gabbo89/EEA2024-2025/raw/main/assets/images/igv.mp4).
+
 ---
 
 # 5. Conversion rate evaluation 
