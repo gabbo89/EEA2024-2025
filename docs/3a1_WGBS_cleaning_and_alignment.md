@@ -685,6 +685,7 @@ We need to change the environment
 [IGV tutorial](https://github.com/gabbo89/EEA2024-2025/blob/main/assets/images/igv.mp4)
 
 <p align="center">A video walkthrough of various Just the Docs features</p>
+
 https://github.com/gabbo89/EEA2024-2025/blob/main/assets/images/igv.mp4
 
 
