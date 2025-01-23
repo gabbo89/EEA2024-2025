@@ -7,6 +7,9 @@ description: A comprehensive guide to understanding epigenetics.
 published: true
 ---
 
+Final version
+{: .label .label-green }
+
 {: .important-title }
 > Aim
 >
@@ -22,7 +25,8 @@ published: true
 - TOC
 {:toc}
 </details>
-<br><br>
+<br>
+
 
 We will use the methylation table obtained from Bismark. The file represent the result of wgbs performed in _Arabidopsis thaliana_ sample.
 

@@ -105,12 +105,12 @@ The columns are as follows:
 <bg>
 
 Since the methylation percentage is _per se_ not informative of the read coverage at the specific position, a `*bismark.cov.gz` file is also created (using 1-based genomic coordinates) that feature 2 additional columns, which add the read coverage of detected methylated or unmethylated reads at a position:
-1. **`chromosome`**
-2. **`start position`**
-3. **`end position`**
-4. **`methylation percentage`**
-5. **`number of methylated Cs`**
-6. **`number of unmethylated Cs`**
+1. **chromosome**
+2. **start position**
+3. **end position**
+4. **methylation percentage**
+5. **number of methylated Cs**
+6. **number of unmethylated Cs**
 
 <!--
 [link to descriptor](/docs/2a_file_formats.md)
@@ -165,7 +165,7 @@ This allows generating nice graphs by alternative means, e.g. using R or Excel.
 
 ## Splitting_report
 {: .no_toc }
-It represent a summary of the splitting step executed by bismark_methylation_extractor. It report the % of methylated Cs in the different contexts. 
+It represent a summary of the splitting step executed by bismark_methylation_extractor. It report the % of methylated Cs in the different contexts. The file is 
 
 
 [Back to the tutorial](https://gabbo89.github.io/EEA2024-2025/docs/3a1_WGBS_cleaning_and_alignment.html#bismark-meth_extract)
