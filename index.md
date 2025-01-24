@@ -17,11 +17,12 @@ For each lesson (arguments) we will explore a different aspect of epigenomics an
 
 ---
 
-For any help (or if you have any hint or suggestion), contact me at: gabriele.magris@uniud.it
+For any help (or if you have any hint or suggestion), contact me at: **gabriele.magris@uniud.it**
 
 _Any improvement is welcome!!_
 
 **_Labor omnia vincit_**
+{: .fs-9 }
 
 <!--
 You can select the color-scheme for the tutorial: <button class="btn js-toggle-dark-mode">Preview dark color scheme</button>
@@ -42,7 +43,7 @@ jtd.addEvent(toggleDarkMode, 'click', function(){
 -->
 
 
-----
+
 <!--
 [^1]: [For any help contact me](gabriele.magris@uniud.it). 
 -->

@@ -12,7 +12,7 @@ published: true
 <br>
 <details open markdown="block">
   <summary>
-    Table of contents
+    <strong>Table of contents</strong>
   </summary>
   {: .text-delta }
 - TOC
@@ -135,7 +135,7 @@ Only performed (default mode) on CG sites
 
 
 ## (Optional) Genome-wide cytosine report output
-
+{: .no_toc }
 The `coverage` ouput of the methylation extractor can be trasformed into a genome-wide cytosine methylation report. The main difference compared to the bedGraph is that **EVERY** cytosine on both the TOP and BOTTOM strands will be considered irrespective of wether they were actually covered by any reads in the experiment or not. The option `--genome_folder` need to be used in combination, because it is necessary to specify the reference used for the alignment. By default, only Cs in CpG context are sorted, but the option `--CX_context` may be used to report all Cs irrespective of sequence context. The file **`*CX_report.txt.gz`** is a tab-delimited file with the following columns:
 
 1. **chromosome**

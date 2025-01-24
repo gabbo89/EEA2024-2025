@@ -19,7 +19,7 @@ Final version
 <br>
 <details open markdown="block">
   <summary>
-    Table of contents
+    <strong>Table of contents</strong>
   </summary>
   {: .text-delta }
 - TOC

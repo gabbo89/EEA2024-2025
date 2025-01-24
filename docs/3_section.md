@@ -13,5 +13,8 @@ The tutorials are designed to be completed in order, but feel free to jump to th
 
 {: .warning}
 > Once the connection to the server goes down
-> **remember** that you need to load the conda enviroment of interest by running `conda activate <env_name>` in the terminal.
+> **remember** that you need to load the conda enviroment of interest by running
+>
+> `conda activate <env_name>` in the terminal.
+>
 > In addition you need to set the path to the working directory!

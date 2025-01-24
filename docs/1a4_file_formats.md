@@ -7,6 +7,9 @@ published: true
 ---
 
 
+A brief introduction to various file formats used in bioinformatics.
+
+<br>
 <details open markdown="block">
   <summary>
     <strong>Table of contents</strong>
@@ -41,8 +44,6 @@ published: true
 	- [Example GFF3 file](#example-gff3-file)
 - [References](#references)
 -->
-
-A brief introduction to various file formats used in bioinformatics.
 
 
 # Sequence formats
@@ -275,7 +276,7 @@ GTF files also support comments, beginning with `#` and running until the end of
 Nothing beyond a hash will be parsed.
 These may occur anywhere in the file, including at the end of a feature line. 
 
-#### Example GTF file
+##### Example GTF file
 {: .no_toc}
 
 Here are the first 12 lines of [example_genome_annotation.gtf](../data/example_genome_annotation.gtf):
@@ -391,7 +392,7 @@ Nine additional fields are optional. Columns cannot be empty, but can be filled 
 11. **blockSizes**: A comma-separated list of the sizes of the blocks.
 12. **blockStarts**: A comma-separated list of the starting positions of the blocks relative to the start of the feature.
 
-#### Example BED file
+##### Example BED file
 {: .no_toc}
 From the [UCSC Genome Browser](https://genome.ucsc.edu/FAQ/FAQformat.html#format1):
 
@@ -416,7 +417,7 @@ chr7  127479365  127480532  Pos5  0  +  127479365  127480532  255,0,0
 chr7  127480532  127481699  Neg4  0  -  127480532  127481699  0,0,255
 ```
 
-## BedGraph format 
+## BedGraph 
 
 BedGraph format is a suitable format for storing the density of features along a chromosome. It is a tab-delimited format, based on the BED format with four columns where the score or density is placed in column 4. 
 Data are usually preceded by a track definition line which adds a number of options for setting the default display of the track.

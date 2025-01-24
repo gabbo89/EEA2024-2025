@@ -34,7 +34,7 @@ Final version
 <br>
 <details open markdown="block">
   <summary>
-    Table of contents
+    <strong>Table of contents</strong>
   </summary>
   {: .text-delta }
 - TOC
@@ -175,6 +175,7 @@ We will use TrimGalore to remove adapter and low quality data from fastq file [T
 We will use it with a reduced set of options, but remember that there are many options available that can be used to customize the trimming process.
 
 ##### The options we will use:
+{: .no_toc }
 
 - `--path_to_cutadapt cutadapt` trimming software loading
 - `--phred33`  Phred quality scores (DEFAULT)
@@ -304,6 +305,7 @@ bismark_genome_preparation --help
 
 
 ##### The options we will use:
+{: .no_toc }
 
 - `--bowtie2` create bisulfite indexes for bowtie2
 - `--parallel` define the number of threads for each indexing process (is run already twice in parallel for the **top** and **bottom** strands)
@@ -340,6 +342,7 @@ Now we are ready to perform the reads alignment.
 >
 
 ##### The options we will use:
+{: .no_toc }
 
 - `--bowtie2` is used as the backend [DEFAULT].
 - `--bam` alignment is written in bam format [DEFAULT].
@@ -422,7 +425,7 @@ The ouput of the aligment process is a `bam file` containing mapping results tha
 `Samtools` is a suite of commands that can be used for manipulating sam/bam files. In order to visualize the content we can use the `samtools view` command.
 
 <a id="bismark-bam"></a>
-Bismark bam file is a tab separate textual file (in binary format if `bam`) and for a detailed description check [Bismark file description](https://gabbo89.github.io/EEA2024-2025/docs/2a_Bismark_file_descr.html)
+Bismark bam file is a tab separate textual file (in binary format if `bam`) and for a detailed description check [Bismark bam file description](https://gabbo89.github.io/EEA2024-2025/docs/2a_Bismark_file_descr.html)
 
 <!--
  (1) QNAME  (read name)
@@ -559,6 +562,7 @@ By default twelve individual output files are being generated per input file whe
 -->
 
 ##### The options we will use:
+{: .no_toc }
 
 - `-o` Directory to write output files to. 
 - `-p` Data generated from paired-end data (will be determined automatically)
@@ -609,13 +613,18 @@ alignments/rkatsiteli.leaves_pe.deduplicated.bam
 Several files will be produced in this last step, for a detailed description check [Bismark file description](https://gabbo89.github.io/EEA2024-2025/docs/2a_Bismark_file_descr.html#meth_extract)
 
 
-The most important file is the `*CX_report.txt` that contains the methylome data across the genome. Check the detailed description [Bismark output file description](https://gabbo89.github.io/EEA2024-2025/docs/2a_Bismark_file_descr.html#optional-genome-wide-cytosine-report-output).
-
 <a id="bismark-CX_report"></a>
+The most important file is the `*CX_report.txt` that contains the methylome data across the genome. Check the detailed description [Bismark methylation file description](https://gabbo89.github.io/EEA2024-2025/docs/2a_Bismark_file_descr.html#optional-genome-wide-cytosine-report-output).
+
+The file looks like this:
+![alt text](image.png)
+
 We will use this file throughout the next tutorials. 
 
 
 ### Create a summary report
+{: .no_toc}
+
 In order to create a final report with all the statistics, we will use the command `bismark2report`. This command will generate a report (in `html` format) with all the statistics for the methylation analysis. 
 
 ```bash
@@ -663,6 +672,7 @@ The filtered bam file obtained after deduplicate_bismark, is still unsorted for 
 
 ### sort the bam file 
 {: .no_toc }
+
 ```bash
 samtools sort \
 -@ 2 \
@@ -672,6 +682,7 @@ alignments/rkatsiteli.leaves_pe.deduplicated.bam
 
 ### index the bam file 
 {: .no_toc }
+
 ```bash
 samtools index -@ 2 alignments/rkatsiteli.leaves_pe.deduplicated.sort.bam
 ```
@@ -696,11 +707,11 @@ We need to change the environment
 <video src="https://github.com/gabbo89/EEA2024-2025/blob/main/assets/images/igv.mp4" width="300" />
 -->
 
-<video controls width="300">
+<video controls width="450">
   <source src="https://github.com/gabbo89/EEA2024-2025/raw/main/assets/images/igv.mp4" type="video/mp4">
 </video>
 
-Or, [click here to watch the tutorial](https://github.com/gabbo89/EEA2024-2025/raw/main/assets/images/igv.mp4).
+Or, [click here to download the tutorial](https://github.com/gabbo89/EEA2024-2025/raw/main/assets/images/igv.mp4).
 
 ---
 
@@ -755,11 +766,12 @@ We can take a look at the summary results, which are reported in bisulfite_conve
 
 ------
 
-[^1]: [file formats](/docs/2b_file_formats.md). 
 [trimgalore short manual]: https://gabbo89.github.io/EEA2024-2025/docs/2a_TrimGalore_manual.html
 [trimgalore_github]: https://github.com/FelixKrueger/TrimGalore
 
 <!--
+[^1]: [file formats](/docs/2b_file_formats.md). 
+
 [^3]: https://gabbo89.github.io/EEA2024-2025/docs/2a_Bismark_manual.html
 <sup>[1]</sup> 
 
