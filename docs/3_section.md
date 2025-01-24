@@ -17,4 +17,5 @@ The tutorials are designed to be completed in order, but feel free to jump to th
 >
 > `conda activate <env_name>` in the terminal.
 >
-> In addition you need to set the path to the working directory!
+> In addition you need to **set the path to the working directory!**
+{: .fs-5 }
