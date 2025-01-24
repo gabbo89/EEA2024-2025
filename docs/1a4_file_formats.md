@@ -92,7 +92,10 @@ A FASTQ file normally uses four lines per sequence:
 3. A line beginning with `+`, sometimes followed by the same comment as the first line
 4. A line encoding the quality values for the sequence in line 2, with the same numbers of symbols as letters in the sequence
 
-##### Example FASTQ file
+##### Example FASTQ file from sequencing center
+![alt text](image-2.png)
+
+##### Example FASTQ file downloaded from an online database
 {: .no_toc}
 
 ```
@@ -113,6 +116,10 @@ The quality scores are usually encoded as ASCII characters, with higher quality 
 
 ![ASCII conversion]({{ "/assets/images/1a4-2_ascii_conversion.png" | relative_url }})
 
+
+Quality values are of paramount importance in bioinformatics, as they allow us to assess the reliability of the sequencing data. This is particularly important when working with high-throughput sequencing data, where the quality of the data can vary significantly across the sequence. Low quality values may indicate errors during the sequencing process, while high values may indicate accurate base calls.
+
+Fastq files are widely used to store the sequence information obtained from sequencers (as for example Illumina) and are extensively used in bioinformatics in the pipeline for trimming (removing of low quality bases and/or sequencing adapters), quality control, and alignment of the sequences to a reference genome.
 
 # Alignment formats
 

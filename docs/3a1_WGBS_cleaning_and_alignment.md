@@ -23,7 +23,7 @@ jtd.addEvent(toggleDarkMode, 'click', function(){
 </script>
 -->
 Final version
-{: .label .label-green }
+{: .label .label-yellow }
 
 {: .important-title }
 > Aim
@@ -617,15 +617,16 @@ Several files will be produced in this last step, for a detailed description che
 The most important file is the `*CX_report.txt` that contains the methylome data across the genome. Check the detailed description [Bismark methylation file description](https://gabbo89.github.io/EEA2024-2025/docs/2a_Bismark_file_descr.html#optional-genome-wide-cytosine-report-output).
 
 The file looks like this:
-![alt text](image.png)
 
-We will use this file throughout the next tutorials. 
+![CX_output]({{"/assets/images/CX_output.png" | relative_url }})
+
+We will use this file extensively throughout the next tutorials. 
 
 
 ### Create a summary report
 {: .no_toc}
 
-In order to create a final report with all the statistics, we will use the command `bismark2report`. This command will generate a report (in `html` format) with all the statistics for the methylation analysis. 
+In order to create a final report that summirize all the steps, we will use the command `bismark2report`. This command will generate a report (in `html` format) with all the statistics for the methylation analysis. 
 
 ```bash
 # we will define all the paths, because files are in different subfolders
@@ -640,7 +641,7 @@ bismark2report \
 {: .success-title }
 >STDOUT
 >
->User specifified dedup report: alignments/rkatsiteli.leaves_pe.deduplication_report.txt
+>User specified dedup report: alignments/rkatsiteli.leaves_pe.deduplication_report.txt
 >
 >Writing Bismark HTML report to >> meth_extr/rkatsiteli.leaves_PE_report.html <<
 > ...
@@ -648,6 +649,10 @@ bismark2report \
 
 Now we can open the `html` file using the common browser (*chrome* or others).
 Navigate to the folder where the file is located. 
+The file should look like:
+
+![CX_output]({{"/assets/images/bismark2report.png" | relative_url }})
+
 
 <!--
 The output files are in the following format (tab delimited):

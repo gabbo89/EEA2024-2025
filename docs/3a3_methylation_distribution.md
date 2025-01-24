@@ -37,16 +37,19 @@ The file is located at the following path:
 The suffix of the file is `.CX_report.txt` as already seen in the previous lessons.
 The structure is as follows:
 
-![Figure 1: header of the modified CG data frame]({{ "/assets/images/3a3-0_methylation_distribution_arabidopsis.png" | relative_url }})
+![Figure 1: header of the CG data frame]({{ "/assets/images/3a3-0_methylation_distribution_arabidopsis.png" | relative_url }})
 <br>
-**Figure 1:** This figure shows the first rows of the file.
+
+**Figure 1:** First rows of the *arabidopsis_wgbs.CX_report.txt* file.
 
 The file is tab separated and the columns are in the following order:
 1. **chromosome**
 2. **coordinate**
 3. **strand**
 4. **number of reads with methylation for the C**
-5. **number of reads without methylation **
+5. **number of reads without methylation**
+6. **C-context**
+7. **trinucleotide context**
 
 ---
 
@@ -162,7 +165,7 @@ head(CG)
 {: .no_toc }
 
 ```r
-names(CG)=c('chr', 'pos', 'strand', 'c', 't', 'context', 'real_context', 'methylation')
+names(CG)=c('chr', 'pos', 'strand', 'c', 't', 'context', 'genome_context', 'methylation')
 ```
 
 ### Add a new column named `coverage` which include the total coverage

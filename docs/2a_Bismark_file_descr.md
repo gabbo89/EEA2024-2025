@@ -115,6 +115,19 @@ The columns are as follows:
 3. **end position**
 4. **methylation percentage**
 
+For example, the first rows of the file in CpG context `rkatsiteli.leaves_pe.deduplicated.bedGraph.gz`:
+
+```
+track type=bedGraph
+chr05   52260   52261   0
+chr05   52261   52262   0
+chr05   52262   52263   0
+chr05   52276   52277   0
+chr05   52278   52279   0
+chr05   52288   52289   0
+chr05   52294   52295   0
+```
+
 <br>
 
 Since the methylation percentage is _per se_ not informative of the read coverage at the specific position, a `*bismark.cov.gz` file is also created (using 1-based genomic coordinates) that feature 2 additional columns, which add the read coverage of detected methylated or unmethylated reads at a position:
@@ -125,13 +138,26 @@ Since the methylation percentage is _per se_ not informative of the read coverag
 5. **number of methylated Cs**
 6. **number of unmethylated Cs**
 
+For example, the first rows of the file in CpG context `rkatsiteli.leaves_pe.deduplicated.bismark.cov.gz`:
+
+```
+chr05   52261   52261   0       0       1
+chr05   52262   52262   0       0       1
+chr05   52263   52263   0       0       1
+chr05   52277   52277   0       0       1
+chr05   52279   52279   0       0       1
+chr05   52289   52289   0       0       1
+chr05   52295   52295   0       0       1
+chr05   52301   52301   0       0       1
+chr05   52325   52325   0       0       1
+```
 <!--
 [link to descriptor](/docs/2a_file_formats.md)
 From this file, downstream processing of the file. 
 -->
 
 {: .note}
-Only performed (default mode) on CG sites
+Only performed by default on CG sites
 
 
 ## (Optional) Genome-wide cytosine report output
@@ -146,6 +172,20 @@ The `coverage` ouput of the methylation extractor can be trasformed into a genom
 6. **C-context**
 7. **trinucleotide context**
 
+For example, the first rows of the file in CpG context `rkatsiteli.leaves_pe.deduplicated.CX_report.txt.gz`:
+
+```
+chr05   1       +       0       0       CHH     CCC
+chr05   2       +       0       0       CHH     CCT
+chr05   3       +       0       0       CHH     CTA
+chr05   8       +       0       0       CHH     CCC
+chr05   9       +       0       0       CHH     CCT
+chr05   10      +       0       0       CHH     CTA
+chr05   15      +       0       0       CHH     CCC
+chr05   16      +       0       0       CHH     CCT
+chr05   17      +       0       0       CHH     CTA
+chr05   22      +       0       0       CHH     CCC
+```
 <br>
 
 In addition the counts of each cytosine context are recorder and stored in a file called `*.cytosine_context_summary.txt`. The report looks at 2 bp downstream, as well as 1 bp upstream of the cytosine taking part in the methylation call. This is useful for looking at methylation in specific contexts (e.g. `CpA` only), and also when using `GpC` methylases that introduce methylation in `GpC` context. The report looks like this: 
@@ -175,7 +215,9 @@ The output is a tabular file with the following format:
 4. **% methylation**
 5. **total coverage**
 
-This allows generating nice graphs by alternative means, e.g. using R or Excel.
+This allows generating nice graphs by alternative means, e.g. using R or Excel. That should look like:
+![mbias_example]({{"/assets/images/mbias_example.png" | relative_url }})
+
 
 ## Splitting_report
 {: .no_toc }

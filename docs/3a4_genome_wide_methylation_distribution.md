@@ -25,10 +25,36 @@ published: true
 </details>
 <br>
 
+
+
+We will use the methylation table obtained from Bismark. The file represent the result of wgbs performed in _Arabidopsis thaliana_ sample.
+
+The file is located at the following path:
+
+`/data2/biotecnologie_molecolari_magris/epigenomics/meth_distribution/arabidopsis_wgbs.CX_report.txt`
+
+The suffix of the file is `.CX_report.txt` as already seen in the previous lessons.
+The structure is as follows:
+
+![Figure 1: header of the CG data frame]({{ "/assets/images/3a3-0_methylation_distribution_arabidopsis.png" | relative_url }})
+<br>
+
+**Figure 1:** First rows of the *arabidopsis_wgbs.CX_report.txt* file.
+
+The file is tab separated and the columns are in the following order:
+1. **chromosome**
+2. **coordinate**
+3. **strand**
+4. **number of reads with methylation for the C**
+5. **number of reads without methylation**
+6. **C-context**
+7. **trinucleotide context**
+
 We will use average values in windows in order to understand how we can represent methylation values across a chromosome as depicted in [Figure 1](#figure-1).
 
+Aggiungere FIGURA genome wide 
 
-![Figure 1: Methylation values across a chromosome. Each point represents the average methylation value in window]({{ "/assets/images/chr5_CTX_report.png" | relative_url }})
+![Figure 1: chromosome_wide methylation]({{ "/assets/images/chr5_CTX_report.png" | relative_url }})
 
 <!--
 # Analysis of Methylation
@@ -40,18 +66,6 @@ In this analysis, we will refer to the methylation distribution shown in [Figure
 ![Methylation Distribution](path/to/your/figure.png)
 -->
 
-The suffix of the file is `.CX_report.txt` and is as follows:
-
-
-
-The file is tab separated and the columns are in the following order:
-1. chromosome
-2. coordinate
-3. strand
-4. number of reads with methylation for the C
-5. number of reads without methylation
-6. methylation context (CG, CHG, CHH)
-7. genomic context
 
 <!--
 Now we will perform the analysis of the methylation distribution in the three contexts `CG`, `CHG` and `CHH` across a chromosome. 
