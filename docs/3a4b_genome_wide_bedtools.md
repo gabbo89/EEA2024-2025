@@ -9,6 +9,11 @@ published: true
 INCOMPLETE
 {: .label .label-red }
 
+{: .important-title }
+> Aim
+>
+> Obtain a graph with the window distribution of methylation values across a chromosome in three contexts `CG`, `CHG` and `CHH`, using `bedtools`.
+
 <br>
 <details open markdown="block">
   <summary>
@@ -34,7 +39,7 @@ The file is located at the following path:
 It should be already available in your directory:
 `/data2/student_space/st24_16_folder/epigenomics/methylation_distribution/`
 
-# 1. Filtering of the dataset 
+# 1. Filter the dataset 
 We need to filter the file in order to remove positions without coverage and by selecting the methylation contexts (`CG`) for the chromosome of interest.
 
 ```bash
@@ -51,25 +56,54 @@ awk -v "OFS=\t" '{if($1=="Chr1" && ($4+$5)>0 && $6=="CG") {meth=100*($4/($4+$5))
 ![alt text](image-15.png)
 
 
-# 2. Create the windows of a fixed size using bedtools 
+# 2. Create windows of fixed size
 We will use `bedtools makewindows` to create the windows. It requires the size of the **window** and the **chromosome length**. We will use the same size of the window as previously.
 
-The **chromosome size** is obtained using `bedtools getfasta` with the `-fo` option to get the length of the chromosome. The output is a tab separated file with the following columns:
+The **chromosome size** is obtained using `bedtools getfasta` with the `-fo` option to get the length of the chromosomes. The output is a tab separated file with the following columns:
 1. chromosome
 2. length
 
-We will need to reference genome!
+We will need the fasta file of the reference genome!
+
 {: .highlight-title}
 > Question
 > How do we get the reference genome?
 >
 
-Once the connection to the server goes down
-> **remember** that you need to load the conda enviroment of interest by running
->
-> `conda activate <env_name>` in the terminal.
->
-> In addition you need to **set the path to the working directory!**
+<details>
+    <summary>Click to expand</summary>
+    We can look for the fasta sequencing by performing a shearch on google for example.
+
+    Try to type in google: Arabidopsis thaliana genome fasta
+
+    ![google search Arabidopsis](image-16.png)
+
+    You will find different options. Try to navigate and look for the fasta file on ncbi database.
+
+<!-- Button to toggle the visibility of the link -->
+<button onclick="document.getElementById('hidden-link').style.display='block'; this.style.display='none';">Show Link</button>
+
+<!-- Hidden link -->
+<div id="hidden-link" style="display:none;">
+  <a href="https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001735.3/" target="_blank">https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001735.3/</a>
+</div>
+    
+    https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001735.3/
+
+    
+    wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/735/GCF_000001735.4_TAIR10.1/GCF_000001735.4_TAIR10.1_genomic.fna.gz
+
+</details>
+
+ààà
+
+<!-- Button to toggle the visibility of the link -->
+<button onclick="document.getElementById('hidden-link').style.display='block'; this.style.display='none';">Show Link</button>
+
+<!-- Hidden link -->
+<div id="hidden-link" style="display:none;">
+  <a href="https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001735.3/" target="_blank">https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001735.3/</a>
+</div>
 
 
 The reference genome is available at [http://plants.ensembl.org/Arabidopsis_thaliana/Info/Index] 
@@ -84,7 +118,7 @@ In order to generate the windows, we will use the following command:
 ```bash
 bedtools makewindows -g chromosome_size.txt -w 100000 > windows.bed
 ```
-
+# 3. Intersect the two tables 
 In order to assign the single sites to the windows we will use `bedtools intersect` with the `-wa` option. We need to create a file with the single sites in bed format (or bedgraph format). We need to format the columns of the input file by creating a bed-like structure:
 
 ```bash

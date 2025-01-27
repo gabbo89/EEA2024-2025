@@ -10,6 +10,11 @@ published: true
 INCOMPLETE
 {: .label .label-red }
 
+{: .important-title }
+> Aim
+>
+> Obtain a graph with the window distribution of methylation values across a chromosome in three contexts `CG`, `CHG` and `CHH`, using `R`.
+
 <br>
 <details open markdown="block">
   <summary>
@@ -22,7 +27,7 @@ INCOMPLETE
 <br>
 
 
-# 1. Filtering of the dataset 
+# 1. Filter the dataset 
 Before reading the file in `R` we need to filter the file in order to remove positions without coverage and by selecting the methylation contexts (`CG`) of interest. We will use again `awk` for this purpose.
 
 The file has been already used in the previous tutorial. (add link)
@@ -72,7 +77,7 @@ CG$methylation_level <- round(100*(CG$c / (CG$c + CG$t)),0)
 
 
 
-# 3. Creating genomic windows of a fixed size
+# 3. Create windows of fixed size
 The chromosome will be divided in non-overlapping windows of a fixed size (e.g. 100,000 bp). The size of the windows is totally arbitrary. The methylation values will be averaged in each window. The size of 100 Kb is sufficient to represent graphically the methylation distribution along the chromosome.
 
 Next we need to assing each C position to a genomic window (for example the C in position 1,145 will be assigned to the window 1-10,000, while the C in position 15,300 will be assigned to the window 10,001-20,000).
@@ -236,6 +241,9 @@ meth_out <- do.call(data.frame,meth_out)
 This will transform the output to a 3 columns table.
 
 ![alt text](image-10.png)
+
+# 4. Draw the plot
+
 Now we are ready to produce the graph. We will need ggplot2 package.
 
 
@@ -281,6 +289,8 @@ And we will get
 
 ![alt text](image-12.png)
 
+# 5. Save the plot
+
 The plot is now shown in an interactive windows on the terminal. In order to save the plot to a pdf file, we can use the following command.
 ```r
 # Open the device
@@ -299,6 +309,8 @@ dev.off()
 ```
 
 ---
+
+# 6. An alternative way 
 
 A different (and simplified way) of obtaining the same result, can be achieved by using the following code:
 
