@@ -18,7 +18,8 @@ The username is the one already used
 
 Mobaxterm can be downloaded freely (home edition) from the official website: https://mobaxterm.mobatek.net/download.html. 
 
-![alt text](image.png)
+![moba_download]({{"/assets/images/image.png" | relative_url }})
+
 
 Once downloaded, the software can be installed following the instructions on screen. 
 
@@ -26,7 +27,8 @@ Define how to set the ssh connection !!
 
 Files can be graphically accessed using the panel on the left side on Mobaxterm. The user can navigate through the directories and select the files they want to use. The files can be copied and pasted to the local computer.
 
-![mobax_panel](image-1.png)
+
+![moba_panel]({{"/assets/images/image-1.png" | relative_url }})
 
 
 ## **mac**

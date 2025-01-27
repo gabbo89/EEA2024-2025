@@ -169,7 +169,7 @@ cut (all_genomic_positions, breaks= my_breaks, labels=my_labels)
 
 The output of the command shows the interval that are assigned to each single coordinate. 
 
-![alt text](image-4.png)
+![intervals]({{"/assets/images/image-4.png" | relative_url }})
 
 Now we want to apply the same approach to the data.frame with the CG methylation data. We need to define the breaks and the labels. The breaks are the same as before, but the labels are the genomic coordinates of the windows.
 
@@ -196,13 +196,13 @@ head(CG)
 ```
 The new dataframe will look like:
 
-![alt text](image-7.png)
-
+![head_CG]({{"/assets/images/image-7.png" | relative_url }})
 ```r
 # Check the last part modified data.frame
 tail(CG)
 ```
-![alt text](image-8.png)
+
+![tail_CG]({{"/assets/images/image-8.png" | relative_url }})
 
 For each site we have now the assigned windows coordinate. 
 We can now create a data.frame with the average methylation for each window, using basic `R` functions.
@@ -231,7 +231,8 @@ We should obtain a new data.frame with the following format
 
 The 2 columns methylation_level.mean and methylation_level.length are seen as an unique column, because we used aggregate(). 
 
-![alt text](image-9.png)
+
+![out_meth_table]({{"/assets/images/image-9.png" | relative_url }})
 
 If we want to have them as separate columns, we can use the do.call function
 
@@ -240,7 +241,7 @@ meth_out <- do.call(data.frame,meth_out)
 ```
 This will transform the output to a 3 columns table.
 
-![alt text](image-10.png)
+![fastq_example]({{"/assets/images/image-10.png" | relative_url }})
 
 # 4. Draw the plot
 
@@ -253,7 +254,7 @@ ggplot(meth_out, aes(x=window,y=methylation_level.mean)) +
 geom_bar(stat="identity", col="blue")
 ```
 
-![chromosome wide distribution](image-11.png)
+![chromosome wide distribution]({{"/assets/images/image-11.png" | relative_url }})
 
 We can improve the quality of the plot by means of the options available in ggplot.
 
@@ -287,7 +288,8 @@ ggtitle("CG methylation distribution in chr1")
 
 And we will get
 
-![alt text](image-12.png)
+
+![complete_plot]({{"/assets/images/image-12.png" | relative_url }})
 
 # 5. Save the plot
 
@@ -354,7 +356,8 @@ head(CG_windows)
 ```
 
 We will get
-![alt text](image-13.png)
+
+![CG_df]({{"/assets/images/image-13.png" | relative_url }})
 
 ```r
 # Calculate mean methylation level per window
@@ -375,7 +378,7 @@ We can now check the output
 head(CG_window_mean_meth_and_length)
 ```
 
-![alt text](image-14.png)
+![CG_table]({{"/assets/images/image-14.png" | relative_url }})
 
 The format of the output is slightly different, because created with `dplyr` package. It is in *tibble* format. 
 

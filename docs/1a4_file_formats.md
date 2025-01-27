@@ -93,7 +93,7 @@ A FASTQ file normally uses four lines per sequence:
 4. A line encoding the quality values for the sequence in line 2, with the same numbers of symbols as letters in the sequence
 
 ##### Example FASTQ file from sequencing center
-![alt text](image-2.png)
+![fastq_example]({{"/assets/images/image-2.png" | relative_url }})
 
 ##### Example FASTQ file downloaded from an online database
 {: .no_toc}

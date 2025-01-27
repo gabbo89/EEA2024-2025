@@ -158,7 +158,7 @@ head(CG)
 ```
 ![Figure 2: header of the CG data frame]({{ "/assets/images/3a3-1_methylation_distribution_arabidopsis.png" | relative_url }})
 <br>
-**Figure 2:** This figure shows the first rows of the CG data frame.
+**Figure 2:** First rows of the CG data frame.
 
 
 ### Rename the columns 
@@ -187,7 +187,7 @@ head(CG)
 
 ![Figure 3: header of the modified CG data frame]({{ "/assets/images/3a3-2_methylation_distribution_arabidopsis.png" | relative_url }})
 <br>
-**Figure 3:** This figure shows the first rows of the modified CG data frame.
+**Figure 3:** First rows of the modified CG data frame.
 
 
 Now we can filter the table by removing the rows where the coverage is lower than a certain threshold (e.g. 10). We haven't done it previously with `awk` in order to test the different coverage thresholds in `R`. Removing the non covered positions (done previously with [awk](#filter-the-data-and-calculate-the-methylation-level)) can be done at the beginning because they are not informative. 

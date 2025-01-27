@@ -74,14 +74,15 @@ Thus using the first two columns, we are able to get the chromsome size. But we 
 >
 
 <details>
-    <summary>Click to expand</summary>
-    We can look for the fasta sequencing by performing a search on google for example.
+    <summary>Show answer</summary>
+We can look for the fasta sequencing by performing a search on google for example.<br>
 
-    Try to type in google: Arabidopsis thaliana genome fasta
+Try to type in google: Arabidopsis thaliana genome fasta<br>
 
-    ![google search Arabidopsis](image-16.png)
+![google search Arabidopsis](image-16.png)
+<img src="{{ '/assets/images/image-16.png' | relative_url }}" alt="google search Arabidopsis">
 
-    You will find different options. Try to navigate and look for the fasta file on ncbi database.
+You will find different options. Try to navigate and look for the fasta file on ncbi database. <br>
 
 </details>
 
@@ -96,15 +97,6 @@ Thus using the first two columns, we are able to get the chromsome size. But we 
 
 
 
-<!-- Button to toggle the visibility of the link -->
-<button onclick="document.getElementById('hidden-link').style.display='block'; this.style.display='none';">Show Link</button>
-
-<!-- Hidden link -->
-<div id="hidden-link" style="display:none;">
-  <a href="fasta_file" target="_blank">https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/735/GCF_000001735.4_TAIR10.1/GCF_000001735.4_TAIR10.1_genomic.fna.gz</a>
-</div>
-
-
 We can use the following command to download the fasta file:
 
 ```bash
@@ -113,6 +105,12 @@ mkdir -p genome_wide_meth/reference
 
 # Download the reference genome using wget 
 wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/735/GCF_000001735.4_TAIR10.1/GCF_000001735.4_TAIR10.1_genomic.fna.gz -P genome_wide_meth/reference/
+
+# Unzip the fasta file 
+gunzip genome_wide_meth/reference/GCF_000001735.4_TAIR10.1_genomic.fna.gz
+
+# Create the index file
+samtools faidx genome_wide_meth/reference/GCF_000001735.4_TAIR10.1_genomic.fna
 ```
 
 The reference genome is also available at [http://plants.ensembl.org/Arabidopsis_thaliana/Info/Index](http://plants.ensembl.org/Arabidopsis_thaliana/Info/Index)
@@ -124,7 +122,8 @@ We will set the **windows size** to 100,000bp.
 In order to generate the windows, we will use the following command:
 
 ```bash
-bedtools makewindows -g chromosome_size.txt -w 100000 > windows.bed
+bedtools makewindows \
+-g <(cut -f 1,2 genome_wide_meth/reference/GCF_000001735.4_TAIR10.1_genomic.fna | grep "Chr1") -w 100000 > genome_wide_meth/100k_windows.bed
 ```
 # 3. Intersect the two tables 
 In order to assign the single sites to the windows we will use `bedtools intersect` with the `-wa` option. We need to create a file with the single sites in bed format (or bedgraph format). We need to format the columns of the input file by creating a bed-like structure:
@@ -138,7 +137,7 @@ Now we can **intersect** the Cs sites with the previously created windows:
 ```bash
 bedtools intersect `
 -a genome_wide_meth/methylome.bed \
--b genome_wide_meth/windows.bed \
+-b genome_wide_meth/100k_windows.bed \
 -wa -wb > genome_wide_meth/methylome_windows.bed
 ```
 
@@ -152,20 +151,3 @@ bedtools groupby \
 -c 7 \
 -o mean > genome_wide_meth/methylome_windows_mean.bed
 ```
-
-```bash
-
-```
-
-need to prepare slides for 
-file formats
-fasta
-fastq
-sam/bam
-bed
-bedgraph
-wiggle
-gff
-
-
-slides for 
