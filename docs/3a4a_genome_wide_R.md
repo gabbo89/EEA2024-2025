@@ -280,7 +280,8 @@ The full command will be:
 ```r
 ggplot(meth_out, aes(x=window,y=methylation_level.mean)) +
 geom_bar(stat="identity", col="blue") + 
-scale_x_discrete(breaks=function(x)x[seq(1,length(x),by=100)], labels=function(x) round(as.numeric(x)/1000000,0)) + 
+scale_x_discrete(breaks=function(x)x[seq(1,length(x),by=100)],
+labels=function(x) round(as.numeric(x)/1000000,0)) + 
 theme(axis.text.x=element_text(angle=45,hjust=1)) +
 labs(x="10 Kb windows", y="methylation (%)") +
 ggtitle("CG methylation distribution in chr1")

@@ -53,11 +53,10 @@ The file is tab separated and the columns are in the following order:
 6. **C-context**
 7. **trinucleotide context**
 
-We will use average values in windows in order to understand how we can represent methylation values across a chromosome as depicted in [Figure 1](#figure-1).
+We will use average values in windows in order to understand how we can represent methylation values across a chromosome as depicted in [Figure 2](#figure-2).
 
-Aggiungere FIGURA genome wide 
-
-![Figure 1: chromosome_wide methylation]({{ "/assets/images/chr5_CTX_report.png" | relative_url }})
+![complete_plot]({{"/assets/images/image-12.png" | relative_url }})
+**Figure 2:** Chromosome wide methylation %
 
 <!--
 # Analysis of Methylation

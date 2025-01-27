@@ -53,8 +53,7 @@ mkdir -p genome_wide_meth/
 awk -v "OFS=\t" '{if($1=="Chr1" && ($4+$5)>0 && $6=="CG") {meth=100*($4/($4+$5)); print $0,meth}}' methylation_distribution/arabidopsis_wgbs.CX_report.txt > genome_wide_meth/arabidopsis_chr1_CG_meth.txt
 ```
 
-![alt text](image-15.png)
-
+![bedtools_table]({{"/assets/images/image-15.png" | relative_url }})
 
 # 2. Create windows of fixed size
 We will use `bedtools makewindows` to create the windows. It requires the size of the **window** and the **chromosome length**. We will use the same size of the window as previously.
@@ -76,24 +75,26 @@ Thus using the first two columns, we are able to get the chromsome size. But we 
 <details>
     <summary>Show answer</summary>
 We can look for the fasta sequencing by performing a search on google for example.<br>
-
+<br>
 Try to type in google: Arabidopsis thaliana genome fasta<br>
+<br>
 
 ![google search Arabidopsis](image-16.png)
-<img src="{{ '/assets/images/image-16.png' | relative_url }}" alt="google search Arabidopsis">
 
+<img src="{{ '/assets/images/image-16.png' | relative_url }}" alt="google search Arabidopsis">
+<br>
 You will find different options. Try to navigate and look for the fasta file on ncbi database. <br>
 
 </details>
 
-
+<br>
 <!-- Hidden link -->
 <div id="hidden-link" style="display:none;">
   <a href="https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001735.3/" target="_blank">https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001735.3/</a>
 </div>
 
 <!-- Button to toggle the visibility of the link -->
-<button onclick="document.getElementById('hidden-link').style.display='block'; this.style.display='none';">Show Link</button>
+<button onclick="document.getElementById('hidden-link').style.display='block'; this.style.display='none';">Show Fasta link</button>
 
 
 
