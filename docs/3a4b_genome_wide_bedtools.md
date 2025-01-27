@@ -59,7 +59,7 @@ The **chromosome size** is obtained using `bedtools getfasta` with the `-fo` opt
 2. length
 
 We will need to reference genome!
-{: .Highlight-title}
+{: .highlight-title}
 > Question
 > How do we get the reference genome?
 >
