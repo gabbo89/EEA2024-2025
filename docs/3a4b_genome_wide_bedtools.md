@@ -59,11 +59,14 @@ awk -v "OFS=\t" '{if($1=="Chr1" && ($4+$5)>0 && $6=="CG") {meth=100*($4/($4+$5))
 # 2. Create windows of fixed size
 We will use `bedtools makewindows` to create the windows. It requires the size of the **window** and the **chromosome length**. We will use the same size of the window as previously.
 
-The **chromosome size** is obtained using `bedtools getfasta` with the `-fo` option to get the length of the chromosomes. The output is a tab separated file with the following columns:
-1. chromosome
-2. length
+The **chromosome length** is obtained using `samtools faidx`. The output is a tab separated file with the (main) following columns:
+1. **chromosome name**
+2. **sequence length**
+3. **offset** # byte offset of the chromosome in the FASTA file
+4. **line bases**
+5. **line width** # number of bytes in each line
 
-We will need the fasta file of the reference genome!
+Thus using the first two columns, we are able to get the chromsome size. But we will need the fasta file of the reference genome!
 
 {: .highlight-title}
 > Question
@@ -72,7 +75,7 @@ We will need the fasta file of the reference genome!
 
 <details>
     <summary>Click to expand</summary>
-    We can look for the fasta sequencing by performing a shearch on google for example.
+    We can look for the fasta sequencing by performing a search on google for example.
 
     Try to type in google: Arabidopsis thaliana genome fasta
 
@@ -80,35 +83,40 @@ We will need the fasta file of the reference genome!
 
     You will find different options. Try to navigate and look for the fasta file on ncbi database.
 
-<!-- Button to toggle the visibility of the link -->
-<button onclick="document.getElementById('hidden-link').style.display='block'; this.style.display='none';">Show Link</button>
-
-<!-- Hidden link -->
-<div id="hidden-link" style="display:none;">
-  <a href="https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001735.3/" target="_blank">https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001735.3/</a>
-</div>
-    
-    https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001735.3/
-
-    
-    wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/735/GCF_000001735.4_TAIR10.1/GCF_000001735.4_TAIR10.1_genomic.fna.gz
-
 </details>
 
-ààà
-
-<!-- Button to toggle the visibility of the link -->
-<button onclick="document.getElementById('hidden-link').style.display='block'; this.style.display='none';">Show Link</button>
 
 <!-- Hidden link -->
 <div id="hidden-link" style="display:none;">
   <a href="https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001735.3/" target="_blank">https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000001735.3/</a>
 </div>
 
+<!-- Button to toggle the visibility of the link -->
+<button onclick="document.getElementById('hidden-link').style.display='block'; this.style.display='none';">Show Link</button>
 
-The reference genome is available at [http://plants.ensembl.org/Arabidopsis_thaliana/Info/Index] 
 
+
+<!-- Button to toggle the visibility of the link -->
+<button onclick="document.getElementById('hidden-link').style.display='block'; this.style.display='none';">Show Link</button>
+
+<!-- Hidden link -->
+<div id="hidden-link" style="display:none;">
+  <a href="fasta_file" target="_blank">https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/735/GCF_000001735.4_TAIR10.1/GCF_000001735.4_TAIR10.1_genomic.fna.gz</a>
+</div>
+
+
+We can use the following command to download the fasta file:
+
+```bash
+# Create a directory to store the reference genome 
+mkdir -p genome_wide_meth/reference
+
+# Download the reference genome using wget 
 wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/735/GCF_000001735.4_TAIR10.1/GCF_000001735.4_TAIR10.1_genomic.fna.gz -P genome_wide_meth/reference/
+```
+
+The reference genome is also available at [http://plants.ensembl.org/Arabidopsis_thaliana/Info/Index](http://plants.ensembl.org/Arabidopsis_thaliana/Info/Index)
+
 
 
 We will set the **windows size** to 100,000bp.
