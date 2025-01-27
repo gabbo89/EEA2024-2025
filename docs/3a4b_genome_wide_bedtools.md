@@ -6,32 +6,81 @@ nav_order: 2
 description: A comprehensive guide to understanding epigenetics.
 published: true
 ---
+INCOMPLETE
+{: .label .label-red }
 
-We will now repeat the same analysis as done previously, but in this case the windows and raw data to be imported in `R` for the final graph will be obtained using `bedtools`.
+<br>
+<details open markdown="block">
+  <summary>
+    <strong>Table of contents</strong>
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+<br>
 
-Bedtools is a software package for the manipulation of genomic datasets. It is designed to be fast, flexible, and relatively easy to use. It is particularly useful for the analysis of large genomic datasets. It is written in C++ and is available for Linux, MacOS and Windows. It is free and open source. It is available at [http://bedtools.readthedocs.io/en/latest/](http://bedtools.readthedocs.io/en/latest/)
 
-We will use the same raw table obtained from Bismark:
+We will now repeat the same analysis as done previously (a chromosome distribution of the methylation), but in this case the windows and raw data to be imported in `R` for the final graph will be obtained using `bedtools`.
 
+Bedtools is a software package for the manipulation of genomic datasets. It is designed to be fast, flexible, and relatively easy to use. It is particularly useful for the analysis of large genomic datasets. It is written in C++ and is available for Linux, MacOS and Windows. It is free and open source. It is available at [http://bedtools.readthedocs.io/en/latest/](http://bedtools.readthedocs.io/en/latest/).
 
+The file has been already used in the previous tutorial. (add link)
+
+The file is located at the following path:
+
+`/data2/biotecnologie_molecolari_magris/epigenomics/meth_distribution/arabidopsis_wgbs.CX_report.txt`
+
+It should be already available in your directory:
+`/data2/student_space/st24_16_folder/epigenomics/methylation_distribution/`
 
 # 1. Filtering of the dataset 
 We need to filter the file in order to remove positions without coverage and by selecting the methylation contexts (`CG`) for the chromosome of interest.
 
 ```bash
-awk 'OFS="\t" {if($1=="Chr1" && ($4+$5)>0 && $6=="CG") {meth=100*($4)/($4+$5); print $0,meth}}' file > ..
+# Move the working directori
+cd /data2/student_space/st24_16_folder/epigenomics/
+
+# Create a new directory for this tutorial
+mkdir -p genome_wide_meth/
+
+# Filter the input file in order to keep only the methylation context of interest (CG) and to keep sites located on Chr1 with a coverage greater than 0
+awk -v "OFS=\t" '{if($1=="Chr1" && ($4+$5)>0 && $6=="CG") {meth=100*($4/($4+$5)); print $0,meth}}' methylation_distribution/arabidopsis_wgbs.CX_report.txt > genome_wide_meth/arabidopsis_chr1_CG_meth.txt
 ```
 
+![alt text](image-15.png)
+
+
 # 2. Create the windows of a fixed size using bedtools 
-We will use `bedtools makewindows` to create the windows. It requires the size of the window and the chromosome length. We will use the same size of the window as previously.
+We will use `bedtools makewindows` to create the windows. It requires the size of the **window** and the **chromosome length**. We will use the same size of the window as previously.
 
 The **chromosome size** is obtained using `bedtools getfasta` with the `-fo` option to get the length of the chromosome. The output is a tab separated file with the following columns:
 1. chromosome
 2. length
 
+We will need to reference genome!
+{: .Highlight-title}
+> Question
+> How do we get the reference genome?
+>
+
+Once the connection to the server goes down
+> **remember** that you need to load the conda enviroment of interest by running
+>
+> `conda activate <env_name>` in the terminal.
+>
+> In addition you need to **set the path to the working directory!**
+
+
+The reference genome is available at [http://plants.ensembl.org/Arabidopsis_thaliana/Info/Index] 
+
+wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/735/GCF_000001735.4_TAIR10.1/GCF_000001735.4_TAIR10.1_genomic.fna.gz -P genome_wide_meth/reference/
+
+
 We will set the **windows size** to 100,000bp.
 
 In order to generate the windows, we will use the following command:
+
 ```bash
 bedtools makewindows -g chromosome_size.txt -w 100000 > windows.bed
 ```
@@ -39,20 +88,27 @@ bedtools makewindows -g chromosome_size.txt -w 100000 > windows.bed
 In order to assign the single sites to the windows we will use `bedtools intersect` with the `-wa` option. We need to create a file with the single sites in bed format (or bedgraph format). We need to format the columns of the input file by creating a bed-like structure:
 
 ```bash
-awk 'OFS="\t" {print $1,$2-1,$2,$8}' .. > methylome.bed 
+awk 'OFS="\t" {print $1,$2-1,$2,$8}' genome_wide_meth/arabidopsis_chr1_CG_meth.txt > genome_wide_meth/methylome.bed 
 ```
 
 Now we can **intersect** the Cs sites with the previously created windows:
 
 ```bash
-bedtools intersect -a methylome.bed -b windows.bed -wa -wb > methylome_windows.bed
+bedtools intersect `
+-a genome_wide_meth/methylome.bed \
+-b genome_wide_meth/windows.bed \
+-wa -wb > genome_wide_meth/methylome_windows.bed
 ```
 
 Now we have the individuals methylation values assigned to the windows. 
 We can obtain a mean methylation value for each window by using `bedtools groupby`:
 
 ```bash
-bedtools groupby -i methylome_windows.bed -g 1-3 -c 7 -o mean > methylome_windows_mean.bed
+bedtools groupby \
+-i genome_wide_meth/methylome_windows.bed \
+-g 1-3 \
+-c 7 \
+-o mean > genome_wide_meth/methylome_windows_mean.bed
 ```
 
 ```bash

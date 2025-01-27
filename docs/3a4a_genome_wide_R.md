@@ -7,6 +7,21 @@ description: A comprehensive guide to understanding epigenetics.
 published: true
 ---
 
+INCOMPLETE
+{: .label .label-red }
+
+<br>
+<details open markdown="block">
+  <summary>
+    <strong>Table of contents</strong>
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+<br>
+
+
 # 1. Filtering of the dataset 
 Before reading the file in `R` we need to filter the file in order to remove positions without coverage and by selecting the methylation contexts (`CG`) of interest. We will use again `awk` for this purpose.
 
@@ -22,13 +37,13 @@ It should be already available in your directory:
 
 
 ```bash
-# move the working directori
+# Move the working directori
 cd /data2/student_space/st24_16_folder/epigenomics/
 
-# create a new directory for this tutorial
+# Create a new directory for this tutorial
 mkdir -p genome_wide_meth/
 
-# filter the input file in order to keep only the methylation context of interest (CG) and to keep sites located on Chr1 with a coverage greater than 0
+# Filter the input file in order to keep only the methylation context of interest (CG) and to keep sites located on Chr1 with a coverage greater than 0
 awk '{if($1=="Chr1" && ($4+$5)>0 && $6=="CG") print $0}' methylation_distribution/arabidopsis_wgbs.CX_report.txt > genome_wide_meth/arabidopsis_chr1_CG.txt
 ```
 
@@ -41,16 +56,16 @@ R
 ```
 
 ```r
-# load the data
+# Load the data
 CG <- read.table("genome_wide_meth/arabidopsis_chr1_CG.txt",header=FALSE,sep="\t",stringsAsFactors=FALSE)
 
-# change the columns names (because we don't have a header)
+# Change the columns names (because we don't have a header)
 names(CG) <- c("chr","pos","strand","c","t","context","genome_context")
 
-# calculate the coverage per site
+# Calculate the coverage per site
 CG$coverage <- CG$c + CG$t
 
-# calculate the methylation level per site
+# Calculate the methylation level per site
 CG$methylation_level <- round(100*(CG$c / (CG$c + CG$t)),0)
 
 ```
@@ -117,13 +132,21 @@ cut(all_genomic_positions,breaks=my_breaks)
 > 10 Levels: (0,10] (10,20] (20,30] (30,40] (40,50] (50,60] (60,70] (70,80] (80,90] (90,100]
 -->
 
+
+!!!! TO CHECK 
+For example , if we want to divide the chromosome in windows of 100,000 bp, we can use the following code:
+
+We can replace the intervals (0,10] with increasing numbers that identify the windows (1,2,3,4,5..) or with numbers that represent the end coordinates of each windows (100000,200000,300000..). For example:
+!!!!
 The output of the command shows the interval that are assigned to each single coordinate. We can replace the intervals labels (for example (0,10] ) with the corresponding window number (for example 1) or for example the genomic coordinates of each window (1, 100,000 ...) using the `label` argument of the `cut` function. *Labels* is a vector which need to have the same size as the vector *breaks* less than one unit and contains the labels to be assigned to each interval. Remember that breaks as 0 at the beginning 
 
 ```r
 # Define the genomic positions
 all_genomic_positions <- 1:100
+
 # Define the breaks
 my_breaks <- c(0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
+
 # Define the labels
 my_labels <- c(10,20,30,40,50,60,70,80,90,100)
 
@@ -131,11 +154,11 @@ my_labels <- c(10,20,30,40,50,60,70,80,90,100)
 # from the genomic coordinate of the windows
 my_labels <- my_breaks[-1]
 
-# compare the length of the vectors with length()
+# Compare the length of the vectors with length()
 length(my_breaks)
 length(my_labels)
 
-# add the label to the new vector
+# Add the label to the new vector
 cut (all_genomic_positions, breaks= my_breaks, labels=my_labels)
 ```
 
@@ -233,7 +256,7 @@ Here we define the type of graph, a bar graph and the color of the bars
 `+ geom_bar(stat="identity", col="blue")`
 
 We can modify the *x labels*
-`+ scale_x_discrete(breaks=function(x)x[seq(1,length(x),by=100)])`
+`+ scale_x_discrete(breaks=function(x)x[seq(1,length(x),by=100)],labels=function(x) round(as.numeric(x)/1000000,0))`
 
 We can rotate the *x labels*
 `+ theme(axis.text.x=element_text(angle=45,hjust=1))`
@@ -275,67 +298,80 @@ ggtitle("CG methylation distribution in chr1")
 dev.off()
 ```
 
+---
 
+A different (and simplified way) of obtaining the same result, can be achieved by using the following code:
 
-For example , if we want to divide the chromosome in windows of 100,000 bp, we can use the following code:
-
-We can replace the intervals (0,10] with increasing numbers that identify the windows (1,2,3,4,5..) or with numbers that represent the end coordinates of each windows (100000,200000,300000..). For example:
-
-This can be obtained using labels of the cut function. labels is a vector with the same size of the breaks vectore (less one unit, because it has a number at the beginning).
+As already done, we need to read the data.frame and define the breaks 
 
 ```r
-# define the breaks
-my_breaks=c(0,10,20,30,40,50,60,70,80,90,100)
+# Load the data
+CG <- read.table("genome_wide_meth/arabidopsis_chr1_CG.txt",header=FALSE,sep="\t",stringsAsFactors=FALSE)
 
-# define the labels 
-my_labels=c(1,2,3,4,5,67,8,9,10)
+# Change the columns names (because we don't have a header)
+names(CG) <- c("chr","pos","strand","c","t","context","genome_context")
 
-# or
-my_labels=c(10,20,30,40,50,60,70,80,90,100)
+# Calculate the coverage per site
+CG$coverage <- CG$c + CG$t
+
+# Calculate the methylation level per site
+CG$methylation_level <- round(100*(CG$c / (CG$c + CG$t)),0)
+
+# Define the max size of the plot 
+max_pos <- 10000*ceiling(max(CG$pos)/10000)
+
+# Define the breaks
+my_breaks <- seq(0,max_pos,by=10000)
+
+# Define the labels
+my_labels <- my_breaks[-1]
+
 ```
 
-The vector my_labels and my_breaks can also be created in an automatic way (little bit more tricky):
+Now we will use the `dplyr` package to group the data by the 10 Kb windows and calculate the mean methylation level per window.
 
 ```r
-# my_labels
-my_labels = c(1,2,3,4,5,6,7,8,9,10) 
+# Load the library
+library(dplyr)
 
-#can be obtained 
+# Assign the windows to coordinates
+CG_windows = CG %>% mutate(window = cut(pos, breaks=my_breaks, labels=my_labels)) 
 
-my_lables=1:(length(seq(0,100,by=10))-1)
+# Check the first 10 rows of the modified dataframe 
+head(CG_windows)
 ```
+
+We will get
+![alt text](image-13.png)
 
 ```r
-my_breaks = seq(0,100,by=10) 
-
-#can be obtained 
-
-my_lables=my_breaks[-1]
+# Calculate mean methylation level per window
+CG_window_mean_meth_and_length = CG_windows %>% group_by(window) %>% summarize(count=n(), mean_meth = mean(methylation_level))
 ```
 
-So what we obtain will be:
+Here we used the following syntax:
+
+1. `CG_windows %>%`, where `%>%` represent the pipe operator. The command used the dataframe `CG_windows` as the input for the next operation. 
+
+2. The `group_by` function groups the data by the `window` column. 
+
+3. The `summarize` function calculates the mean methylation level per window and the number of sites per window. The `mean(methylation_level)` function calculates the mean methylation level, and assign the value to a column named **mean_meth**. The `count=n()` function counts the number of sites per window (the number of rows in each group) and assign the value to a column named **count**.
+
+We can now check the output
 
 ```r
-all_genomic_positions=1:100
-
-my_breaks = seq(0,100,by=10)
-
-my_labels = my_breaks[-1]
-
-cut(all_genomic_positions,breaks=my_breaks,labels=my_labels)
+head(CG_window_mean_meth_and_length)
 ```
 
-{: .success-title }
-> STDOUT message
->
+![alt text](image-14.png)
 
-If we want to apply the same to the CG data.frame
+The format of the output is slightly different, because created with `dplyr` package. It is in *tibble* format. 
+
+Now we can draw the same graph as before, but with the new data. We will use the `ggplot2` package.
+
 
 ```r
-maxpos=1000*ceiling(max(CG$pos)/10000)
-my_breaks=seq(0,maxpos,by=1000)
-my_labels=my_breaks[-1]
-CG$window=cut(CG$pos,breaks=my_breaks,labels=my_labels)
+library(ggplot2)
+ggplot(CG_window_mean_meth_and_length, aes(x=window,y=mean_meth)) + 
+geom_bar(stat="identity", col="blue")
 ```
-
---- 

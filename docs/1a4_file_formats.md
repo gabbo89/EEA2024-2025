@@ -1,7 +1,7 @@
 ---
 layout: default
 title: File formats
-parent: 1. Introduction
+parent: 2. General Guides
 nav_order: 4
 published: true
 ---

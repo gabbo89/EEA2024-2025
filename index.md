@@ -17,7 +17,7 @@ For each lesson (arguments) we will explore a different aspect of epigenomics an
 
 ---
 
-For any help (or if you have any hint or suggestion), contact me at: **gabriele.magris@uniud.it**
+For any help, or if you find a bug or have any hint or suggestion, contact me at: **gabriele.magris@uniud.it**
 
 _Any improvement is welcome!!_
 

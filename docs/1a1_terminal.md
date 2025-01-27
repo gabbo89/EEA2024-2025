@@ -11,10 +11,10 @@ The analyses will be performed on a remote server, which can be accessed remotel
 
 For **windows** user's Mobaxterm is the client reccomended, while for **mac** and **linux** users the terminal is the default option.
 
-The ip address is: 158.110.36.60 
+The ip address is: 
 The username is the one already used 
 
-- **Windows**
+## **Windows**
 
 Mobaxterm can be downloaded freely (home edition) from the official website: https://mobaxterm.mobatek.net/download.html. 
 
@@ -29,7 +29,7 @@ Files can be graphically accessed using the panel on the left side on Mobaxterm.
 ![mobax_panel](image-1.png)
 
 
-- **mac**
+## **mac**
 To connect to the server and be able to use interactive and graphical softwares, you need first to have installed on your computer the XQuartz software, that can be downloaded from the official website: https://www.xquartz.org/.
 
 Next I reccomend to connect from the terminal to the server using the following syntax:
@@ -46,6 +46,6 @@ This should solve the problem of black windows (on igv) and other graphical issu
 
 For any concern, just tell me!
 
-In order to navigate graphically through the directories and select the files you want to use on the server, you can use a client FTP, like Cyberduck (https://cyberduck.io/). The are several available and alternatives softwares available (for example filezilla).
+In order to navigate graphically through the directories and select the files, you can use a client FTP, like Cyberduck (https://cyberduck.io/). The are several and alternatives softwares available (for example filezilla).
 
 You will need to set the server address, the username and the password.

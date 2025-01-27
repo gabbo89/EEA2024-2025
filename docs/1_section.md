@@ -6,7 +6,7 @@ has_toc: True
 nav_order: 2
 ---
 
-Here you will find the basic information about Epigenetics and Epigenomics.
+In this section you will find some basics informations.
 
 <!--
 ![giove]({{ "/assets/images/Picture3.jpg" | relative_url }})
