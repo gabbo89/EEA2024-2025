@@ -65,7 +65,7 @@ The **chromosome length** is obtained using `samtools faidx`. The output is a ta
 2. **sequence length**
 3. **offset** _# byte offset of the chromosome in the FASTA file_{: .label .label-green-100 }
 4. **line bases**
-5. **line width** _# number of bytes in each line_ {: .label .label-green-100 }
+5. **line width** _# number of bytes in each line_{: .text-green-100 }
 
 
 Thus using the first two columns, we are able to get the chromsome size. But we will need the fasta file of the reference genome!
