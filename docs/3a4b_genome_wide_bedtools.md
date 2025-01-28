@@ -151,6 +151,7 @@ bedtools intersect \
 -wa -wb | less
 ```
 <br>
+
 {: .highlight}
 > Why do we write `$2-1` in awk command while creating the bed?
 
@@ -159,6 +160,8 @@ bedtools intersect \
 Can you spot the difference between the 2 intersect examples? 
 
 ##### this was obtained with `awk 'OFS="\t" {print $1,$2-1,$2,$8}' `
+{: .no_toc}
+
 ```
 Chr1    108     109     83.3333 Chr1    0       500
 Chr1    109     110     100     Chr1    0       500
@@ -175,6 +178,8 @@ Chr1    511     512     83.3333 Chr1    500     1000
 ```
 
 ##### this was obtained with `awk 'OFS="\t" {print $1,$2,$2,$8}' `
+{: .no_toc}
+
 ```
 Chr1    109     109     83.3333 Chr1    0       500
 Chr1    110     110     100     Chr1    0       500
@@ -195,7 +200,7 @@ Chr1    512     512     83.3333 Chr1    500     1000
 We will now set the **windows size** to 100,000bp.
 
 ```bash
-# define a variable that point to the index file 
+# Define a variable that point to the index file 
 idx_file=genome_wide_meth/reference/GCF_000001735.4_TAIR10.1_genomic.fna.fai
 bedtools makewindows \
 -g <(cut -f 1,2 ${idx_file} | grep "NC_003070.9" | sed "s|NC_003070.9|Chr1|1" ) \
@@ -212,7 +217,7 @@ bedtools intersect \
 ```
 The output should look like
 
-```r
+```bash
 Chr1    0       100000  Chr1    108     109     83.3333
 Chr1    0       100000  Chr1    109     110     100
 Chr1    0       100000  Chr1    114     115     100
@@ -226,11 +231,11 @@ Chr1    0       100000  Chr1    500     501     83.3333
 ```
 
 Now we have the individuals methylation values assigned to the windows. 
-We can obtain a mean methylation value for each window by using `bedtools groupby`:
+We can obtain a mean methylation value for each window by using `bedtools groupby`.
 
-![groupby_bedtools](image.png)
+![groupby_bedtools]({{"/assets/images/group_by.png" | relative_url }})
 
-three options are essentials:
+Three options are essentials:
 - `-g` to specify the column to group by. Need to be comma separated (or ranges)
 - `-c` to specify the column to summarize
 - `-o` to specify the operation to be applied to the column selected above

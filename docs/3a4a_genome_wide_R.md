@@ -112,7 +112,7 @@ all_genomic_positions=1:100
 # Use the cut function
 cut(all_genomic_positions,breaks=my_breaks)
 ```
-![alt text](image-3.png)
+![cut_output]({{"/assets/images/image-3.png" | relative_url }})
 
 <!--
 {: .success-title }

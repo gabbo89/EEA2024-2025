@@ -56,6 +56,7 @@ The file is tab separated and the columns are in the following order:
 We will use average values in windows in order to understand how we can represent methylation values across a chromosome as depicted in [Figure 2](#figure-2).
 
 ![complete_plot]({{"/assets/images/image-12.png" | relative_url }})
+<br>
 **Figure 2:** Chromosome wide methylation %
 
 <!--
