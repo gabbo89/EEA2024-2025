@@ -123,16 +123,16 @@ samtools faidx genome_wide_meth/reference/GCF_000001735.4_TAIR10.1_genomic.fna
 The reference genome is also available at [http://plants.ensembl.org/Arabidopsis_thaliana/Info/Index](http://plants.ensembl.org/Arabidopsis_thaliana/Info/Index)
 
 
-
-We will set the **windows size** to 100,000bp.
-
-In order to generate the windows, we will use the following command:
+In order to run a first test, we will set the **windows size** to 500bp. 
+To generate the windows, we will use the following command:
 
 ```bash
 bedtools makewindows \
--g <(cut -f 1,2 genome_wide_meth/reference/GCF_000001735.4_TAIR10.1_genomic.fna | grep "Chr1") \
--w 100000 > genome_wide_meth/100k_windows.bed
+-g <(cut -f 1,2 genome_wide_meth/reference/GCF_000001735.4_TAIR10.1_genomic.fna.fai | grep "NC_003070.9" | sed "s|NC_003070.9|Chr1|1" ) \
+-w 500 > genome_wide_meth/500bp_windows.bed
 ```
+We need to use a combination of grep and sed, because we need to select the chromosome of interest and translate the ID to the chromosome label we have in our methylation table. 
+
 # 3. Intersect the two tables 
 In order to assign the single sites to the windows we will use `bedtools intersect` with the `-wa` option. We need to create a file with the single sites in bed format (or bedgraph format). We need to format the columns of the input file by creating a bed-like structure:
 
@@ -143,6 +143,29 @@ genome_wide_meth/arabidopsis_chr1_CG_meth.txt \
 ```
 
 Now we can **intersect** the Cs sites with the previously created windows:
+
+```bash
+bedtools intersect \
+-a genome_wide_meth/methylome.bed \
+-b genome_wide_meth/500bp_windows.bed \
+-wa -wb > genome_wide_meth/methylome_windows.bed
+```
+
+{: .highlight}
+> Why do we write `$2-1` in awk command while creating the bed? 
+
+Can you spot the difference between the 2 intersect examples? 
+![alt text](image.png)
+<br>
+We will now set the **windows size** to 100,000bp.
+
+```bash
+bedtools makewindows \
+-g <(cut -f 1,2 genome_wide_meth/reference/GCF_000001735.4_TAIR10.1_genomic.fna.fai | grep "NC_003070.9" | sed "s|NC_003070.9|Chr1|1" ) \
+-w 100000 > genome_wide_meth/100k_windows.bed
+```
+
+And  **intersect** the Cs sites with the created windows:
 
 ```bash
 bedtools intersect \
