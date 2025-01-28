@@ -124,8 +124,11 @@ In order to run a first test, we will set the **windows size** to 500bp.
 To generate the windows, we will use the following command:
 
 ```bash
+# define a variable that point to the index file 
+idx_file=genome_wide_meth/reference/GCF_000001735.4_TAIR10.1_genomic.fna.fai
+
 bedtools makewindows \
--g <(cut -f 1,2 genome_wide_meth/reference/GCF_000001735.4_TAIR10.1_genomic.fna.fai | grep "NC_003070.9" | sed "s|NC_003070.9|Chr1|1" ) \
+-g <(cut -f 1,2 ${idx_file} | grep "NC_003070.9" | sed "s|NC_003070.9|Chr1|1" ) \
 -w 500 > genome_wide_meth/500bp_windows.bed
 ```
 We need to use a combination of grep and sed, because we need to select the chromosome of interest and translate the ID to the chromosome label we have in our methylation table. 
@@ -149,7 +152,8 @@ bedtools intersect \
 ```
 <br>
 {: .highlight}
-> Why do we write `$2-1` in awk command while creating the bed? 
+> Why do we write `$2-1` in awk command while creating the bed?
+
 <br>
 
 Can you spot the difference between the 2 intersect examples? 
