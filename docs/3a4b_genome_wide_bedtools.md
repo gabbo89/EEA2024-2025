@@ -30,6 +30,9 @@ We will now repeat the same analysis as done previously (a chromosome distributi
 
 Bedtools is a software package for the manipulation of genomic datasets. It is designed to be fast, flexible, and relatively easy to use. It is particularly useful for the analysis of large genomic datasets. It is written in C++ and is available for Linux, MacOS and Windows. It is free and open source. It is available at [http://bedtools.readthedocs.io/en/latest/](http://bedtools.readthedocs.io/en/latest/).
 
+You can find a detailed explanation [here](https://onedrive.live.com/?cid=YOUR_CID&resid=YOUR_RESID&authkey=YOUR_AUTHKEY&action=embedview).
+
+
 The file has been already used in the previous tutorial. (add link)
 
 The file is located at the following path:
@@ -63,7 +66,7 @@ We will use `bedtools makewindows` to create the windows. It requires the size o
 The **chromosome length** is obtained using `samtools faidx`. The output is a tab separated file with the following columns:
 1. **chromosome name**
 2. **sequence length**
-3. **offset** _# byte offset of the chromosome in the FASTA file_{: .label .label-green-100 }
+3. **offset** _# byte offset of the chromosome in the FASTA file_{: .text-green-100 }
 4. **line bases**
 5. **line width** _# number of bytes in each line_{: .text-green-100 }
 
@@ -80,11 +83,7 @@ Thus using the first two columns, we are able to get the chromsome size. But we 
     <summary>Show answer</summary>
 We can look for the fasta sequencing by performing a search on google for example.<br>
 <br>
-Try to type in google: Arabidopsis thaliana genome fasta<br>
-<br>
-
-da rimuovere eventualmente!!!!
-![google search Arabidopsis]({{"/assets/images/image-16.png" | relative_url }})
+Try to type in google: <b><i>Arabidopsis thaliana genome fasta</i></b> <br>
 
 <img src="{{ '/assets/images/image-16.png' | relative_url }}" alt="google search Arabidopsis">
 <br>
@@ -100,8 +99,6 @@ You will find different options. Try to navigate and look for the fasta file on 
 
 <!-- Button to toggle the visibility of the link -->
 <button onclick="document.getElementById('hidden-link').style.display='block'; this.style.display='none';">Show Fasta link</button>
-
-You can find an example PowerPoint presentation on OneDrive [here](https://onedrive.live.com/?cid=YOUR_CID&resid=YOUR_RESID&authkey=YOUR_AUTHKEY&action=embedview).
 
 We can use the following command to download the fasta file:
 
@@ -148,34 +145,91 @@ Now we can **intersect** the Cs sites with the previously created windows:
 bedtools intersect \
 -a genome_wide_meth/methylome.bed \
 -b genome_wide_meth/500bp_windows.bed \
--wa -wb > genome_wide_meth/methylome_windows.bed
+-wa -wb | less
 ```
-
+<br>
 {: .highlight}
 > Why do we write `$2-1` in awk command while creating the bed? 
+<br>
 
 Can you spot the difference between the 2 intersect examples? 
-![alt text](image.png)
+
+##### this was obtained with `awk 'OFS="\t" {print $1,$2-1,$2,$8}' `
+```
+Chr1    108     109     83.3333 Chr1    0       500
+Chr1    109     110     100     Chr1    0       500
+Chr1    114     115     100     Chr1    0       500
+Chr1    115     116     90.9091 Chr1    0       500
+Chr1    160     161     85.7143 Chr1    0       500
+Chr1    161     162     94.7368 Chr1    0       500
+Chr1    309     310     100     Chr1    0       500
+Chr1    310     311     100     Chr1    0       500
+Chr1    499     500     92.3077 Chr1    0       500
+Chr1    500     501     83.3333 Chr1    500     1000
+Chr1    510     511     92.3077 Chr1    500     1000
+Chr1    511     512     83.3333 Chr1    500     1000
+```
+
+##### this was obtained with `awk 'OFS="\t" {print $1,$2,$2,$8}' `
+```
+Chr1    109     109     83.3333 Chr1    0       500
+Chr1    110     110     100     Chr1    0       500
+Chr1    115     115     100     Chr1    0       500
+Chr1    116     116     90.9091 Chr1    0       500
+Chr1    161     161     85.7143 Chr1    0       500
+Chr1    162     162     94.7368 Chr1    0       500
+Chr1    310     310     100     Chr1    0       500
+Chr1    311     311     100     Chr1    0       500
+Chr1    500     500     92.3077 Chr1    0       500
+Chr1    500     500     92.3077 Chr1    500     1000
+Chr1    501     501     83.3333 Chr1    500     1000
+Chr1    511     511     92.3077 Chr1    500     1000
+Chr1    512     512     83.3333 Chr1    500     1000
+```
+
 <br>
 We will now set the **windows size** to 100,000bp.
 
 ```bash
+# define a variable that point to the index file 
+idx_file=genome_wide_meth/reference/GCF_000001735.4_TAIR10.1_genomic.fna.fai
 bedtools makewindows \
--g <(cut -f 1,2 genome_wide_meth/reference/GCF_000001735.4_TAIR10.1_genomic.fna.fai | grep "NC_003070.9" | sed "s|NC_003070.9|Chr1|1" ) \
+-g <(cut -f 1,2 ${idx_file} | grep "NC_003070.9" | sed "s|NC_003070.9|Chr1|1" ) \
 -w 100000 > genome_wide_meth/100k_windows.bed
 ```
 
-And  **intersect** the Cs sites with the created windows:
+Now **intersect** the Cs sites with the created windows:
 
 ```bash
 bedtools intersect \
--a genome_wide_meth/methylome.bed \
--b genome_wide_meth/100k_windows.bed \
+-a genome_wide_meth/100k_windows.bed \
+-b genome_wide_meth/methylome.bed \
 -wa -wb > genome_wide_meth/methylome_windows.bed
+```
+The output should look like
+
+```r
+Chr1    0       100000  Chr1    108     109     83.3333
+Chr1    0       100000  Chr1    109     110     100
+Chr1    0       100000  Chr1    114     115     100
+Chr1    0       100000  Chr1    115     116     90.9091
+Chr1    0       100000  Chr1    160     161     85.7143
+Chr1    0       100000  Chr1    161     162     94.7368
+Chr1    0       100000  Chr1    309     310     100
+Chr1    0       100000  Chr1    310     311     100
+Chr1    0       100000  Chr1    499     500     92.3077
+Chr1    0       100000  Chr1    500     501     83.3333
 ```
 
 Now we have the individuals methylation values assigned to the windows. 
 We can obtain a mean methylation value for each window by using `bedtools groupby`:
+
+![groupby_bedtools](image.png)
+
+three options are essentials:
+- `-g` to specify the column to group by. Need to be comma separated (or ranges)
+- `-c` to specify the column to summarize
+- `-o` to specify the operation to be applied to the column selected above
 
 ```bash
 bedtools groupby \
@@ -183,4 +237,28 @@ bedtools groupby \
 -g 1-3 \
 -c 7 \
 -o mean > genome_wide_meth/methylome_windows_mean.bed
+```
+
+```bash
+Chr1    0       100000  11.60445855
+Chr1    100000  200000  8.414595102
+Chr1    200000  300000  10.31226345
+Chr1    300000  400000  14.74457454
+Chr1    400000  500000  8.907547652
+Chr1    500000  600000  8.964093083
+Chr1    600000  700000  13.71786552
+Chr1    700000  800000  18.34481589
+Chr1    800000  900000  13.79805439
+Chr1    900000  1000000 11.17873136
+```
+
+Now we can draw the plot using the created file.
+
+```bash
+R
+```
+
+```r
+# We will use a different library to read the bed file
+library(data.table)
 ```
