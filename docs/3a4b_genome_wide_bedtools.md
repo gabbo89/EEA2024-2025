@@ -50,7 +50,9 @@ cd /data2/student_space/st24_16_folder/epigenomics/
 mkdir -p genome_wide_meth/
 
 # Filter the input file in order to keep only the methylation context of interest (CG) and to keep sites located on Chr1 with a coverage greater than 0
-awk -v "OFS=\t" '{if($1=="Chr1" && ($4+$5)>0 && $6=="CG") {meth=100*($4/($4+$5)); print $0,meth}}' methylation_distribution/arabidopsis_wgbs.CX_report.txt > genome_wide_meth/arabidopsis_chr1_CG_meth.txt
+awk -v "OFS=\t" '{if($1=="Chr1" && ($4+$5)>0 && $6=="CG") {meth=100*($4/($4+$5)); print $0,meth}}' \
+methylation_distribution/arabidopsis_wgbs.CX_report.txt \
+> genome_wide_meth/arabidopsis_chr1_CG_meth.txt
 ```
 
 ![bedtools_table]({{"/assets/images/image-15.png" | relative_url }})
@@ -108,7 +110,8 @@ We can use the following command to download the fasta file:
 mkdir -p genome_wide_meth/reference
 
 # Download the reference genome using wget 
-wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/735/GCF_000001735.4_TAIR10.1/GCF_000001735.4_TAIR10.1_genomic.fna.gz -P genome_wide_meth/reference/
+wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/735/GCF_000001735.4_TAIR10.1/GCF_000001735.4_TAIR10.1_genomic.fna.gz \
+-P genome_wide_meth/reference/
 
 # Unzip the fasta file 
 gunzip genome_wide_meth/reference/GCF_000001735.4_TAIR10.1_genomic.fna.gz
@@ -127,19 +130,22 @@ In order to generate the windows, we will use the following command:
 
 ```bash
 bedtools makewindows \
--g <(cut -f 1,2 genome_wide_meth/reference/GCF_000001735.4_TAIR10.1_genomic.fna | grep "Chr1") -w 100000 > genome_wide_meth/100k_windows.bed
+-g <(cut -f 1,2 genome_wide_meth/reference/GCF_000001735.4_TAIR10.1_genomic.fna | grep "Chr1") \
+-w 100000 > genome_wide_meth/100k_windows.bed
 ```
 # 3. Intersect the two tables 
 In order to assign the single sites to the windows we will use `bedtools intersect` with the `-wa` option. We need to create a file with the single sites in bed format (or bedgraph format). We need to format the columns of the input file by creating a bed-like structure:
 
 ```bash
-awk 'OFS="\t" {print $1,$2-1,$2,$8}' genome_wide_meth/arabidopsis_chr1_CG_meth.txt > genome_wide_meth/methylome.bed 
+awk 'OFS="\t" {print $1,$2-1,$2,$8}' \
+genome_wide_meth/arabidopsis_chr1_CG_meth.txt \
+> genome_wide_meth/methylome.bed 
 ```
 
 Now we can **intersect** the Cs sites with the previously created windows:
 
 ```bash
-bedtools intersect `
+bedtools intersect \
 -a genome_wide_meth/methylome.bed \
 -b genome_wide_meth/100k_windows.bed \
 -wa -wb > genome_wide_meth/methylome_windows.bed
