@@ -58,17 +58,19 @@ awk -v "OFS=\t" '{if($1=="Chr1" && ($4+$5)>0 && $6=="CG") {meth=100*($4/($4+$5))
 # 2. Create windows of fixed size
 We will use `bedtools makewindows` to create the windows. It requires the size of the **window** and the **chromosome length**. We will use the same size of the window as previously.
 
-The **chromosome length** is obtained using `samtools faidx`. The output is a tab separated file with the (main) following columns:
+The **chromosome length** is obtained using `samtools faidx`. The output is a tab separated file with the following columns:
 1. **chromosome name**
 2. **sequence length**
-3. **offset** # byte offset of the chromosome in the FASTA file
+3. **offset** _# byte offset of the chromosome in the FASTA file_{: .label .label-green-100 }
 4. **line bases**
-5. **line width** # number of bytes in each line
+5. **line width** _# number of bytes in each line_ {: .label .label-green-100 }
+
 
 Thus using the first two columns, we are able to get the chromsome size. But we will need the fasta file of the reference genome!
 
 {: .highlight-title}
 > Question
+>
 > How do we get the reference genome?
 >
 
@@ -79,7 +81,8 @@ We can look for the fasta sequencing by performing a search on google for exampl
 Try to type in google: Arabidopsis thaliana genome fasta<br>
 <br>
 
-![google search Arabidopsis](image-16.png)
+da rimuovere eventualmente!!!!
+![google search Arabidopsis]({{"/assets/images/image-16.png" | relative_url }})
 
 <img src="{{ '/assets/images/image-16.png' | relative_url }}" alt="google search Arabidopsis">
 <br>
@@ -96,7 +99,7 @@ You will find different options. Try to navigate and look for the fasta file on 
 <!-- Button to toggle the visibility of the link -->
 <button onclick="document.getElementById('hidden-link').style.display='block'; this.style.display='none';">Show Fasta link</button>
 
-
+You can find an example PowerPoint presentation on OneDrive [here](https://onedrive.live.com/?cid=YOUR_CID&resid=YOUR_RESID&authkey=YOUR_AUTHKEY&action=embedview).
 
 We can use the following command to download the fasta file:
 
