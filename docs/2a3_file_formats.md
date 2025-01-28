@@ -379,7 +379,7 @@ chr3  127480532  127481699
 >
 > **1-based**
 
-BED format is 0-start, half-open, which means that the start position is inclusive and the end position is exclusive.
+BED format is **0-start**{: .label .label-blue }, **half-open**{: .label .label-blue }, which means that the start position is inclusive and the end position is exclusive.
 `Closed-start` A is included and `Open-end` B is excluded.
 
 ![bed-format]({{ "/assets/images/1a4-6_bed_format.png" | relative_url }})
