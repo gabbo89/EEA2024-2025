@@ -8,7 +8,7 @@ has_children: true
 published: true
 ---
 
-![Bismark figure](bismark.png)
+![Bismark_figure]({{"/assets/images/bismark.png" | relative_url }})
 
 
 Bismark is a program to map bisulfite treated sequencing reads to a genome of interest and perform methylation calls in a single step. It's main features are:

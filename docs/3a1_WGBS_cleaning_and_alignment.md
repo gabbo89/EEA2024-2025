@@ -259,7 +259,7 @@ Check the obtained figures from the output folder in order to evaluate the quali
 Once the raw fastq files have been filtered in order to remove potential contaminants and adapters, we are ready to perform the alignment, given a reference genome.
 
 
-In order to perform the alignment we will use the Bismark suite [Bismark short manual](https://gabbo89.github.io/EEA2024-2025/docs/2a_Bismark_manual.html){: .btn } [Bismark on github](https://felixkrueger.github.io/Bismark/){: .btn }
+In order to perform the alignment we will use the Bismark suite [Bismark short manual](https://gabbo89.github.io/EEA2024-2025/docs/2a3_Bismark_manual.html){: .btn } [Bismark on github](https://felixkrueger.github.io/Bismark/){: .btn }
 
 <!--
 In order to perform the alignment we will use the Bismark suite [^Bismark short manual] [Bismark short manual][bismark short manual] and [^TrimGalore on Github][trimgalore_github].
@@ -771,7 +771,7 @@ We can take a look at the summary results, which are reported in bisulfite_conve
 
 ------
 
-[trimgalore short manual]: https://gabbo89.github.io/EEA2024-2025/docs/2a_TrimGalore_manual.html
+[trimgalore short manual]: https://gabbo89.github.io/EEA2024-2025/docs/2a2_TrimGalore_manual.html
 [trimgalore_github]: https://github.com/FelixKrueger/TrimGalore
 
 <!--

@@ -34,13 +34,13 @@ ONT sequencing data need to be in the appropriate format (usually `fastq` or `fa
 
 Create the index of the reference genome 
 
-# Step 2: ALignment of reads to the reference genome 
+# 2. ALign the reads to the reference genome 
 We will use `minimap2` to align the reads to the reference genome. 
 
 
 
-# Step 3: Extract methylation informations 
-We will use `modkit` to extract the methylation informations from the aligned reads. 
+# 3. Extract methylation informations 
+We will use `modkit` to extract the methylation informations from the aligned reads.  [Modkit short manual][Modkit short manual]{: .btn } and [Modkit on Github][Modkit_github]{: .btn }
 
 ## create the bedMethyl tables 
 A primary use of `modkit` is to create summary counts of modified and unmodified bases in an extended bedMethyl format. bedMethyl files tabulate the counts of base modifications from every sequencing read over each aligned reference genomic position. Only **primary alignments** are used in generating the table, it is recommended to mark duplicate alignments before running as multiple primary alignments can be double counted (but the behavior is logged).
@@ -80,3 +80,8 @@ ${out_var}/dna_methylation/modkit/${sample}/${aligner}${sample}${hap}/${file_nam
 >
 > Finished generating genome-wide cytosine report!'
 
+[Modkit short manual]: https://gabbo89.github.io/EEA2024-2025/docs/2a4_Modkit_manual.html
+[Modkit_github]: https://github.com/nanoporetech/modkit
+
+
+[Modkit short manual][Modkit short manual]{: .btn } and [Modkit on Github][Modkit_github]{: .btn }
