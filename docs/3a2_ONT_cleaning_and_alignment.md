@@ -83,5 +83,3 @@ ${out_var}/dna_methylation/modkit/${sample}/${aligner}${sample}${hap}/${file_nam
 [Modkit short manual]: https://gabbo89.github.io/EEA2024-2025/docs/2a4_Modkit_manual.html
 [Modkit_github]: https://github.com/nanoporetech/modkit
 
-
-[Modkit short manual][Modkit short manual]{: .btn } and [Modkit on Github][Modkit_github]{: .btn }
