@@ -721,17 +721,19 @@ Upload the reference genome and the alignment file (bam file need to be sorted a
 <video controls width="450">
   <source src="https://github.com/gabbo89/video/blob/main/assets/video/igv.mp4" type="video/mp4">
 </video>
+<br>
+
+<video controls width="450">
+  <source src="https://drive.google.com/file/d/1UphR7jG7YSwzp1hLpsWGgaIMKKmyS62p/view?usp=drive_link" type="video/mp4">
+</video>
 
 <video width="600" controls>
-  <source src="{{ '/assets/videos/igv.mp4' | relative_url }}" type="video/mp4">
+  <source src="{{ '/assets/videos/igv.mov' | relative_url }}" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 
 Or, [click here to download the tutorial](https://github.com/gabbo89/EEA2024-2025/blob/main/assets/videos/igv.mp4).
 
-https://github.com/gabbo89/EEA2024-2025/blob/main/assets/videos/igv.mp4
-
-https://github.com/gabbo89/video/blob/main/assets/video/igv.mp4
 
 #### upload the following files:
 {: .no_toc }
