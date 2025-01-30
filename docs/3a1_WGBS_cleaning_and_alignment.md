@@ -706,8 +706,7 @@ This will open an interactive windows
 
 Upload the reference genome and the alignment file (bam file need to be sorted and indexed)
 
-# follow instructions as below 
-
+Follow instructions as shown below
 
 <!--
 [text](<../assets/images/2025-01-23 16-33-40.mkv>)
@@ -725,7 +724,7 @@ Upload the reference genome and the alignment file (bam file need to be sorted a
 -->
 
 <video controls width="450">
-  <source src="https://drive.google.com/file/d/1UphR7jG7YSwzp1hLpsWGgaIMKKmyS62p/view?usp=sharing" type="video/mp4">
+  <source src="https://drive.google.com/file/d/1UphR7jG7YSwzp1hLpsWGgaIMKKmyS62p/preview" type="video/mp4">
 </video>
 
 <!--
