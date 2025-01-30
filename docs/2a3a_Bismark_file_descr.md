@@ -31,7 +31,8 @@ SEQILMN03:348:CAG91ANXX:8:1101:16424:6264_1:N:0:TGGTGA
 The file is a linear file tab separated with 16 columns.
 For example:
 
-![bam outpout](image.png)
+
+![bam_output](image-2.png)
 
 1. `QNAME` (read name)
 2. `FLAG` (this flag tries to take the strand a bisulfite read originated from into account (this is different from ordinary DNA alignment flags!))
@@ -58,8 +59,8 @@ The mate read of paired-end alignments is written out as an additional separate 
 ## Methylation call
 
 The methylation call string contains a dot `.` for every position in the read not involving a cytosine, or contains one of the following letters for the three different cytosine methylation contexts:
-- **UPPER CASE = METHYLATED**
-- **lower case = unmethylated**
+   **UPPER CASE = METHYLATED**
+   **lower case = unmethylated**
 
 
 - `z` - C in CpG context - unmethylated
