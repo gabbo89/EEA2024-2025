@@ -726,8 +726,9 @@ Jump to the coordinate:
   Your browser does not support the video tag.
 </video>
 
-Or, [click here to download the tutorial](https://github.com/gabbo89/EEA2024-2025/raw/main/assets/images/igv.mp4).
-
+Or, [click here to download the tutorial](https://github.com/gabbo89/EEA2024-2025/blob/main/assets/videos/igv.mp4).
+https://github.com/gabbo89/EEA2024-2025/blob/main/assets/videos/igv.mp4
+https://github.com/gabbo89/video/blob/main/assets/video/igv.mp4
 ---
 
 # 5. Conversion rate evaluation 
