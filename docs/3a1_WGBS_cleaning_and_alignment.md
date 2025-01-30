@@ -697,11 +697,16 @@ This section describes the process of uploading data to an interactive genomic v
 -->
 Now we can try to upload the data to an interactive genomic viewer, as for example `igv` (Integrative Genomics Viewer).  
 
-We need to change the environment 
+Run IGV from the command line this will open an interactive windows
+```bash
+igv
+```
 
+![alt text](image-1.png)
 
-# upload the reference genome and the alignment file 
-# follow instructions 
+Upload the reference genome and the alignment file (bam file need to be sorted and indexed)
+# follow instructions as below 
+Jump to the coordinate: 
 
 <!--
 [text](<../assets/images/2025-01-23 16-33-40.mkv>)
