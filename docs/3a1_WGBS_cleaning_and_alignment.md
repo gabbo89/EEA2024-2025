@@ -730,6 +730,7 @@ Upload the reference genome and the alignment file (bam file need to be sorted a
 Or, [click here to download the tutorial](https://github.com/gabbo89/EEA2024-2025/blob/main/assets/videos/igv.mp4).
 
 https://github.com/gabbo89/EEA2024-2025/blob/main/assets/videos/igv.mp4
+
 https://github.com/gabbo89/video/blob/main/assets/video/igv.mp4
 
 #### upload the following files:
