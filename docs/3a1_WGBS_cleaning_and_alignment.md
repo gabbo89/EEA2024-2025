@@ -705,8 +705,9 @@ This will open an interactive windows
 ![igv_preview](image-1.png)
 
 Upload the reference genome and the alignment file (bam file need to be sorted and indexed)
+
 # follow instructions as below 
-Jump to the coordinate: 
+
 
 <!--
 [text](<../assets/images/2025-01-23 16-33-40.mkv>)
@@ -727,8 +728,20 @@ Jump to the coordinate:
 </video>
 
 Or, [click here to download the tutorial](https://github.com/gabbo89/EEA2024-2025/blob/main/assets/videos/igv.mp4).
+
 https://github.com/gabbo89/EEA2024-2025/blob/main/assets/videos/igv.mp4
 https://github.com/gabbo89/video/blob/main/assets/video/igv.mp4
+
+#### upload the following files:
+{: .no_toc }
+
+- reference genome: 
+**`/data2/student_space/st24_16_folder/epigenomics/wgbs/reference/vitis_vinifera.fasta`**
+- alignment file:
+**`/data2/student_space/st24_16_folder/epigenomics/wgbs/alignments/rkatsiteli.leaves_pe.deduplicated.sort.bam`**
+
+Jump to the coordinate: chr05:24461000-24462000
+
 ---
 
 # 5. Conversion rate evaluation 
