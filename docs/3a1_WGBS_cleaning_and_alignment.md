@@ -724,11 +724,12 @@ Upload the reference genome and the alignment file (bam file need to be sorted a
 <br>
 
 <video controls width="450">
-  <source src="https://drive.google.com/file/d/1UphR7jG7YSwzp1hLpsWGgaIMKKmyS62p/view?usp=drive_link" type="video/mp4">
+  <source src="https://drive.google.com/file/d/1UphR7jG7YSwzp1hLpsWGgaIMKKmyS62p/view?usp=sharing" type="video/mp4">
 </video>
 
+
 <video width="600" controls>
-  <source src="{{ '/assets/videos/igv.mov' | relative_url }}" type="video/mp4">
+  <source src="{{ '/assets/videos/igv.mp4' | relative_url }}" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 
