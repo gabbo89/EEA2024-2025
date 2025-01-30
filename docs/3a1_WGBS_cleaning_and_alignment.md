@@ -726,7 +726,8 @@ Follow instructions as shown below
 <video controls width="450">
   <source src="https://drive.google.com/file/d/1UphR7jG7YSwzp1hLpsWGgaIMKKmyS62p/preview" type="video/mp4">
 </video>
-
+<br>
+<iframe src="https://drive.google.com/file/d/1UphR7jG7YSwzp1hLpsWGgaIMKKmyS62p/preview" width="640" height="480" allow="autoplay"></iframe>
 <!--
 <video width="600" controls>
   <source src="{{ '/assets/videos/igv.mp4' | relative_url }}" type="video/mp4">
