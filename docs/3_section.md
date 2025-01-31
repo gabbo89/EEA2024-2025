@@ -16,6 +16,9 @@ The tutorials are designed to be completed in order, but feel free to jump to th
 > **remember** that you need to load the conda enviroment of interest by running
 >
 > `conda activate <env_name>` in the terminal.
+> 
+>For example:
+> `conda activate epigenomics`
 >
 > In addition you need to **set the path to the working directory!**
 {: .fs-5 }

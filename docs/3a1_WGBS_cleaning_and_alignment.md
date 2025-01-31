@@ -721,11 +721,12 @@ Follow instructions as shown below
   <source src="https://github.com/gabbo89/video/blob/main/assets/video/igv.mp4" type="video/mp4">
 </video>
 <br>
--->
+
 
 <video controls width="450">
   <source src="https://drive.google.com/file/d/1UphR7jG7YSwzp1hLpsWGgaIMKKmyS62p/preview" type="video/mp4">
 </video>
+-->
 <br>
 <iframe src="https://drive.google.com/file/d/1UphR7jG7YSwzp1hLpsWGgaIMKKmyS62p/preview" width="640" height="480" allow="autoplay"></iframe>
 <!--
@@ -740,12 +741,14 @@ Or, [click here to download the tutorial](https://github.com/gabbo89/EEA2024-202
 #### upload the following files:
 {: .no_toc }
 
-- reference genome: 
+- reference genome:
+
 **`/data2/student_space/st24_16_folder/epigenomics/wgbs/reference/vitis_vinifera.fasta`**
+
 - alignment file:
 **`/data2/student_space/st24_16_folder/epigenomics/wgbs/alignments/rkatsiteli.leaves_pe.deduplicated.sort.bam`**
 
-Jump to the coordinate: chr05:24461000-24462000
+Jump to the coordinate: `chr05:24461000-24462000`
 
 ---
 
