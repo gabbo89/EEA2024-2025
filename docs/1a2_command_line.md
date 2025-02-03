@@ -3,23 +3,25 @@ layout: default
 title: The command line
 nav_order: 3
 parent: 1. Introduction
-description: A comprehensive guide to understanding epigenetics.
+description: Introduction to the command line
 published: true
 ---
 
-
-# Introduction to the command line
-
-This is an introduction to the *UNIX (Mac/Linux)* command line for absolute beginners.
+This is an introduction to the *UNIX* command line.
 It covers some commands and concepts that are widely used in the UNIX command line.
 Examples are provided throughout.
-It is recommend that you try out commands as you read about them in your own UNIX system, as well as the exercise towards the end of the page.
 
-If you are using Windows, please see these pages with instructions on installing Ubuntu (a UNIX operating system):
+<br>
+<details open markdown="block">
+  <summary>
+    <strong>Table of contents</strong>
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
 
-- [Windows Subsystem for Linux (WSL, Windows only)](wsl.md)
-- [Using Ubuntu through a Virtual Machine (Mac or Windows)](ubuntu_virtualbox.md)
-
+<!--
 ## Contents
 
 - [Opening the terminal](#opening-the-terminal)
@@ -40,14 +42,11 @@ If you are using Windows, please see these pages with instructions on installing
     - [Video demonstration](#video-demonstration)
 - [Exercise](#exercise)
 - [See also](#see-also)
+-->
 
-## Opening the terminal
+## The terminal
 
-Once you are using a UNIX operating system (i.e. a Mac system, a Linux system, or Ubuntu through either a virtual machine or a Linux subsystem on a Windows machine) open the *terminal* to use the command line.
 The terminal is the window in which the command line runs.
-
-- If you are using a Mac, click on Spotlight Search (the magnifying glass icon in the top-right corner of the screen), type "Terminal", and open the Terminal application.
-- If you are using Windows, open the application Mobaxterm in order to interact with a terminal.
 
 The UNIX command line will look like this:
 
@@ -62,7 +61,7 @@ This is called the *bash prompt*...
 - The tilde (`~`) indicates that your home directory is the current *working directory*. The home directory is located at `/home/` followed by your UNIX username.
 - The dollar sign (`$`) indicates that the terminal is using the `bash` shell language.
 
-In examples on this page, `st24_16@banjo:~$` will be used as an example bash prompt.
+In this page, `st24_16@banjo:~$` will be used as an example bash prompt.
 
 ## The working directory
 
@@ -77,14 +76,21 @@ In the context of command line programs, "print" means "display in the terminal"
 
 ```bash
 st24_16@banjo:~$ pwd
+```
+
+This will give:
+
+```bash
+st24_16@banjo:~$ pwd
 /home/st24_16
 ```
+
 
 ## Changing working directories
 
 The working directory of the command line can be changed using the `cd` (change directory) command.
 Use `pwd` before and after the `cd` command to check which directory you have moved from and to.
-Type `cd bioinfo-notebook/` to change the working directory to the `bioinfo-notebook/` directory.
+Type `cd /data2` to change the working directory to the `/data2` directory.
 
 ```bash
 st24_16@banjo:~$ pwd
@@ -94,13 +100,13 @@ st24_16@banjo:/data2$ pwd
 /data2
 ```
 
-You do not need to type this command out in full, typing `cd b` and pressing the `Tab` key should complete this command.
-Notice that the working directory part of the bash prompt has changed from `~` to `~/bioinfo-notebok`.
+You do not need to type this command out in full, typing `cd /d` and pressing the `Tab` key should complete this command.
+Notice that the working directory part of the bash prompt has changed from `~` to `~/data2`.
 
 When you press `Tab` in the command line, it will try to complete the file or directory name for you.
 If there are multiple options, these options will be printed in the terminal.
 If there is only one possible option, this option will be filled in.
-For example, pressing `Tab` twice after typing `cd D` could give the following directories beginning with "D" as options:
+For example, pressing `Tab` twice after typing `cd /d` could give the following directories beginning with "d" as options:
 
 ```bash
 st24_16@banjo:~$ cd /d
@@ -111,7 +117,9 @@ In UNIX, directory names are case-sensitive.
 This means that `~/downloads/` is a different directory than `~/Downloads/`.
 
 The command `cd ../` can be used to move to move up one directory, `cd ../../` can be used to move up two directories, etc.
+
 In this example, moving up one directory from `/data2/biotecnologie_molecolari_magris/epigenomics/` changes the working directory to `/data2/biotecnologie_molecolari_magris/`.
+
 Moving up two directories from `/data2/biotecnologie_molecolari_magris/epigenomics/` changes the working directory to `/data2`.
 
 ```bash
@@ -137,48 +145,6 @@ pwd
 /data2/
 ```
 
-## Comments and broken lines
-
-The number sign or hash (`#`) is used for *comments* in bash.
-Comments are used in programming to explain or annotate code; they are not run as code.
-Anything written after a `#` symbol in the command line is a comment.
-
-```bash
-pwd # This prints the working directory
-/data2/
-```
-
-Long lines of code can be hard to read.
-For legibility, long lines of command line code can be broken up with the backslash (`\`).
-The `\` characters split lines to make them more readable, they do not affect how the code functions.
-
-```bash
-ronan@dell:~/bioinfo-notebook/data$ head example_nucleotide_sequence.fasta 
->NC_001133.9 Saccharomyces cerevisiae S288C chromosome I, complete sequence
-CCACACCACACCCACACACCCACACACCACACCACACACCACACCACACCCACACACACACATCCTAACA
-CTACCCTAACACAGCCCTAATCTAACCCTGGCCAACCTGTCTCTCAACTTACCCTCCATTACCCTGCCTC
-CACTCGTTACCCTGTCCCATTCAACCATACCACTCCGAACCACCATCCATCCCTCTACTTACTACCACTC
-ACCCACCGTTACCCTCCAATTACCCATATCCAACCCACTGCCACTTACCCTACCATTACCCTACCATCCA
-CCATGACCTACTCACCATACTGTTCTTCTACCCACCATATTGAAACGCTAACAAATGATCGTAAATAACA
-CACACGTGCTTACCCTACCACTTTATACCACCACCACATGCCATACTCACCCTCACTTGTATACTGATTT
-TACGTACGCACACGGATGCTACAGTATATACCATCTCAAACTTACCCTACTCTCAGATTCCACTTCACTC
-CATGGCCCATCTCTCACTGAATCAGTACCAAATGCACTCACATCATTATGCACGGCACTTGCCTCAGCGG
-TCTATACCCTGTGCCATTTACCCATAACGCCCATCATTATCCACATTTTGATATCTATATCTCATTCGGC
-ronan@dell:~/bioinfo-notebook/data$ head \
-> example_nucleotide_sequence.fasta 
->NC_001133.9 Saccharomyces cerevisiae S288C chromosome I, complete sequence
-CCACACCACACCCACACACCCACACACCACACCACACACCACACCACACCCACACACACACATCCTAACA
-CTACCCTAACACAGCCCTAATCTAACCCTGGCCAACCTGTCTCTCAACTTACCCTCCATTACCCTGCCTC
-CACTCGTTACCCTGTCCCATTCAACCATACCACTCCGAACCACCATCCATCCCTCTACTTACTACCACTC
-ACCCACCGTTACCCTCCAATTACCCATATCCAACCCACTGCCACTTACCCTACCATTACCCTACCATCCA
-CCATGACCTACTCACCATACTGTTCTTCTACCCACCATATTGAAACGCTAACAAATGATCGTAAATAACA
-CACACGTGCTTACCCTACCACTTTATACCACCACCACATGCCATACTCACCCTCACTTGTATACTGATTT
-TACGTACGCACACGGATGCTACAGTATATACCATCTCAAACTTACCCTACTCTCAGATTCCACTTCACTC
-CATGGCCCATCTCTCACTGAATCAGTACCAAATGCACTCACATCATTATGCACGGCACTTGCCTCAGCGG
-TCTATACCCTGTGCCATTTACCCATAACGCCCATCATTATCCACATTTTGATATCTATATCTCATTCGGC
-
-```
-
 ## Listing directory content with the `ls` command
 
 The `ls` command can be used to list the files and directories within the current working directory.
@@ -186,7 +152,7 @@ Try using the `ls` command in the `bioinfo-notebook/` directory.
 
 ```bash
 ls
-igv  perl5
+biotecnologie_molecolari_depaoli  biotecnologie_molecolari_magris
 ```
 
 ## Relative paths
@@ -194,15 +160,162 @@ igv  perl5
 From the `/data2/student_space/st24_16_folder/` working directory, all of the files used during the tutorials can be accessed using *relative paths*.
 Without paths, the program only knows which file or directory to look for **in the working directory.**
 With paths, the program knows which file or directory to look for *and* how to get to it from the working directory.
-!!!!
-The `ls` command can be used to list the content of the `bioinfo-notebook/data/` from the `bioinfo-notebook/` working directory using `ls data/`.
+
+The `ls` command can be used to list the content of the folder `/data2/biotecnologie_molecolari_magris/` from the `/data2` working directory using `ls biotecnologie_molecolari_magris/`.
 
 ```bash
-ronan@dell:~/bioinfo-notebook$ pwd
-/home/ronan/bioinfo-notebook
-ronan@dell:~/bioinfo-notebook$ ls data/
-example_genome_annotation.gtf  example_nucleotide_sequence.fasta
+pwd
+/data2
 ```
+```bash
+ls biotecnologie_molecolari_magris/
+epigenomics
+```
+
+## Using the `--help` argument
+
+For a lot of command line programs, using the command with the `--help` (or `-h`) argument will display a short help message on how that command is used.
+
+```bash
+ls --help
+Usage: ls [OPTION]... [FILE]...
+List information about the FILEs (the current directory by default).
+Sort entries alphabetically if none of -cftuvSUX nor --sort is specified.
+
+Mandatory arguments to long options are mandatory for short options too.
+  -a, --all                  do not ignore entries starting with .
+  -A, --almost-all           do not list implied . and ..
+      --author               with -l, print the author of each file
+  -b, --escape               print C-style escapes for nongraphic characters
+      --block-size=SIZE      scale sizes by SIZE before printing them; e.g.,
+                               '--block-size=M' prints sizes in units of
+                               1,048,576 bytes; see SIZE format below
+  -B, --ignore-backups       do not list implied entries ending with ~
+  -c                         with -lt: sort by, and show, ctime (time of last
+                               modification of file status information);
+                               with -l: show ctime and sort by name;
+                               otherwise: sort by ctime, newest first
+  -C                         list entries by columns
+      --color[=WHEN]         colorize the output; WHEN can be 'never', 'auto',
+                               or 'always' (the default); more info below
+  -d, --directory            list directories themselves, not their contents
+  -D, --dired                generate output designed for Emacs' dired mode
+  -f                         do not sort, enable -aU, disable -ls --color
+  -F, --classify             append indicator (one of */=>@|) to entries
+      --file-type            likewise, except do not append '*'
+      --format=WORD          across -x, commas -m, horizontal -x, long -l,
+                               single-column -1, verbose -l, vertical -C
+      --full-time            like -l --time-style=full-iso
+  -g                         like -l, but do not list owner
+      --group-directories-first
+                             group directories before files;
+                               can be augmented with a --sort option, but any
+                               use of --sort=none (-U) disables grouping
+  -G, --no-group             in a long listing, don't print group names
+  -h, --human-readable       with -l and/or -s, print human readable sizes
+                               (e.g., 1K 234M 2G)
+      --si                   likewise, but use powers of 1000 not 1024
+  -H, --dereference-command-line
+                             follow symbolic links listed on the command line
+      --dereference-command-line-symlink-to-dir
+                             follow each command line symbolic link
+                               that points to a directory
+      --hide=PATTERN         do not list implied entries matching shell PATTERN
+                               (overridden by -a or -A)
+      --indicator-style=WORD  append indicator with style WORD to entry names:
+                               none (default), slash (-p),
+                               file-type (--file-type), classify (-F)
+  -i, --inode                print the index number of each file
+  -I, --ignore=PATTERN       do not list implied entries matching shell PATTERN
+  -k, --kibibytes            default to 1024-byte blocks for disk usage
+  -l                         use a long listing format
+  -L, --dereference          when showing file information for a symbolic
+                               link, show information for the file the link
+                               references rather than for the link itself
+  -m                         fill width with a comma separated list of entries
+  -n, --numeric-uid-gid      like -l, but list numeric user and group IDs
+  -N, --literal              print raw entry names (don't treat e.g. control
+                               characters specially)
+  -o                         like -l, but do not list group information
+  -p, --indicator-style=slash
+                             append / indicator to directories
+  -q, --hide-control-chars   print ? instead of nongraphic characters
+      --show-control-chars   show nongraphic characters as-is (the default,
+                               unless program is 'ls' and output is a terminal)
+  -Q, --quote-name           enclose entry names in double quotes
+      --quoting-style=WORD   use quoting style WORD for entry names:
+                               literal, locale, shell, shell-always, c, escape
+  -r, --reverse              reverse order while sorting
+  -R, --recursive            list subdirectories recursively
+  -s, --size                 print the allocated size of each file, in blocks
+  -S                         sort by file size
+      --sort=WORD            sort by WORD instead of name: none (-U), size (-S),
+                               time (-t), version (-v), extension (-X)
+      --time=WORD            with -l, show time as WORD instead of default
+                               modification time: atime or access or use (-u)
+                               ctime or status (-c); also use specified time
+                               as sort key if --sort=time
+      --time-style=STYLE     with -l, show times using style STYLE:
+                               full-iso, long-iso, iso, locale, or +FORMAT;
+                               FORMAT is interpreted like in 'date'; if FORMAT
+                               is FORMAT1<newline>FORMAT2, then FORMAT1 applies
+                               to non-recent files and FORMAT2 to recent files;
+                               if STYLE is prefixed with 'posix-', STYLE
+                               takes effect only outside the POSIX locale
+  -t                         sort by modification time, newest first
+  -T, --tabsize=COLS         assume tab stops at each COLS instead of 8
+  -u                         with -lt: sort by, and show, access time;
+                               with -l: show access time and sort by name;
+                               otherwise: sort by access time
+  -U                         do not sort; list entries in directory order
+  -v                         natural sort of (version) numbers within text
+  -w, --width=COLS           assume screen width instead of current value
+  -x                         list entries by lines instead of by columns
+  -X                         sort alphabetically by entry extension
+  -Z, --context              print any security context of each file
+  -1                         list one file per line
+      --help     display this help and exit
+      --version  output version information and exit
+
+The SIZE argument is an integer and optional unit (example: 10K is 10*1024).
+Units are K,M,G,T,P,E,Z,Y (powers of 1024) or KB,MB,... (powers of 1000).
+
+Using color to distinguish file types is disabled both by default and
+with --color=never.  With --color=auto, ls emits color codes only when
+standard output is connected to a terminal.  The LS_COLORS environment
+variable can change the settings.  Use the dircolors command to set it.
+
+Exit status:
+ 0  if OK,
+ 1  if minor problems (e.g., cannot access subdirectory),
+ 2  if serious trouble (e.g., cannot access command-line argument).
+
+GNU coreutils online help: <http://www.gnu.org/software/coreutils/>
+Full documentation at: <http://www.gnu.org/software/coreutils/ls>
+or available locally via: info '(coreutils) ls invocation'
+g
+```
+
+For more in-depth help with a command, the `man` (manual) command is useful, if it is available.
+This will open a manual for the program within the terminal.
+The `Up` and `Down` arrow keys (or `j` and `k`) can be used to scroll through these manuals, and `q` is used to exit.
+
+```bash
+man head
+
+HEAD(1)                          User Commands                         HEAD(1)
+
+NAME
+       head - output the first part of files
+
+SYNOPSIS
+       head [OPTION]... [FILE]...
+
+DESCRIPTION
+...
+ Manual page head(1) line 1 (press h for help or q to quit)
+```
+
 
 ## Making directories with `mkdir`
 
@@ -412,59 +525,42 @@ TCAGTGTTAGTGTTAGTGTTAGTATTAGGGTGTGGTGTGTGGGTGTGGTGTGGGTGTGGGTGTGGGTGTG
 GGTGTGGGTGTGGGTGTGGTGTGGTGTGTGGGTGTGGTGTGGGTGTGGTGTGTGTGGG
 ```
 
-## Using the `--help` argument
+## Comments and broken lines
 
-For a lot of command line programs, using the command with the `--help` (or `-h`) argument will display a short help message on how that command is used.
-
-```bash
-head --help
-Usage: head [OPTION]... [FILE]...
-Print the first 10 lines of each FILE to standard output.
-With more than one FILE, precede each with a header giving the file name.
-
-With no FILE, or when FILE is -, read standard input.
-
-Mandatory arguments to long options are mandatory for short options too.
-  -c, --bytes=[-]NUM       print the first NUM bytes of each file;
-                             with the leading '-', print all but the last
-                             NUM bytes of each file
-  -n, --lines=[-]NUM       print the first NUM lines instead of the first 10;
-                             with the leading '-', print all but the last
-                             NUM lines of each file
-  -q, --quiet, --silent    never print headers giving file names
-  -v, --verbose            always print headers giving file names
-  -z, --zero-terminated    line delimiter is NUL, not newline
-      --help     display this help and exit
-      --version  output version information and exit
-
-NUM may have a multiplier suffix:
-b 512, kB 1000, K 1024, MB 1000*1000, M 1024*1024,
-GB 1000*1000*1000, G 1024*1024*1024, and so on for T, P, E, Z, Y.
-
-GNU coreutils online help: <http://www.gnu.org/software/coreutils/>
-Full documentation at: <http://www.gnu.org/software/coreutils/head>
-or available locally via: info '(coreutils) head invocation'
-```
-
-For more in-depth help with a command, the `man` (manual) command is useful, if it is available.
-This will open a manual for the program within the terminal.
-The `Up` and `Down` arrow keys (or `j` and `k`) can be used to scroll through these manuals, and `q` is used to exit.
+The number sign or hash (`#`) is used for *comments* in bash.
+Comments are used in programming to explain or annotate code; they are not run as code.
+Anything written after a `#` symbol in the command line is a comment.
 
 ```bash
-man head
-
-HEAD(1)                          User Commands                         HEAD(1)
-
-NAME
-       head - output the first part of files
-
-SYNOPSIS
-       head [OPTION]... [FILE]...
-
-DESCRIPTION
-...
- Manual page head(1) line 1 (press h for help or q to quit)
+pwd # This prints the working directory
+/data2/
 ```
+
+Long lines of code can be hard to read.
+For legibility, long lines of command line code can be broken up with the backslash (`\`).
+The `\` characters split lines to make them more readable, they do not affect how the code functions.
+
+```bash
+head /data2/biotecnologie_molecolari_magris/epigenomics/bash/example_sequence.fasta
+
+>CASBKX010000001.1 Saccharomyces cerevisiae genome assembly, contig: chrI, whole genome shotgun sequence
+CACACACACCACACCCACACCCACACACCCACACCCACACACCCACACCACACCCACACCACACCCACAC
+CACACCACACCCACACCACACACCACACCCACACACCACACCACACCCACACCACACCCACACCACACCC
+ACACACCACACCCACACACCCACACACCACACCCACACACCACACCCACACCCACACACACCACACCCAC
+ACACCACACCCACACCCACACACACACACACCACACCCACACCCACACCCACACACCCACACACCCACAA
+CCACACCCACACCACACCCACACCCACACACACCACACACCACACCCACACACACCCACACAACCCCGCT
+
+head \
+/data2/biotecnologie_molecolari_magris/epigenomics/bash/example_sequence.fasta
+
+>CASBKX010000001.1 Saccharomyces cerevisiae genome assembly, contig: chrI, whole genome shotgun sequence
+CACACACACCACACCCACACCCACACACCCACACCCACACACCCACACCACACCCACACCACACCCACAC
+CACACCACACCCACACCACACACCACACCCACACACCACACCACACCCACACCACACCCACACCACACCC
+ACACACCACACCCACACACCCACACACCACACCCACACACCACACCCACACCCACACACACCACACCCAC
+ACACCACACCCACACCCACACACACACACACCACACCCACACCCACACCCACACACCCACACACCCACAA
+CCACACCCACACCACACCCACACCCACACACACCACACACCACACCCACACACACCCACACAACCCCGCT
+```
+
 
 ## Downloading files with `wget`
 
@@ -474,26 +570,36 @@ It can take a URL as an argument, and download the file found at that URL into t
 In this example, `wget` is used to download the amino acid sequence of [haemoglobin subunit alpha from UniProt](https://www.uniprot.org/uniprot/P69905):
 
 ```bash
-ronan@dell:~/bioinfo-notebook$ pwd
-/home/ronan/bioinfo-notebook
-ronan@dell:~/bioinfo-notebook$ wget \
-> https://www.uniprot.org/uniprot/P69905.fasta
---2020-04-15 16:52:27--  https://www.uniprot.org/uniprot/P69905.fasta
-Resolving www.uniprot.org (www.uniprot.org)... 128.175.245.202, 193.62.192.81
-Connecting to www.uniprot.org (www.uniprot.org)|128.175.245.202|:443... connected.
-HTTP request sent, awaiting response... 200 
-Length: 233 [text/plain]
-Saving to: ‘P69905.fasta’
+cd /data2/student_space/st24_16_folder/
 
-P69905.fasta        100%[===================>]     233  --.-KB/s    in 0s      
+# Create the directory 
+mkdir -p epigenomics/bash
 
-2020-04-15 16:52:28 (7.91 MB/s) - ‘P69905.fasta’ saved [233/233]
+# Move to the directory of interest 
+cd epigenomics/bash
 
-ronan@dell:~/bioinfo-notebook$ head P69905.fasta # Examining the start of the downloaded file 
->sp|P69905|HBA_HUMAN Hemoglobin subunit alpha OS=Homo sapiens OX=9606 GN=HBA1 PE=1 SV=2
-MVLSPADKTNVKAAWGKVGAHAGEYGAEALERMFLSFPTTKTYFPHFDLSHGSAQVKGHG
-KKVADALTNAVAHVDDMPNALSALSDLHAHKLRVDPVNFKLLSHCLLVTLAAHLPAEFTP
-AVHASLDKFLASVSTVLTSKYR
+# Download the insulin protein sequence 
+wget \
+https://www.uniprot.org/uniprot/P01308.fasta
+--2025-02-03 16:28:20--  https://www.uniprot.org/uniprot/P01308.fasta
+Resolving www.uniprot.org (www.uniprot.org)... 193.62.193.81
+Connecting to www.uniprot.org (www.uniprot.org)|193.62.193.81|:443... connected.
+HTTP request sent, awaiting response... 301 Moved Permanently
+
+....
+
+P01308.fasta        100%[================================================>]     182  --.-KB/s   in 0s
+ 
+
+2025-02-03 16:28:21 (5.00 MB/s) - ‘P01308.fasta’ saved [182/182]
+
+```
+
+```bash
+head P01308.fasta # show the first rows of the downloaded file
+>sp|P01308|INS_HUMAN Insulin OS=Homo sapiens OX=9606 GN=INS PE=1 SV=1
+MALWMRLLPLLALLALWGPDPAAAFVNQHLCGSHLVEALYLVCGERGFFYTPKTRREAED
+LQVGQVELGGGPGAGSLQPLALEGSLQKRGIVEQCCTSICSLYQLENYCN
 ```
 
 ## Moving and copying with `mv` and `cp`
@@ -504,34 +610,40 @@ The `cp` commands creates a copy of a file/directory, whereas `mv` moves it to a
 The `mv` command can be used to rename files, by moving it to the same directory, but with a new file name.
 
 ```bash
-ronan@dell:~/bioinfo-notebook$ mv P69905.fasta data/ # Moving the P69905.fasta file to the data/ directory
+# Create a subfolder
+mkdir test 
 
-ronan@dell:~/bioinfo-notebook$ cd data/ # Changing directory to data/
+# Move the file to new folder
+mv P01308.fasta test/
 
-ronan@dell:~/bioinfo-notebook/data$ ls # Listing files in data/ to confirm that the FASTA file has been moved
-example_genome_annotation.gtf      P69905.fasta
-example_nucleotide_sequence.fasta  S_cere_GCF_000146045.2_R64_genomic.fna
+# Check if the file has been moved 
+ls test/
 
-ronan@dell:~/bioinfo-notebook/data$ mv P69905.fasta haem.fasta # Using mv to rename the FASTA file to haem.fasta
+# Rename the file 
+mv test/P01308.fasta test/ins.fasta
 
-ronan@dell:~/bioinfo-notebook/data$ ls # Listing the files in the directory
-example_genome_annotation.gtf      haem.fasta
-example_nucleotide_sequence.fasta  S_cere_GCF_000146045.2_R64_genomic.fna
+# Check if the file has been renamed 
+ls test/
 
-ronan@dell:~/bioinfo-notebook/data$ cp haem.fasta ../ # Creating a copy of haem.fasta in the directory above data/, i.e. the bioinfo-notebook/ directory
+# Create a copy of the fasta file in the working directory
+cp test/ins.fasta . 
 
-ronan@dell:~/bioinfo-notebook/data$ ls # Listing the files in the directory
-example_genome_annotation.gtf      haem.fasta
-example_nucleotide_sequence.fasta  S_cere_GCF_000146045.2_R64_genomic.fna
+# Check the content of the working directory
+ls 
 
-ronan@dell:~/bioinfo-notebook/data$ cd ../ # Changing directory to bioinfo-notebook/
+ins.fasta test
+# Create a copy of the fasta file in the working directory with a different name
+cp test/ins.fasta insulin.fasta
 
-ronan@dell:~/bioinfo-notebook$ ls # Listing the files in the directory
-assets       data  envs        LICENSE    scripts
-_config.yml  docs  haem.fasta  README.md  temp
+# Check the content of the working directory
+ls 
+
+ins.fasta insulin.fasta  test
 ```
 
 
+## AWK command line 
+<!--
 ### Video demonstration
 
 In this demonstration, the bioinfo-notebook GitHub project (also known as a repository or repo) is cloned into the home directory of the UNIX system (in this case, the UNIX system used is Ubuntu).
@@ -567,3 +679,6 @@ These tasks only require one command each.
 - [Linux setup script](linux_setup.md)
 - [File formats used in bioinformatics](file_formats.md)
 - [The DataCamp "Introduction to Shell" interactive course](https://www.datacamp.com/courses/introduction-to-shell-for-data-science)
+
+-->
+

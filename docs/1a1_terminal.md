@@ -32,7 +32,7 @@ Files can be graphically accessed using the panel on the left side on Mobaxterm.
 ## **Apple users**
 To connect to the server and be able to use interactive and graphical software, you need first to have installed on your computer the XQuartz software, which can be downloaded from the official website [XQuartz Download Page](https://www.xquartz.org/).
 
-Next I reccomend to connect using the default terminal application and connect to the server using the following syntax:
+Next I reccomend to connect using the default terminal application (type *Terminal* on the magnifying glass icon in the top-right corner of the screen) and connect to the server using the following syntax:
 
 `ssh -X {username}@{srv_name}`
 
