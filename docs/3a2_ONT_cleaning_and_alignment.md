@@ -107,6 +107,8 @@ We can use the following command
 <code>samtools fastq</code>
 </details>
 <br>
+-
+
 The input file is located here:
 `/data2/biotecnologie_molecolari_magris/epigenomics/ont/rkatsiteli.leaves.ont.bam`
 
