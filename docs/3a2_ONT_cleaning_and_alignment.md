@@ -67,9 +67,9 @@ We will use an input that is in bam format. We need to convert it to [fastq form
 
     Open the short help of samtools:
 
-```bash
-samtools
-```
+    <pre><code class="language-bash">
+    samtools
+    </code></pre>
 
 </details>
 
@@ -236,7 +236,12 @@ ont/sequences/rkatsiteli.leaves.ont.fastq \
 <br>
 
 The default output of minimap2 is in `PAF` format, and you can find a detailed description [here](https://gabbo89.github.io/EEA2024-2025/docs/2a1_file_formats.html)
+
+
+default output of minimap2 is in <code>PAF</code> format, and you can find a detailed description <a href="https://gabbo89.github.io/EEA2024-2025/docs/2a1_file_formats.html">here</a>
+
 <br>
+
 [here]({{ "/docs/2a1_file_formats.md" | relative_url }})
 
 [here]({{ "/docs/2a1_file_formats.html" | relative_url }})
