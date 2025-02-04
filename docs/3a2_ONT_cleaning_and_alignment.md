@@ -106,45 +106,8 @@ Open the short help of samtools:
 <br>   
 We can use the following command  
 <code>samtools fastq</code>
-
-
 </details>
-
-<details>
-    <summary>Show answer</summary>
-
 <br>
-We can take a look to the options of samtools.
-<br>
-
-Open the short help of samtools 
-
-```bash
-samtools 
-```
-
-```
-  -- File operations
-     collate        shuffle and group alignments by name
-     cat            concatenate BAMs
-     consensus      produce a consensus Pileup/FASTA/FASTQ
-     merge          merge sorted alignments
-     mpileup        multi-way pileup
-     sort           sort alignment file
-     split          splits a file by read group
-     quickcheck     quickly check if SAM/BAM/CRAM file appears intact
-     fastq          converts a BAM to a FASTQ{: .text-red-100 }
-     fasta          converts a BAM to a FASTA
-     import         Converts FASTA or FASTQ files to SAM/BAM/CRAM
-     reference      Generates a reference from aligned data
-     reset          Reverts aligner changes in reads
-```
-```bash
-samtools fastq
-```
-
-</details>
-
 The input file is located here:
 `/data2/biotecnologie_molecolari_magris/epigenomics/ont/rkatsiteli.leaves.ont.bam`
 
