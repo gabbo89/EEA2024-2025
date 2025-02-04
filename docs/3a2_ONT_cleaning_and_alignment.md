@@ -73,22 +73,24 @@ samtools
 
 <code>samtools</code>
 
-<code>    
-  -- File operations
-     collate        shuffle and group alignments by name
-     cat            concatenate BAMs
-     consensus      produce a consensus Pileup/FASTA/FASTQ
-     merge          merge sorted alignments
-     mpileup        multi-way pileup
-     sort           sort alignment file
-     split          splits a file by read group
-     quickcheck     quickly check if SAM/BAM/CRAM file appears intact
-     fastq          converts a BAM to a FASTQ{: .text-red-100 }
-     fasta          converts a BAM to a FASTA
-     import         Converts FASTA or FASTQ files to SAM/BAM/CRAM
-     reference      Generates a reference from aligned data
-     reset          Reverts aligner changes in reads
-</code>    
+```html
+<pre><code class="language-bash">
+    -- File operations
+         collate        shuffle and group alignments by name
+         cat            concatenate BAMs
+         consensus      produce a consensus Pileup/FASTA/FASTQ
+         merge          merge sorted alignments
+         mpileup        multi-way pileup
+         sort           sort alignment file
+         split          splits a file by read group
+         quickcheck     quickly check if SAM/BAM/CRAM file appears intact
+         fastq          converts a BAM to a FASTQ
+         fasta          converts a BAM to a FASTA
+         import         Converts FASTA or FASTQ files to SAM/BAM/CRAM
+         reference      Generates a reference from aligned data
+         reset          Reverts aligner changes in reads
+</code></pre>
+```
     
 <code>samtools fastq</code>
 
