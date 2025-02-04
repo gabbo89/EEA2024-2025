@@ -85,8 +85,7 @@ Open the short help of samtools:
          reference      Generates a reference from aligned data
          reset          Reverts aligner changes in reads
 </code></pre>
-
-<code>
+<pre><code class="bash">
     -- File operations
          collate        shuffle and group alignments by name
          cat            concatenate BAMs
@@ -101,7 +100,7 @@ Open the short help of samtools:
          import         Converts FASTA or FASTQ files to SAM/BAM/CRAM
          reference      Generates a reference from aligned data
          reset          Reverts aligner changes in reads
-</code>
+</code></pre>
 
 <br>   
 We can use the following command  
@@ -125,7 +124,7 @@ For a detailed description refer to [SAM/BAM format specification](https://samto
 
 Each modified base prediction has a quality value associated with it, which should be interpreted as the likelihood of the modification being correct, given the assumption the original call is correct. 
 
-#### `MM:Z`{: .fs-3 }
+#### **MM:Z**{: .fs-3 }
 {: .no_toc }
 
 First character is the unmodified base reported by the sequencing instrument for the top strand (`A`, `C`, `G`, `T`, `U` or `N`), followed by +/- indicating the strand the modification was observed (relative to the original strand of SEQ), and by one or more base modifications codes (for example *m* or *h*). 
@@ -147,7 +146,7 @@ It tells us that there are 3 Cs called (as either modified or unmodified) on the
 https://github.com/samtools/hts-specs/blob/a6a4504917a1b02197538f21e1b441c3f3892be4/SAMtags.tex#L517
 -->
 
-#### `ML:B`{: .fs-3 }
+#### **ML:B**{: .fs-3 }
 {: .no_toc }
 
 The tag lists the probability of each modification listed in the MM tag being correct, in the order they occour. Probability range between 0 and 1 and is remapped in equal sized portions to the discrete integers 0 to 255 inclusively. The probability range corresponding to integer value N is N/256 to (N+1)/256. 
@@ -236,7 +235,7 @@ ont/sequences/rkatsiteli.leaves.ont.fastq \
     <summary>Show answer</summary>
 <br>
 
-The default output of minimap2 is in <code>PAF</code> format, and you can find a detailed description <a href="https://gabbo89.github.io/EEA2024-2025/docs/2a1_file_formats.html#PAF">here</a>
+The default output of minimap2 is in <code>PAF</code> format, and you can find a detailed description <a href="https://gabbo89.github.io/EEA2024-2025/docs/2a1_file_formats.html#paf">here</a>
 
 
 </details>
