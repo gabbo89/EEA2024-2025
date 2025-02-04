@@ -51,11 +51,13 @@ The output of nanopore sequencing may be available in different formats.
 We will use an input that is in bam format. We need to convert it to [fastq format](../2a1_file_formats.html#FASTQ).
 
 <br>
+
 {: .highlight-title}
 > Question
 >
 > How do we convert a bam to fastq?
 >
+
 <details>
     <summary>Show answer</summary>
 
@@ -65,9 +67,9 @@ We will use an input that is in bam format. We need to convert it to [fastq form
 
     Open the short help of samtools:
 
-    ```bash
-    samtools
-    ```
+```bash
+samtools
+```
 
 </details>
 
@@ -234,7 +236,7 @@ ont/sequences/rkatsiteli.leaves.ont.fastq \
 <br>
 
 The default output of minimap2 is in `PAF` format, and you can find a detailed description [here](https://gabbo89.github.io/EEA2024-2025/docs/2a1_file_formats.html)
-
+<br>
 [here]({{ "/docs/2a1_file_formats.md" | relative_url }})
 
 [here]({{ "/docs/2a1_file_formats.html" | relative_url }})
