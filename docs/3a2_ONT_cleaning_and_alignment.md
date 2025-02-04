@@ -59,7 +59,7 @@ We will use an input that is in bam format. We need to convert it to [fastq form
 >
 
 <details>
-    <summary>Show answer</summary>
+    <summary><strong>Show answer</strong></summary>
 
 <br>
 We can take a look at the options of samtools.
@@ -69,7 +69,7 @@ Open the short help of samtools:
 <code>samtools</code>
 
 
-<pre style="background-color:rgb(128, 128, 128);"><code class="language-bash">
+<pre><code class="language-bash">
     -- File operations
          collate        shuffle and group alignments by name
          cat            concatenate BAMs
@@ -227,6 +227,7 @@ The default output of minimap2 is in <code>PAF</code> format, and you can find a
 
 </details>
 
+-
 <a id="paf-format"></a>
 
 Thus we need to add the option `-a` to obtain an output in sam format
@@ -414,7 +415,7 @@ ont/alignments/rkatsiteli.leaves.ont.sort.bam \
  C     m     343595      0.27844343   406403     0.2964383
 ```
 
-# 5. Evaluate the methylation call performance
+# 5. Evaluate the methylation call performance against chloroplast sequence
 
 
 
