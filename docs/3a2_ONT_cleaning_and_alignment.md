@@ -6,6 +6,9 @@ parent: 3. Tutorial
 description: A comprehensive guide to understanding epigenetics.
 published: true
 ---
+Not complete
+{: .label .label-red }
+
 {: .important-title }
 > Aim
 >
@@ -230,9 +233,11 @@ ont/sequences/rkatsiteli.leaves.ont.fastq \
     <summary>Show answer</summary>
 <br>
 
-    The default output of minimap2 is in `PAF` format, and you can find a detailed description [here](https://gabbo89.github.io/EEA2024-2025/docs/2a1_file_formats.html)
-    [here](/docs/2a1_file_formats.md | relative_url }})
-    [here](/docs/2a1_file_formats.html | relative_url }})
+The default output of minimap2 is in `PAF` format, and you can find a detailed description [here](https://gabbo89.github.io/EEA2024-2025/docs/2a1_file_formats.html)
+
+[here]({{ "/docs/2a1_file_formats.md" | relative_url }})
+
+[here]({{ "/docs/2a1_file_formats.html" | relative_url }})
 
 </details>
 
@@ -338,6 +343,8 @@ In the simples usage modkit pileup creates a bedMethyl file from a pileup file. 
 >
 
 ##### The options we will use:
+{: .no_toc}
+
 - `--threads` Define number of threads 
 - `--cpg` Output counts at CpG motifs (requires a reference sequence as well as **FAI index**)
 - `--ref` Path to reference sequence in FASTA format
@@ -352,6 +359,8 @@ samtools faidx ont/reference/vitis_vinifera.fasta
 
 
 #### Usage
+{: .no_toc}
+
 ```bash
 # Create the output directory
 mkdir ont/meth_extr
