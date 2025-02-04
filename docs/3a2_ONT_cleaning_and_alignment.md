@@ -66,10 +66,32 @@ We will use an input that is in bam format. We need to convert it to [fastq form
     <br>
 
     Open the short help of samtools:
+<pre><code class="language-bash">
+samtools
+</code></pre>
 
-    <pre><code class="language-bash">
-    samtools
-    </code></pre>
+
+<code>samtools</code>
+
+<code>    
+  -- File operations
+     collate        shuffle and group alignments by name
+     cat            concatenate BAMs
+     consensus      produce a consensus Pileup/FASTA/FASTQ
+     merge          merge sorted alignments
+     mpileup        multi-way pileup
+     sort           sort alignment file
+     split          splits a file by read group
+     quickcheck     quickly check if SAM/BAM/CRAM file appears intact
+     fastq          converts a BAM to a FASTQ{: .text-red-100 }
+     fasta          converts a BAM to a FASTA
+     import         Converts FASTA or FASTQ files to SAM/BAM/CRAM
+     reference      Generates a reference from aligned data
+     reset          Reverts aligner changes in reads
+</code>    
+    
+<code>samtools fastq</code>
+
 
 </details>
 
@@ -223,6 +245,7 @@ ont/sequences/rkatsiteli.leaves.ont.fastq \
 >
 >[M::main] Real time: 61.873 sec; CPU: 123.004 sec; Peak RSS: 0.892 GB
 
+<br>
 
 {: .highlight-title}
 > Question
@@ -230,21 +253,13 @@ ont/sequences/rkatsiteli.leaves.ont.fastq \
 > Check the file obtained, have you spotted any difference ? 
 >
 
-<br>
+
 <details>
     <summary>Show answer</summary>
 <br>
 
-The default output of minimap2 is in `PAF` format, and you can find a detailed description [here](https://gabbo89.github.io/EEA2024-2025/docs/2a1_file_formats.html)
+The default output of minimap2 is in <code>PAF</code> format, and you can find a detailed description <a href="https://gabbo89.github.io/EEA2024-2025/docs/2a1_file_formats.html#PAF">here</a>
 
-
-default output of minimap2 is in <code>PAF</code> format, and you can find a detailed description <a href="https://gabbo89.github.io/EEA2024-2025/docs/2a1_file_formats.html">here</a>
-
-<br>
-
-[here]({{ "/docs/2a1_file_formats.md" | relative_url }})
-
-[here]({{ "/docs/2a1_file_formats.html" | relative_url }})
 
 </details>
 
