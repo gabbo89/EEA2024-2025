@@ -8,6 +8,8 @@ has_children: false
 published: true
 ---
 
+COMPLETE
+{: .label .label-yellow }
 
 <br>
 <details open markdown="block">

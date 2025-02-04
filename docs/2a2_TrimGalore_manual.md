@@ -7,6 +7,9 @@ description: A brief description of the software used for cleaning the raw fastq
 published: true
 ---
 
+COMPLETE
+{: .label .label-yellow }
+
 # Trim Galore
 _Trim Galore_ is a wrapper around [Cutadapt](https://github.com/marcelm/cutadapt) and [FastQC](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/) to consistently apply adapter and quality trimming to FastQ files, with extra functionality for RRBS data.
 

@@ -21,4 +21,5 @@ The tutorials are designed to be completed in order, but feel free to jump to th
 > `conda activate epigenomics`
 >
 > In addition you need to **set the path to the working directory!**
-{: .fs-5 }
+> In addition you need to **set any variable that has been defined**
+{: .fs-6 }

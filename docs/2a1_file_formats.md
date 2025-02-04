@@ -6,6 +6,8 @@ nav_order: 1
 published: true
 ---
 
+COMPLETE
+{: .label .label-yellow }
 
 A brief introduction to various file formats used in bioinformatics.
 
@@ -170,6 +172,31 @@ CRAM has the following major objectives:
 2. Full compatibility with BAM
 3. Effortless transition to CRAM from using BAM files
 4. Support for controlled loss of BAM data
+
+
+## PAF
+
+PAF is a text format describing the approximate mapping positions between two
+set of sequences. PAF is TAB-delimited with each line consisting of the
+following predefined fields:ù
+
+
+1. **Query sequence name**
+2. **Query sequence length**
+3. **Query start coordinate (0-based; BED-like-closed)**
+4. **Query end coordinate (0-based; BED-like-open)**
+5. **Relative strand** (+ on same strand/- if opposite)
+6. **Target sequence name**
+7. **Target sequence length**
+8. **Target start on original strand (0-based)**
+9. **Target end on original strand (0-based)**
+10. **Number of matching bases**
+11. **Number bases, including gaps, in the mapping**
+12. **Mapping quality (0-255; 255 for missing)**
+
+Column 11 gives the total number of sequence matches, and gaps in the alignment. Column 10 divided by column 11 gives the BLAST-like alignment identity. PAF may optionally have additional fields in the SAM-like typed key-value format. 
+
+[Back to the ONT tutorial](https://gabbo89.github.io/EEA2024-2025/docs/3a2_ONT_cleaning_and_alignment.html#paf-format)
 
 <!--
 ### Stockholm format
