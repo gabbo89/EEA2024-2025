@@ -20,13 +20,18 @@ For each lesson (arguments) we will explore a different aspect of epigenomics an
 
 For any help, or if you find a bug or have any hint or suggestion, contact me at: **gabriele.magris@uniud.it**{: .fs-6 }
 
+<br>
+
 _Any improvement is welcome!!_
 
 **_Labor omnia vincit_**
 {: .fs-9 }
 
 ---
+
 The project was created only for educational purposes.
+
+
 <!--
 You can select the color-scheme for the tutorial: <button class="btn js-toggle-dark-mode">Preview dark color scheme</button>
 

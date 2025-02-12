@@ -11,7 +11,7 @@ The analyses will be performed on a remote server, which can be accessed remotel
 
 For **windows** user's Mobaxterm is the client reccomended, while for **mac** and **linux** users the terminal is the default option.
 
-The ip address and username are already defined (for any issue write contact me) 
+The ip address and username are already defined (for any issue contact me) 
 
 ## **Windows users**
 
@@ -38,14 +38,14 @@ Next I reccomend to connect using the default terminal application (type *Termin
 
 `-X` enable the use of interactive devices that use X11 protocol. 
 
-In addition with very new mac devices you may have problems with the XQuartz software, in this case you can add the following command line to your `~/.bashrc` file:
+In addition with very new mac devices you may encounter problems with the XQuartz software, in this case you can add the following command line to your `~/.bashrc` file:
 
 `export _JAVA_OPTIONS='-Dsun.java2d.xrender=false -Dsun.java2d.pmoffscreen=false'`
 
-This should solve the problem of black windows (on igv) and other graphical issues.
+This should solve the problem of black windows (for example on igv) and other graphical issues. If you encounter any problem, remember to comment or remove the section from the .`~/.bashrc` file. 
 
 For any concern, just tell me!
 
-In order to navigate graphically through the directories and select the files, you can use an FTP client like [Cyberduck](https://cyberduck.io/). There are several alternative software options available, such as for example FileZilla.
+In order to navigate graphically through the directories and select the files, you can use an FTP client like [Cyberduck](https://cyberduck.io/). There are several alternative software options available, such as for example [FileZilla](https://filezilla-project.org/).
 
 You will need to set the server address, the username and the password.

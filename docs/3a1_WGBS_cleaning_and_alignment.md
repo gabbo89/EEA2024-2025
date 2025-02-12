@@ -707,7 +707,6 @@ This will open an interactive windows
 Upload the reference genome and the alignment file (bam file need to be sorted and indexed)
 
 Follow instructions as shown below
-
 <!--
 [text](<../assets/images/2025-01-23 16-33-40.mkv>)
 -->
@@ -728,21 +727,23 @@ Follow instructions as shown below
 </video>
 -->
 <br>
-<iframe src="https://drive.google.com/file/d/1UphR7jG7YSwzp1hLpsWGgaIMKKmyS62p/preview" width="640" height="480" allow="autoplay"></iframe>
+<iframe src="https://drive.google.com/file/d/1UphR7jG7YSwzp1hLpsWGgaIMKKmyS62p/preview" width="700" height="480" allow="autoplay"></iframe>
 <!--
+width was 640
 <video width="600" controls>
   <source src="{{ '/assets/videos/igv.mp4' | relative_url }}" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 -->
 Or, [click here to download the tutorial](https://github.com/gabbo89/EEA2024-2025/blob/main/assets/videos/igv.mp4).
-
+<!--
+https://github.com/angelmejiabrito/googledrivevideotowebpage?tab=readme-ov-file
+-->
 
 #### upload the following files:
 {: .no_toc }
 
 - reference genome:
-
 **`/data2/student_space/st24_16_folder/epigenomics/wgbs/reference/vitis_vinifera.fasta`**
 
 - alignment file:

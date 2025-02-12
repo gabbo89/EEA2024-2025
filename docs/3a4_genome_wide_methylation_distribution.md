@@ -57,7 +57,7 @@ We will use average values in windows in order to understand how we can represen
 
 ![complete_plot]({{"/assets/images/image-12.png" | relative_url }})
 <br>
-**Figure 2:** Chromosome wide methylation %
+**Figure 2:** Chromosome wide methylation %.
 
 <!--
 # Analysis of Methylation
@@ -73,4 +73,6 @@ In this analysis, we will refer to the methylation distribution shown in [Figure
 <!--
 Now we will perform the analysis of the methylation distribution in the three contexts `CG`, `CHG` and `CHH` across a chromosome. 
 -->
-We will use two different approaches: one using the `R` library and the other using the `bedtools` package.
+We will use two different approaches: 
+- one using the `R` library
+- one using the `bedtools` package

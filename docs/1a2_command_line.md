@@ -304,26 +304,26 @@ This will open a manual for the program within the terminal.
 The `Up` and `Down` arrow keys (or `j` and `k`) can be used to scroll through these manuals, and `q` is used to exit.
 
 ```bash
-man head
+man ls
 
-HEAD(1)                          User Commands                         HEAD(1)
+LS(1)                        User Commands                                  LS(1)
 
 NAME
-       head - output the first part of files
+       ls - list directory contents
 
 SYNOPSIS
-       head [OPTION]... [FILE]...
+       ls [OPTION]... [FILE]...
 
 DESCRIPTION
-...
- Manual page head(1) line 1 (press h for help or q to quit)
+       List information about the FILEs (the current directory by default).  Sort entries alphabetically if none of -cftuvSUX nor --sort is spec‐
+       ified.
+
 ```
 
 
-## Making directories with `mkdir`
+## Creating directories with `mkdir`
 
 The command `mkdir` can be used to create a directory.
-Here is the [--help](#using-the---help-argument) text for the command `mkdir`:
 
 ```bash
 mkdir --help
@@ -346,17 +346,19 @@ Full documentation at: <http://www.gnu.org/software/coreutils/mkdir>
 or available locally via: info '(coreutils) mkdir invocation'
 ```
 
-In this example, `mkdir` is used to create a directory called `example`, which is located in (and is therefore a subdirectory of) the home directory (`~`).
+In this example, `mkdir` is used to create a directory called `example`, which is located in (and is therefore a subdirectory of) the working directory (`/data2/student_space/st24_16_folder`).
 This is the equivalent of making a new folder within a folder on your desktop.
 
 ```bash
-ronan@dell:~$ clear
-ronan@dell:~$ pwd
-/home/ronan
-ronan@dell:~$ mkdir example
-ronan@dell:~$ cd example/
-ronan@dell:~/example$ pwd
-/home/ronan/example
+cd /data2/student_space/st24_16_folder/
+
+mkdir example
+
+cd example/
+
+pwd
+
+/data2/student_space/st24_16_folder/example
 ```
 
 ## Removing files and directories with the `rm` command
@@ -366,10 +368,10 @@ This command must be used *with care,* as it is not the same as deleting a file 
 Deleted files on a desktop are moved to a Recycle Bin or Trash folder, and are only permanently deleted once they are removed from this folder.
 When using the `rm` command, files and directories are permanently deleted; they cannot be recovered.
 
-Here is the [--help](#using-the---help-argument) text for the `rm` command:
+Here is the help text for the `rm` command:
 
 ```bash
-ronan@dell:~$ rm --help
+rm --help
 Usage: rm [OPTION]... [FILE]...
 Remove (unlink) the FILE(s).
 
@@ -412,7 +414,7 @@ or available locally via: info '(coreutils) rm invocation'
 To remove files, simply type `rm` followed by the name of the file, and press `Enter`/`Return`:
 
 ```bash
-ronan@dell:~/example$ pwd
+pwd
 /home/ronan/example
 ronan@dell:~/example$ ls
 example_file.txt
@@ -428,15 +430,16 @@ This includes files and other directories within this directory.
 In this example, `rm -r` is used to remove the `example/` directory from the home directory:
 
 ```bash
-ronan@dell:~/example$ pwd
-/home/ronan/example
-ronan@dell:~/example$ cd ../
-ronan@dell:~$ pwd
-/home/ronan
-ronan@dell:~$ rm -r example/
-ronan@dell:~$ cd example
+cd ../
+
+pwd
+
+rm -r example/
+
+cd example
+
 bash: cd: example: No such file or directory
-ronan@dell:~$ 
+
 ```
 
 ## Using the `head` command
@@ -604,6 +607,9 @@ head P01308.fasta # show the first rows of the downloaded file
 MALWMRLLPLLALLALWGPDPAAAFVNQHLCGSHLVEALYLVCGERGFFYTPKTRREAED
 LQVGQVELGGGPGAGSLQPLALEGSLQKRGIVEQCCTSICSLYQLENYCN
 ```
+
+# ADD the step of downloading data from ncbi archive -> need to add the powerpoint presentation 
+
 
 ## Moving and copying with `mv` and `cp`
 
