@@ -4,7 +4,7 @@ title: Using R
 parent: Lesson 4 - Genome wide methylation distribution analysis
 nav_order: 1
 description: A comprehensive guide to understanding epigenetics.
-published: true
+published: false
 ---
 
 INCOMPLETE

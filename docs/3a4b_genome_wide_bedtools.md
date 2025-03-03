@@ -4,7 +4,7 @@ title: Using bedtools
 parent: Lesson 4 - Genome wide methylation distribution analysis
 nav_order: 2
 description: A comprehensive guide to understanding epigenetics.
-published: true
+published: false
 ---
 INCOMPLETE
 {: .label .label-red }

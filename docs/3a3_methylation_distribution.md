@@ -4,7 +4,7 @@ title: Lesson 3 - Methylation distribution analysis
 nav_order: 3
 parent: 3. Tutorial
 description: A comprehensive guide to understanding epigenetics.
-published: true
+published: false
 ---
 
 Final version
