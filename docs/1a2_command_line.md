@@ -415,12 +415,20 @@ To remove files, simply type `rm` followed by the name of the file, and press `E
 
 ```bash
 pwd
-/home/ronan/example
-ronan@dell:~/example$ ls
+/data2/student_space/st24_16_folder/example
+
+# Create an empty file using touch
+touch example_file.txt
+
+# List the content of the current directory 
+ls
 example_file.txt
-ronan@dell:~/example$ rm example_file.txt # Remove the file 'example_file.txt'
-ronan@dell:~/example$ ls
-ronan@dell:~/example$ 
+
+# Remove the file 
+rm example_file.txt 
+
+# List again the content of the current directory 
+ls
 ```
 
 To remove directories, `rm -r` must be typed, followed by the name of the directory.
@@ -449,19 +457,13 @@ This command is useful for examining very large files quickly.
 From the `bioinfo-notebook/` working directory, use `head data/example_nucleotide_sequence.fasta` to view the head of that FASTA file.
 
 ```bash
-ronan@dell:~/bioinfo-notebook$ pwd
-/home/ronan/bioinfo-notebook
-ronan@dell:~/bioinfo-notebook$ head data/example_nucleotide_sequence.fasta 
->NC_001133.9 Saccharomyces cerevisiae S288C chromosome I, complete sequence
-CCACACCACACCCACACACCCACACACCACACCACACACCACACCACACCCACACACACACATCCTAACA
-CTACCCTAACACAGCCCTAATCTAACCCTGGCCAACCTGTCTCTCAACTTACCCTCCATTACCCTGCCTC
-CACTCGTTACCCTGTCCCATTCAACCATACCACTCCGAACCACCATCCATCCCTCTACTTACTACCACTC
-ACCCACCGTTACCCTCCAATTACCCATATCCAACCCACTGCCACTTACCCTACCATTACCCTACCATCCA
-CCATGACCTACTCACCATACTGTTCTTCTACCCACCATATTGAAACGCTAACAAATGATCGTAAATAACA
-CACACGTGCTTACCCTACCACTTTATACCACCACCACATGCCATACTCACCCTCACTTGTATACTGATTT
-TACGTACGCACACGGATGCTACAGTATATACCATCTCAAACTTACCCTACTCTCAGATTCCACTTCACTC
-CATGGCCCATCTCTCACTGAATCAGTACCAAATGCACTCACATCATTATGCACGGCACTTGCCTCAGCGG
-TCTATACCCTGTGCCATTTACCCATAACGCCCATCATTATCCACATTTTGATATCTATATCTCATTCGGC
+head /data2/biotecnologie_molecolari_magris/epigenomics/bash/example_sequence.fasta
+>CASBKX010000001.1 Saccharomyces cerevisiae genome assembly, contig: chrI, whole genome shotgun sequence
+CACACACACCACACCCACACCCACACACCCACACCCACACACCCACACCACACCCACACCACACCCACAC
+CACACCACACCCACACCACACACCACACCCACACACCACACCACACCCACACCACACCCACACCACACCC
+ACACACCACACCCACACACCCACACACCACACCCACACACCACACCCACACCCACACACACCACACCCAC
+ACACCACACCCACACCCACACACACACACACCACACCCACACCCACACCCACACACCCACACACCCACAA
+CCACACCCACACCACACCCACACCCACACACACCACACACCACACCCACACACACCCACACAACCCCGCT
 ```
 
 The `head` command takes optional *arguments*.
@@ -470,43 +472,14 @@ One of the arguments that can be given to `head` is `-n`, which specifies how ma
 The command `head -n 5 data/example_nucleotide_sequence.fasta` prints the first 5 lines of the file `example_nucleotide_sequence.fasta`.
 
 ```bash
-ronan@dell:~/bioinfo-notebook$ pwd
-/home/ronan/bioinfo-notebook
-ronan@dell:~/bioinfo-notebook$ head -n 5 data/example_nucleotide_sequence.fasta
->NC_001133.9 Saccharomyces cerevisiae S288C chromosome I, complete sequence
-CCACACCACACCCACACACCCACACACCACACCACACACCACACCACACCCACACACACACATCCTAACA
-CTACCCTAACACAGCCCTAATCTAACCCTGGCCAACCTGTCTCTCAACTTACCCTCCATTACCCTGCCTC
-CACTCGTTACCCTGTCCCATTCAACCATACCACTCCGAACCACCATCCATCCCTCTACTTACTACCACTC
-ACCCACCGTTACCCTCCAATTACCCATATCCAACCCACTGCCACTTACCCTACCATTACCCTACCATCCA
+head -n 5 /data2/biotecnologie_molecolari_magris/epigenomics/bash/example_sequence.fasta
+>CASBKX010000001.1 Saccharomyces cerevisiae genome assembly, contig: chrI, whole genome shotgun sequence
+CACACACACCACACCCACACCCACACACCCACACCCACACACCCACACCACACCCACACCACACCCACAC
+CACACCACACCCACACCACACACCACACCCACACACCACACCACACCCACACCACACCCACACCACACCC
+ACACACCACACCCACACACCCACACACCACACCCACACACCACACCCACACCCACACACACCACACCCAC
+ACACCACACCCACACCCACACACACACACACCACACCCACACCCACACCCACACACCCACACACCCACAA
+
 ```
-
-In the UNIX terminal, an asterisk (`*`) acts as a *wildcard*.
-This means that any files or directories that can replace this character will replace it.
-For example, the `bioinfo-notebook/data/` directory contains two files: `example_genome_annotation.gtf` and `example_nucleotide_sequence.fasta`.
-Using the command `head -n 5 data/*` will print the first 5 lines of both of these files.
-
-```bash
-ronan@dell:~/bioinfo-notebook$ pwd
-/home/ronan/bioinfo-notebook
-ronan@dell:~/bioinfo-notebook$ head -n 5 data/*
-==> data/example_genome_annotation.gtf <==
-#gtf-version 2.2
-#!genome-build R64
-#!genome-build-accession NCBI_Assembly:GCF_000146045.2
-#!annotation-source SGD R64-2-1
-NC_001133.9	RefSeq	gene	1807	2169	.	-	.	gene_id "YAL068C"; db_xref "GeneID:851229"; gbkey "Gene"; gene "PAU8"; gene_biotype "protein_coding"; locus_tag "YAL068C"; partial "true"; 
-
-==> data/example_nucleotide_sequence.fasta <==
->NC_001133.9 Saccharomyces cerevisiae S288C chromosome I, complete sequence
-CCACACCACACCCACACACCCACACACCACACCACACACCACACCACACCCACACACACACATCCTAACA
-CTACCCTAACACAGCCCTAATCTAACCCTGGCCAACCTGTCTCTCAACTTACCCTCCATTACCCTGCCTC
-CACTCGTTACCCTGTCCCATTCAACCATACCACTCCGAACCACCATCCATCCCTCTACTTACTACCACTC
-ACCCACCGTTACCCTCCAATTACCCATATCCAACCCACTGCCACTTACCCTACCATTACCCTACCATCCA
-```
-
-The asterisk command is especially useful for selecting files with the same *file extension*.
-The file extension is the part of the filename after the full stop that specifies the file type: for example, a file ending in `.txt` is a text file.
-In a directory with many text files, `*.txt` selects all of the text files.
 
 ## The `tail` command
 
@@ -514,21 +487,12 @@ The `tail` command is the equivalent of the command `head`, but prints the last 
 This is useful for quickly examining the information at the ends of files.
 
 ```bash
-ronan@dell:~/bioinfo-notebook$ pwd
-/home/ronan/bioinfo-notebook
-ronan@dell:~/bioinfo-notebook$ tail -n 5 data/*
-==> data/example_genome_annotation.gtf <==
-NC_001133.9	RefSeq	exon	225460	226863	.	+	.	gene_id "YAR071W"; transcript_id "NM_001178239.1"; db_xref "GeneID:851299"; gbkey "mRNA"; gene "PHO11"; locus_tag "YAR071W"; partial "true"; product "acid phosphatase PHO11"; exon_number "1"; 
-NC_001133.9	RefSeq	CDS	225460	226860	.	+	0	gene_id "YAR071W"; transcript_id "NM_001178239.1"; db_xref "SGD:S000000094"; db_xref "GeneID:851299"; experiment "EXISTENCE:direct assay:GO:0003993 acid phosphatase activity [PMID:8817921]"; gbkey "CDS"; gene "PHO11"; locus_tag "YAR071W"; note "One of three repressible acid phosphatases; glycoprotein that is transported to the cell surface by the secretory pathway; induced by phosphate starvation and coordinately regulated by PHO4 and PHO2; PHO11 has a paralog, PHO12, that arose from a segmental duplication"; product "acid phosphatase PHO11"; protein_id "NP_009434.1"; exon_number "1"; 
-NC_001133.9	RefSeq	start_codon	225460	225462	.	+	0	gene_id "YAR071W"; transcript_id "NM_001178239.1"; db_xref "SGD:S000000094"; db_xref "GeneID:851299"; experiment "EXISTENCE:direct assay:GO:0003993 acid phosphatase activity [PMID:8817921]"; gbkey "CDS"; gene "PHO11"; locus_tag "YAR071W"; note "One of three repressible acid phosphatases; glycoprotein that is transported to the cell surface by the secretory pathway; induced by phosphate starvation and coordinately regulated by PHO4 and PHO2; PHO11 has a paralog, PHO12, that arose from a segmental duplication"; product "acid phosphatase PHO11"; protein_id "NP_009434.1"; exon_number "1"; 
-NC_001133.9	RefSeq	stop_codon	226861	226863	.	+	0	gene_id "YAR071W"; transcript_id "NM_001178239.1"; db_xref "SGD:S000000094"; db_xref "GeneID:851299"; experiment "EXISTENCE:direct assay:GO:0003993 acid phosphatase activity [PMID:8817921]"; gbkey "CDS"; gene "PHO11"; locus_tag "YAR071W"; note "One of three repressible acid phosphatases; glycoprotein that is transported to the cell surface by the secretory pathway; induced by phosphate starvation and coordinately regulated by PHO4 and PHO2; PHO11 has a paralog, PHO12, that arose from a segmental duplication"; product "acid phosphatase PHO11"; protein_id "NP_009434.1"; exon_number "1"; 
-###
-
-==> data/example_nucleotide_sequence.fasta <==
-GTGTGGTGATGGATAGTGAGTGGATAGTGAGTGGATGGATGGTGGAGTGGGGGAATGAGACAGGGCATGG
-GGTGGTGAGGTAAGTGCCGTGGATTGTGATGATGGAGAGGGAGGGTAGTTGACATGGAGTTAGAATTGGG
-TCAGTGTTAGTGTTAGTGTTAGTATTAGGGTGTGGTGTGTGGGTGTGGTGTGGGTGTGGGTGTGGGTGTG
-GGTGTGGGTGTGGGTGTGGTGTGGTGTGTGGGTGTGGTGTGGGTGTGGTGTGTGTGGG
+tail -n 5 /data2/biotecnologie_molecolari_magris/epigenomics/bash/example_sequence.fasta
+CACACACACCACACCCACACCCACACACCCACACCCACACACCCACACCACACCCACACCACACCCACAC
+CACACCACACCCACACCACACACCACACCCACACACCACACCACACCCACACCACACCCACACCACACCC
+ACACACCACACCCACACACCCACACACCACACCCACACACCACACCCACACCCACACACACCACACCCAC
+ACACCACACCCACACCCACACACACACACACCACACCCACACCCACACCCACACACCCACACACCCACAA
+CCACACCCACACCACACCCACACCCACACACACCACACACCACACCCACACACACCCACACAACCCCGCT
 ```
 
 ## Comments and broken lines
@@ -556,6 +520,7 @@ ACACACCACACCCACACACCCACACACCACACCCACACACCACACCCACACCCACACACACCACACCCAC
 ACACCACACCCACACCCACACACACACACACCACACCCACACCCACACCCACACACCCACACACCCACAA
 CCACACCCACACCACACCCACACCCACACACACCACACACCACACCCACACACACCCACACAACCCCGCT
 
+# The same can be achieved 
 head \
 /data2/biotecnologie_molecolari_magris/epigenomics/bash/example_sequence.fasta
 
@@ -650,44 +615,98 @@ ls
 ins.fasta insulin.fasta  test
 ```
 
+## Compressed files 
+It may happen that files downloaded or shared are in a compressed format, such as `.zip`, `.tar`, `.gz`, etc. The most widely used compression format can be decompressed using the following commands:
 
-## AWK command line 
-<!--
-### Video demonstration
+```bash
+gunzip # for .gz files
 
-In this demonstration, the bioinfo-notebook GitHub project (also known as a repository or repo) is cloned into the home directory of the UNIX system (in this case, the UNIX system used is Ubuntu).
-This means that all the files for this project will be downloaded from GitHub into the `~/bioinfo-notebook/` directory.
-A GitHub repo can be cloned using the command `$ git clone` followed by the URL of the target repo (which can be found on GitHub using the “Clone or download” button).
-The Linux setup script is then run from this cloned GitHub repo.
+bunzip2 # for .bz2 files
 
-[![asciicast](https://asciinema.org/a/314853.svg)](https://asciinema.org/a/314853?autoplay=1)
+unzip # for .zip files
+```
 
-## Exercise
+Viceversa, to compress a file, you can use the following commands:
+```bash
+gzip # to create .gz files
 
-Look at the [structure of the bioinfo-notebook repository](../README.md#repository-structure).
-This outlines how this repository (another term for a GitHub project folder) is structured: it outlines which files and directories are in this project.
-Most of the files in this project are within subdirectories of the `bioinfo-notebook/` directory.
+# or
+gzip -c # to create .gz files with a different name (without overwriting the original file)
 
-Once you have read this page, and [copied this project to your UNIX system](#cloning-the-bioinfo-notebook-project-into-your-home-directory), try the following small tasks.
-These tasks only require one command each.
+bzip2 # to create .bz2 files
+```
 
-1. Change the working directory from `bioinfo-notebook/` to `bioinfo-notebook/data/`.
-2. Change the working directory from `bioinfo-notebook/data` to `bioinfo-notebook/docs`, using `../` in your command.
-3. List the files in the `bioinfo-notebook/docs/` directory.
-4. Select a file in the `bioinfo-notebook/docs/` directory, and display the first 6 lines of it using the `head` command.
-5. Display the last 2 lines of all the files in the `bioinfo-notebook/docs/` directory, using the `tail` command.
-6. From the `bioinfo-notebook/docs/` directory, list the files in the `bioinfo-notebook/envs/` directory.
+In order to create or manipulate archive of files, you can use the following commands:
 
-[Solutions to this exercise](cl_solutions.md).
+```bash
+tar -cf archive_name.tar file1 file2 file3 # to create an archive of files named archive_name.tar
 
-## See also
+tar -zcf archive_name.tar.gz file1 file2 file3 # to create an archive of files named archive_name.tar.gz (compressed format)
+```
 
-- [Windows Subsystem for Linux](wsl.md)
-- [Using Ubuntu through a Virtual Machine](ubuntu_virtualbox.md)
-- [conda](conda.md)
-- [Linux setup script](linux_setup.md)
-- [File formats used in bioinformatics](file_formats.md)
-- [The DataCamp "Introduction to Shell" interactive course](https://www.datacamp.com/courses/introduction-to-shell-for-data-science)
+In order to extract the content of an archive, you can use the following commands:
 
--->
+```bash
+tar -xf archive_name.tar # to extract the content of the archive named archive_name.tar
 
+
+tar -zxf archive_name.tar.gz # to extract the content of the archive named archive_name.tar.gz (compressed format)
+```
+
+## Wildcards
+
+In the UNIX terminal, an asterisk (`*`) acts as a *wildcard*.
+This means that any files or directories that can replace this character will replace it.
+For example, the `bioinfo-notebook/data/` directory contains two files: `example_genome_annotation.gtf` and `example_nucleotide_sequence.fasta`.
+Using the command `head -n 5 data/*` will print the first 5 lines of both of these files.
+
+The asterisk command is especially useful for selecting files with the same *file extension*.
+The file extension is the part of the filename after the full stop that specifies the file type: for example, a file ending in `.txt` is a text file.
+In a directory with many text files, `*.txt` selects all of the text files.
+
+
+## AWK command line
+The basic syntax of the AWK command is: 
+
+```bash
+awk 'BEGIN { begin command(s) } { line command(s) } END { end command(s) }' input_file
+```
+
+Without BEGIN and END 
+```bash
+awk '{ line command(s) } ' input_file
+
+# For example
+
+awk '{print $0}' input_file # prints the entire line 
+awk '{print $3}' input_file # prints the third column of the line
+awk '{print $2"\t"$3}' input_file # prints the second and third columns of the line
+# the same can be achieved 
+awk 'OFS="\t" {print $2,$3}' input_file # prints the second and third columns of the line with tab as the output field separator
+```
+
+Field separator can be indicated in the BEGIN section for the input file (FS), and for the output file field separator (OFS). The column of the file can be referred to by its number (1, 2, 3, etc.) or by its name (if the file has a header) and separated using the comma:
+
+```bash
+awk 'BEGIN {FS=","; OFS="\t"} {print $2,$3}' input_file
+```
+
+`If` functions can be introduced in the awk command line.
+For exaple if we want to select only rows that have a certain value in the third column, we can use the following command:
+
+```bash
+awk '{if($3=="chr3") print $0}' input_file
+
+# The same can be achieved
+awk '$3=="chr3"{print $0}' input_file
+
+or 
+
+awk '{if($4==10) print $0}' input_file
+```
+
+Multiple `if` commands can be combined
+```bash
+awk '{if(condition 1) actionA; if(condition 2 && condition 3) actionB}' input_file
+
+```
