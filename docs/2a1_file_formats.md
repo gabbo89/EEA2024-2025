@@ -180,7 +180,7 @@ CRAM has the following major objectives:
 
 PAF is a text format describing the approximate mapping positions between two
 set of sequences. PAF is TAB-delimited with each line consisting of the
-following predefined fields:ù
+following predefined fields:
 
 
 1. **Query sequence name**

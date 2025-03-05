@@ -1,7 +1,7 @@
 ---
 layout: default
 title: The command line
-nav_order: 3
+nav_order: 5
 parent: 1. Introduction
 description: Introduction to the command line
 published: true
@@ -658,8 +658,6 @@ tar -zxf archive_name.tar.gz # to extract the content of the archive named archi
 
 In the UNIX terminal, an asterisk (`*`) acts as a *wildcard*.
 This means that any files or directories that can replace this character will replace it.
-For example, the `bioinfo-notebook/data/` directory contains two files: `example_genome_annotation.gtf` and `example_nucleotide_sequence.fasta`.
-Using the command `head -n 5 data/*` will print the first 5 lines of both of these files.
 
 The asterisk command is especially useful for selecting files with the same *file extension*.
 The file extension is the part of the filename after the full stop that specifies the file type: for example, a file ending in `.txt` is a text file.
@@ -709,5 +707,47 @@ awk '{if($4==10) print $0}' input_file
 Multiple `if` commands can be combined
 ```bash
 awk '{if(condition 1) actionA; if(condition 2 && condition 3) actionB}' input_file
+```
 
+Let's try with an exercise. Suppose to have a file with the following content:
+```bash
+Carlo   Biologia        80
+Carlo   Chimica 100
+Donato  Biologia        100
+Donato  Chimica 90
+Francesca       Biologia        90
+Francesca       Chimica 80
+Chiara  Biologia        100
+Chiara  Chimica 70
+```
+
+File is located here
+
+`/data2/biotecnologie_molecolari_magris/epigenomics/bash/awk_example.txt`
+
+1. Discard the names and extract only the 2nd and 3rd columns:
+
+```bash
+awk '{print $2"\t"$3}' /data2/biotecnologie_molecolari_magris/epigenomics/bash/awk_example.txt
+
+# The same can be achieved 
+awk 'OFS="\t" {print $2,$3}' /data2/biotecnologie_molecolari_magris/epigenomics/bash/awk_example.txt
+```
+
+2. Extract only the rows with `Biologia`
+
+```bash
+awk '{if($2=="Biologia") print $1"\t"$3}' /data2/biotecnologie_molecolari_magris/epigenomics/bash/awk_example.txt
+
+# In a similar manner we can write the code
+awk '/Biologia/' /data2/biotecnologie_molecolari_magris/epigenomics/bash/awk_example.txt
+
+# Or
+
+awk '/Biologia/ {print $1"\t"$3}' /data2/biotecnologie_molecolari_magris/epigenomics/bash/awk_example.txt
+```
+
+3. Extract only the names of student that achieved more or equal to 80 in `Chimica`
+```bash
+awk '{if($2=="Chimica" && $3>=80) print $1}' /data2/biotecnologie_molecolari_magris/epigenomics/bash/awk_example.txt
 ```
