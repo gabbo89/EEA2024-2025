@@ -729,7 +729,7 @@ File is located here:
 
 `/data2/biotecnologie_molecolari_magris/epigenomics/bash/awk_example.txt`
 
-1. Discard the names and extract only the 2nd and 3rd columns:
+- Discard the names and extract only the 2nd and 3rd columns:
 
 ```bash
 awk '{print $2"\t"$3}' /data2/biotecnologie_molecolari_magris/epigenomics/bash/awk_example.txt
@@ -738,7 +738,7 @@ awk '{print $2"\t"$3}' /data2/biotecnologie_molecolari_magris/epigenomics/bash/a
 awk 'OFS="\t" {print $2,$3}' /data2/biotecnologie_molecolari_magris/epigenomics/bash/awk_example.txt
 ```
 
-2. Extract only the rows with `Biologia`
+- Extract only the rows with `Biologia`
 
 ```bash
 awk '{if($2=="Biologia") print $1"\t"$3}' /data2/biotecnologie_molecolari_magris/epigenomics/bash/awk_example.txt
@@ -751,7 +751,7 @@ awk '/Biologia/' /data2/biotecnologie_molecolari_magris/epigenomics/bash/awk_exa
 awk '/Biologia/ {print $1"\t"$3}' /data2/biotecnologie_molecolari_magris/epigenomics/bash/awk_example.txt
 ```
 
-3. Extract only the names of student that achieved more or equal to 80 in `Chimica`
+- Extract only the names of student that achieved more or equal to 80 in `Chimica`
 
 ```bash
 awk '{if($2=="Chimica" && $3>=80) print $1}' /data2/biotecnologie_molecolari_magris/epigenomics/bash/awk_example.txt
