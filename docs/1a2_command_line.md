@@ -573,8 +573,9 @@ MALWMRLLPLLALLALWGPDPAAAFVNQHLCGSHLVEALYLVCGERGFFYTPKTRREAED
 LQVGQVELGGGPGAGSLQPLALEGSLQKRGIVEQCCTSICSLYQLENYCN
 ```
 
+<!--
 # ADD the step of downloading data from ncbi archive -> need to add the powerpoint presentation 
-
+-->
 
 ## Moving and copying with `mv` and `cp`
 
