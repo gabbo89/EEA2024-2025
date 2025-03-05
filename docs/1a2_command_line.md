@@ -573,7 +573,11 @@ MALWMRLLPLLALLALWGPDPAAAFVNQHLCGSHLVEALYLVCGERGFFYTPKTRREAED
 LQVGQVELGGGPGAGSLQPLALEGSLQKRGIVEQCCTSICSLYQLENYCN
 ```
 
+
+
 <!--
+It may be necessary to download sequences also from public repositories (for example fastq files)
+
 # ADD the step of downloading data from ncbi archive -> need to add the powerpoint presentation 
 -->
 
@@ -721,7 +725,7 @@ Chiara  Biologia        100
 Chiara  Chimica 70
 ```
 
-File is located here
+File is located here:
 
 `/data2/biotecnologie_molecolari_magris/epigenomics/bash/awk_example.txt`
 
@@ -748,6 +752,7 @@ awk '/Biologia/ {print $1"\t"$3}' /data2/biotecnologie_molecolari_magris/epigeno
 ```
 
 3. Extract only the names of student that achieved more or equal to 80 in `Chimica`
+
 ```bash
 awk '{if($2=="Chimica" && $3>=80) print $1}' /data2/biotecnologie_molecolari_magris/epigenomics/bash/awk_example.txt
 ```
