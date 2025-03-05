@@ -703,9 +703,9 @@ awk '{if($3=="chr3") print $0}' input_file
 # The same can be achieved
 awk '$3=="chr3"{print $0}' input_file
 
-or 
+# or 
 
-awk '{if($4==10) print $0}' input_file
+awk '{if($3=="chr3 && $4==10) print $0}' input_file
 ```
 
 Multiple `if` commands can be combined
