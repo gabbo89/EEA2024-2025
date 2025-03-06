@@ -468,8 +468,8 @@ chr19 49302900 49303200 -0.25
 
 
 
-## References
-
+# References
+{: .no_toc }
 - [SAM format specification](https://samtools.github.io/hts-specs/SAMv1.pdf)
 - [CRAM format specification (version 3.0)](https://github.com/samtools/hts-specs/blob/5a5d05fa157c679f34db8920ce3acab1d9f3dfd1/CRAMv3.pdf)
 - [The Sequence Alignment/Map format and SAMtools](https://doi.org/10.1093/bioinformatics/btp352)
