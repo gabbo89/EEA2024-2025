@@ -610,11 +610,11 @@ alignments/rkatsiteli.leaves_pe.deduplicated.bam
 >Finished generating genome-wide cytosine report
 
 <a id="bismark-meth_extract"></a>
-Several files will be produced in this last step, for a detailed description check [Bismark file description](https://gabbo89.github.io/EEA2024-2025/docs/2a_Bismark_file_descr.html#meth_extract)
+Several files will be produced in this last step, for a detailed description check [Bismark file description](https://gabbo89.github.io/EEA2024-2025/docs/2a3a_Bismark_file_descr.html#meth_extract)
 
 
 <a id="bismark-CX_report"></a>
-The most important file is the `*CX_report.txt` that contains the methylome data across the genome. Check the detailed description [Bismark methylation file description](https://gabbo89.github.io/EEA2024-2025/docs/2a_Bismark_file_descr.html#optional-genome-wide-cytosine-report-output).
+The most important file is the `*CX_report.txt` that contains the methylome data across the genome. Check the detailed description [Bismark methylation file description](https://gabbo89.github.io/EEA2024-2025/docs/2a3a_Bismark_file_descr.html#optional-genome-wide-cytosine-report-output).
 
 The file looks like this:
 
@@ -637,6 +637,10 @@ bismark2report \
 --dedup_report alignments/rkatsiteli.leaves_pe.deduplication_report.txt \
 --dir meth_extr/
 ```
+<!--
+remember that the differences in M-bias plot - is due to the fact that the option --include_overlap need to be used to have a real M-bias plot. Whithout these option (the default) the curve will be different with a decrease, due to removal of overlapping reads.
+
+-->
 
 {: .success-title }
 >STDOUT

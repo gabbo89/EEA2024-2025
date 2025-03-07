@@ -7,8 +7,9 @@ description: Introduction to the command line
 published: true
 ---
 
-INCOMPLETE
-{: .label .label-red }
+FINAL VERSION
+{: .label .label-green }
+
 
 This is an introduction to the *UNIX* command line.
 It covers some commands and concepts that are widely used in the UNIX command line.

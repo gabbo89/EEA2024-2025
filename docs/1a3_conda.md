@@ -8,8 +8,9 @@ published: true
 ---
 
 
-INCOMPLETE
-{: .label .label-red }
+FINAL VERSION
+{: .label .label-green }
+
 # Conda
 
 From the website, `conda` provides ["Package, dependency and environment management for any language"](https://docs.conda.io/en/latest/).

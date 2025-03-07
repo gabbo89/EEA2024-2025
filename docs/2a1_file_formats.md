@@ -6,8 +6,8 @@ nav_order: 1
 published: true
 ---
 
-COMPLETE
-{: .label .label-yellow }
+FINAL VERSION
+{: .label .label-green }
 
 A brief introduction to various file formats used in bioinformatics.
 
