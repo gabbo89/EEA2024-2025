@@ -151,7 +151,7 @@ pwd
 ## Listing directory content with the `ls` command
 
 The `ls` command can be used to list the files and directories within the current working directory.
-Try using the `ls` command in the `bioinfo-notebook/` directory.
+Try using the `ls` command in the `/data2/` directory.
 
 ```bash
 ls
@@ -454,7 +454,7 @@ bash: cd: example: No such file or directory
 
 The `head` command can be used to view the first part (the head) of a file or files.
 This command is useful for examining very large files quickly.
-From the `bioinfo-notebook/` working directory, use `head data/example_nucleotide_sequence.fasta` to view the head of that FASTA file.
+From the current directory, use `head /data2/biotecnologie_molecolari_magris/epigenomics/bash/example_sequence.fasta` to view the head of that FASTA file.
 
 ```bash
 head /data2/biotecnologie_molecolari_magris/epigenomics/bash/example_sequence.fasta
@@ -705,7 +705,7 @@ awk '$3=="chr3"{print $0}' input_file
 
 # or 
 
-awk '{if($3=="chr3 && $4==10) print $0}' input_file
+awk '{if($3=="chr3" && $4==10) print $0}' input_file
 ```
 
 Multiple `if` commands can be combined
