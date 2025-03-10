@@ -56,7 +56,7 @@ Final version
 ---
 
 # 1. Quality control and trimming of raw fastq files
-Sequencing raw data are divided in read1 and read2 and store in `fastq` format. Fastq files are compressed in `gzip` format (*.fastq.gz)
+Sequencing raw data are divided in read1 and read2 and stored in `fastq` format. Fastq files are compressed in `gzip` format (*.fastq.gz).
 
 We need to check the quality of the raw data in order to be sure that sequencing worked!
 
@@ -425,7 +425,7 @@ The ouput of the aligment process is a `bam file` containing mapping results tha
 `Samtools` is a suite of commands that can be used for manipulating sam/bam files. In order to visualize the content we can use the `samtools view` command.
 
 <a id="bismark-bam"></a>
-Bismark bam file is a tab separate textual file (in binary format if `bam`) and for a detailed description check [Bismark bam file description](https://gabbo89.github.io/EEA2024-2025/docs/2a_Bismark_file_descr.html)
+Bismark bam file is a tab separate textual file (in binary format if `bam`) and for a detailed description check [Bismark bam file description](https://gabbo89.github.io/EEA2024-2025/docs/2a3a_Bismark_file_descr.html)
 
 <!--
  (1) QNAME  (read name)
