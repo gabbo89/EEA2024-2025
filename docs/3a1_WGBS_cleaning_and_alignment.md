@@ -810,7 +810,7 @@ chloroplast \
 
 ```
 
-We can take a look at the summary results, which are reported in bisulfite_conversion/rkatsiteli.leaves_PE_report.txt file!
+We can take a look at the summary results, which are reported in `bisulfite_conversion/rkatsiteli.leaves_PE_report.txt` file!
 
 ------
 

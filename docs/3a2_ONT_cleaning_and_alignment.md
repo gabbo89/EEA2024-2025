@@ -4,7 +4,7 @@ title: Lesson 2 - Oxford Nanopore Technologies alignment
 nav_order: 2
 parent: 3. Tutorial
 description: A comprehensive guide to understanding epigenetics.
-published: false
+published: true
 ---
 Not complete
 {: .label .label-red }
@@ -425,6 +425,135 @@ ont/alignments/rkatsiteli.leaves.ont.sort.bam \
 # 5. Evaluate the methylation call performance against chloroplast sequence
 
 In order to get an estimate of the methylation call performance, we can compare the genomic methylation calls against the chloroplast calls. We can align the same data to a different reference, which include the chloroplast sequence.
+
+Create a new reference file that includes the chloroplast sequence
+```bash
+# Create a directory for the new reference
+mkdir -p ont/chloroplast
+
+# Merge the two sequences, we will use the already available chloroplast sequence used for wgbs analyses
+cat \
+wgbs/chloroplast/chloroplast.fasta \
+ont/reference/vitis_vinifera.fasta > ont/chloroplast/vitis_vinifera_chloroplast.fasta
+```
+
+Create now the index for the new reference
+
+```bash
+minimap2 \
+-x map-ont \
+-d ont/chloroplast/vitis_vinifera_chloroplast.fasta.mmi \
+ont/chloroplast/vitis_vinifera_chloroplast.fasta
+```
+
+Perform tha alignment 
+```bash
+# Define the number of threads
+threads=2
+
+minimap2 \
+-a \
+-x map-ont \
+-t ${threads} \
+-y \
+-L \
+ont/chloroplast/vitis_vinifera_chloroplast.fasta.mmi \
+ont/sequences/rkatsiteli.leaves.ont.fastq \
+> ont/alignments/rkatsiteli.leaves.ont.chloroplast.sam
+```
+
+{: .success-title }
+>STDOUT
+>
+>[M::main] Version: 2.28-r1209
+>
+>[M::main] CMD: minimap2 -a -x map-ont -t 2 -y -L ont/chloroplast/vitis_vinifera_chloroplast.fasta.mmi ont/sequences/rkatsiteli.leaves.ont.fastq
+>
+>[M::main] Real time: 324.781 sec; CPU: 643.580 sec; Peak RSS: 2.460 GB
+
+
+### Convert the (unsorted) sam to a sorted bam file 
+{: .no_toc}
+
+In order to proceed with downstream analysis, we need to convert the sam to binary format
+
+```bash
+# Convert the sam to bam file and soort by coordinates 
+samtools view -b \
+ont/alignments/rkatsiteli.leaves.ont.chloroplast.sam | \
+samtools sort \
+-@ ${threads} \
+--write-index \
+-o ont/alignments/rkatsiteli.leaves.ont.chloroplast.sort.bam
+```
+
+{: .success-title }
+>STDOUT
+>
+>[bam_sort_core] merging from 0 files and 2 in-memory blocks...
+
+
+Subset the bam file in order to extract only the reads mapping to the chloroplast
+```bash
+# Convert the sam to bam file and soort by coordinates 
+samtools view -b \
+-o ont/alignments/rkatsiteli.leaves.ont.chloroplast.only_chl.sort.bam \
+--write-index \
+ont/alignments/rkatsiteli.leaves.ont.chloroplast.sort.bam gi\|91983971\|ref\|NC_007957.1\| 
+```
+### Create the bedMethyl tables 
+{: .no_toc}
+
+
+There is the need to create the `.fai` file for the reference sequence 
+
+```bash
+samtools faidx ont/chloroplast/vitis_vinifera_chloroplast.fasta
+```
+
+```bash
+# Create the output directory
+mkdir ont/meth_extr_chl
+
+# Run modkit pileup
+modkit pileup \
+--threads 2 \
+--cpg \
+--combine-mods \
+--combine-strands \
+--ref ont/chloroplast/vitis_vinifera_chloroplast.fasta \
+--log-filepath ont/meth_extr_chl/rkatsiteli.leaves.chloroplast.CG.log \
+ont/alignments/rkatsiteli.leaves.ont.chloroplast.only_chl.sort.bam \
+ont/meth_extr_chl/rkatsiteli.leaves.chloroplast.CG.bedMethyl 
+```
+
+{: .success-title }
+> STDOUT
+>
+>
+> Using filter threshold 0.8925781 for C.
+>
+> Done, processed 59214 rows. Processed ~28161 reads and skipped zero reads.
+
+We can collect read-level statistics for a general overview using `modkit summary`. 
+By default it only uses 10,000 reads for generating the summary. 
+
+```bash
+modkit summary \
+ont/alignments/rkatsiteli.leaves.ont.chloroplast.only_chl.sort.bam
+```
+
+```
+# bases             C
+# total_reads_used  10042
+# count_reads_C     10042
+# pass_threshold_C  0.93359375
+ base  code  pass_count  pass_frac     all_count  all_frac
+ C     -     6247434     0.9952004     6762980    0.97306305
+ C     h     16259       0.0025900174  106144     0.015272086
+ C     m     13871       0.002209615   81073      0.011664849
+```
+
 
 [Modkit short manual]: https://gabbo89.github.io/EEA2024-2025/docs/2a4_Modkit_manual.html
 [Modkit_github]: https://github.com/nanoporetech/modkit
