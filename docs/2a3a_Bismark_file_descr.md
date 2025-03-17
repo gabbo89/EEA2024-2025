@@ -172,6 +172,29 @@ From this file, downstream processing of the file.
 Only performed by default on CG sites
 
 
+## M-bias output 
+{: .no_toc }
+<!--
+This allows generating nice graphs by alternative means, e.g. using R or Excel. The plot is also drawn into a .png file which requires the Perl module GD::Graph (more specifically, both modules GD::Graph::lines and GD::Graph::colour are required); if GD::Graph cannot be found on the system, only the table will be printed.
+-->
+The Bismark methylation extractor produces a file in M-bias format which uses 0-based genomic start and 1- based end coordinates. The file shows the methylation proportion across each possibile position in the read (cumulatively)[^2]
+
+The output is a tabular file with the following format:
+1. **read position**
+2. **count methylated**
+3. **count unmethylated**
+4. **% methylation**
+5. **total coverage**
+
+This allows generating nice graphs by alternative means, e.g. using R or Excel. That should look like:
+![mbias_example]({{"/assets/images/mbias_example.png" | relative_url }})
+
+
+## Splitting_report
+{: .no_toc }
+The Bismark methylation extractor produces also a reporting summary. It represent a summary of the splitting step executed by bismark_methylation_extractor. It report the % of methylated Cs in the different contexts. The file is a textual file.
+
+
 ## (Optional) Genome-wide cytosine report output
 {: .no_toc }
 The `coverage` ouput of the methylation extractor can be trasformed into a genome-wide cytosine methylation report. The main difference compared to the bedGraph is that **EVERY** cytosine on both the TOP and BOTTOM strands will be considered irrespective of wether they were actually covered by any reads in the experiment or not. The option `--genome_folder` need to be used in combination, because it is necessary to specify the reference used for the alignment. By default, only Cs in CpG context are sorted, but the option `--CX_context` may be used to report all Cs irrespective of sequence context. The file **`*CX_report.txt.gz`** is a tab-delimited file with the following columns:
@@ -212,30 +235,6 @@ A         CAC        ACAC          338               41769               0.80
 C         CAC        CCAC          296               38560               0.76
 G         CAC        GCAC          201               26655               0.75
 ```
-
-## M-bias output 
-{: .no_toc }
-<!--
-This allows generating nice graphs by alternative means, e.g. using R or Excel. The plot is also drawn into a .png file which requires the Perl module GD::Graph (more specifically, both modules GD::Graph::lines and GD::Graph::colour are required); if GD::Graph cannot be found on the system, only the table will be printed.
--->
-The Bismark methylation extractor produces a file in M-bias format which uses 0-based genomic start and 1- based end coordinates. The file shows the methylation proportion across each possibile position in the read (cumulatively)[^2]
-
-The output is a tabular file with the following format:
-1. **read position**
-2. **count methylated**
-3. **count unmethylated**
-4. **% methylation**
-5. **total coverage**
-
-This allows generating nice graphs by alternative means, e.g. using R or Excel. That should look like:
-![mbias_example]({{"/assets/images/mbias_example.png" | relative_url }})
-
-
-## Splitting_report
-{: .no_toc }
-The Bismark methylation extractor produces also a reporting summary. It represent a summary of the splitting step executed by bismark_methylation_extractor. It report the % of methylated Cs in the different contexts. The file is a textual file.
-
-
 
 [Back to the tutorial](https://gabbo89.github.io/EEA2024-2025/docs/3a1_WGBS_cleaning_and_alignment.html#bismark-meth_extract)
 

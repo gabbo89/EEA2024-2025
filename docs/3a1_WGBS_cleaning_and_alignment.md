@@ -160,8 +160,9 @@ The quality of the data can be improved by trimming the data. Trimming removes l
 {: .note }
  If the data is not good quality, it should be discarded. 
 
-
+<!--
 Refer to the powerpoint presentation for additional informations.  
+-->
 
 ----
 
