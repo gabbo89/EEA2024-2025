@@ -820,7 +820,7 @@ We have seen that Bismark is a powerful tool for the analysis of bisulfite seque
 Pay always attention at the different available options that can be combined in order to obtain the results of interest!
 
 <!--
-For example, in some situations it could be of interest to merge the information of the two strands and work only with the reference strand, for example when we aggregate data. Thus it may be useful to add to the step of `bismark_methylation_extractor` the option `--comprehensive`.
+For example, in some situations it could be of interest to merge the information of the two strands and work only with the reference strand, for example when we aggregate data. Thus it may be useful to add to the step of `bismark_methylation_extractor` the option `--merge_CpG`.
 -->
 
 ---

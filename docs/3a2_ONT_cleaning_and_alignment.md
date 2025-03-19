@@ -143,6 +143,7 @@ https://github.com/samtools/hts-specs/blob/a6a4504917a1b02197538f21e1b441c3f3892
 The tag lists the probability of each modification listed in the MM tag being correct, in the order they occour. Probability range between 0 and 1 and is remapped in equal sized portions to the discrete integers 0 to 255 inclusively. The probability range corresponding to integer value N is N/256 to (N+1)/256. 
 
 ![alt text](image-7.png)
+
 ---
 
 ```bash
