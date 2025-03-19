@@ -6,8 +6,8 @@ parent: 3. Tutorial
 description: A comprehensive guide to understanding epigenetics.
 published: true
 ---
-Not complete
-{: .label .label-red }
+Final version
+{: .label .label-yellow }
 
 {: .important-title }
 > Aim
@@ -102,7 +102,8 @@ Take a look to the file content
 
 ```bash
 samtools view \
-/data2/biotecnologie_molecolari_magris/epigenomics/ont/rkatsiteli.leaves.ont.bam
+/data2/biotecnologie_molecolari_magris/epigenomics/ont/rkatsiteli.leaves.ont.bam | \
+less
 ```
 ---
 
@@ -125,8 +126,10 @@ For more details about ChEBI - Chemical Entities of Biological Interest (ChEBI) 
 Usually a `?` is following, and no information is available about the modification status of the skipped bases. Afterwards a comma separated list of how may bases in the read of the previously stated *base type* to skip (starting with 0). 
 
 For example:
+![alt text](image-6.png)
 
 `C+m?,5,12,0` 
+
 
 It tells us that there are 3 Cs called (as either modified or unmodified) on the top strand. The first 5 Cs are unknown, while the 6<sup>th</sup>, 19<sup>th</sup> and 20<sup>th</sup> are called Cs. 12 Cs between 6<sup>th</sup> and 19<sup>th</sup> are unknown. 
 
@@ -139,6 +142,7 @@ https://github.com/samtools/hts-specs/blob/a6a4504917a1b02197538f21e1b441c3f3892
 
 The tag lists the probability of each modification listed in the MM tag being correct, in the order they occour. Probability range between 0 and 1 and is remapped in equal sized portions to the discrete integers 0 to 255 inclusively. The probability range corresponding to integer value N is N/256 to (N+1)/256. 
 
+![alt text](image-7.png)
 ---
 
 ```bash

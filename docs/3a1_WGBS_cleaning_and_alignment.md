@@ -813,7 +813,17 @@ chloroplast \
 
 We can take a look at the summary results, which are reported in `bisulfite_conversion/rkatsiteli.leaves_PE_report.txt` file!
 
-------
+# Final considerations
+{: .no_toc }
+
+We have seen that Bismark is a powerful tool for the analysis of bisulfite sequencing data. We have seen the different commands that enable us to perform a complete analysis of WGBS data. 
+Pay always attention at the different available options that can be combined in order to obtain the results of interest!
+
+<!--
+For example, in some situations it could be of interest to merge the information of the two strands and work only with the reference strand, for example when we aggregate data. Thus it may be useful to add to the step of `bismark_methylation_extractor` the option `--comprehensive`.
+-->
+
+---
 
 [trimgalore short manual]: https://gabbo89.github.io/EEA2024-2025/docs/2a2_TrimGalore_manual.html
 [trimgalore_github]: https://github.com/FelixKrueger/TrimGalore
