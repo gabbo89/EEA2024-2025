@@ -41,7 +41,7 @@ conda activate epigenomics
 cd /data2/student_space/st24_16_folder/epigenomics/
 
 # Create the required directories 
-mkdir ont/sequences ont/reference
+mkdir -p ont/sequences ont/reference
 ```
 <br>
 
@@ -126,12 +126,12 @@ For more details about ChEBI - Chemical Entities of Biological Interest (ChEBI) 
 Usually a `?` is following, and no information is available about the modification status of the skipped bases. Afterwards a comma separated list of how may bases in the read of the previously stated *base type* to skip (starting with 0). 
 
 For example:
-![alt text](image-6.png)
 
 `C+m?,5,12,0` 
 
 
 It tells us that there are 3 Cs called (as either modified or unmodified) on the top strand. The first 5 Cs are unknown, while the 6<sup>th</sup>, 19<sup>th</sup> and 20<sup>th</sup> are called Cs. 12 Cs between 6<sup>th</sup> and 19<sup>th</sup> are unknown. 
+
 
 <!--
 https://github.com/samtools/hts-specs/blob/a6a4504917a1b02197538f21e1b441c3f3892be4/SAMtags.tex#L517
@@ -142,7 +142,11 @@ https://github.com/samtools/hts-specs/blob/a6a4504917a1b02197538f21e1b441c3f3892
 
 The tag lists the probability of each modification listed in the MM tag being correct, in the order they occour. Probability range between 0 and 1 and is remapped in equal sized portions to the discrete integers 0 to 255 inclusively. The probability range corresponding to integer value N is N/256 to (N+1)/256. 
 
-![alt text](image-7.png)
+Suppose having the following values:
+
+`MM:Z:C+m,5,12;C+h,5,12;` may have an associated tag of `ML:B:C,204,89,26,130`.
+These probabilities should not sum to above 1.0(≈256 ininteger encoding, allowing for some minor rounding errors), but may sum to a lower total with the remainder representing the probability that none of the listed modification types are present. In the example used above, the 6<sup>th</sup> C has 80% chance of being 5mC, 10% chance of being 5hmC and 10% chance of being an unmodified C.
+
 
 ---
 
