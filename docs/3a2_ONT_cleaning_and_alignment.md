@@ -340,6 +340,10 @@ ont/alignments/rkatsiteli.leaves.ont.sort.bam \
 
 Now you are able to change the colors of the methylation status and for example discriminate between methylated and un-methylated positions in the ont track.
 
+Remember to deactivate the environment in order to go back to the previous one (epigenomics)
+```bash
+conda deactivate 
+```
 
 # 4. Extract methylation informations 
 We will use `modkit` to extract the methylation informations from the aligned reads. For a short or detailed description checks respectively [Modkit short manual][Modkit short manual]{: .btn } and [Modkit on Github][Modkit_github]{: .btn }

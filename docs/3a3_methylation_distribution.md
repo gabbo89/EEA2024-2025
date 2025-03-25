@@ -8,7 +8,7 @@ published: true
 ---
 
 Final version
-{: .label .label-green }
+{: .label .label-yellow }
 
 {: .important-title }
 > Aim
@@ -217,7 +217,6 @@ CG_coverage_filtered = CG %>% filter(coverage > 10 & methR > 0)
 # read the input file, which is missing the header
 CHG=read.table("arabidopisis_metilome_CHG.txt", stringsAsFactors=F, header=F,sep="\t")
 
-
 # rename the columns
 names(CHG)=c('chr', 'pos', 'strand', 'c', 't', 'context', 'genome_context', 'methylation')
 
@@ -225,14 +224,13 @@ names(CHG)=c('chr', 'pos', 'strand', 'c', 't', 'context', 'genome_context', 'met
 # total coverage is calculated by summing the columns c and t
 CHG$coverage = CHG$c + CHG$t
 
-
 # Add now a new column named `methR` which represent the methylation level calculated in a different way. The value is calculated as % value, rounded to 0 decimal places:
 CHG$methR = round(100*CHG$c / CHG$coverage, 0)
 
 # check now the new dataframe
 head(CHG)
 
-
+# The output should look like
    chr pos strand  c  t context genome_context methylation coverage methR
 1 Chr3 381      + 15  5     CHG            CTG    0.750000       20    75
 2 Chr3 383      - 29  3     CHG            CAG    0.906250       32    91
@@ -244,33 +242,14 @@ head(CHG)
 ```
 
 
-### Add a new column named `coverage` which include the total coverage
-{: .no_toc }
-
-```r
-
-```
-
-
-
-```r
-
-
-```
-
-![Figure 3: header of the modified CG data frame]({{ "/assets/images/3a3-2_methylation_distribution_arabidopsis.png" | relative_url }})
-<br>
-**Figure 3:** First rows of the modified CG data frame.
-
-
 Now we can filter the table by removing the rows where the coverage is lower than a certain threshold (e.g. 10). We haven't done it previously with `awk` in order to test the different coverage thresholds in `R`. Removing the non covered positions (done previously with [awk](#filter-the-data-and-calculate-the-methylation-level)) can be done at the beginning because they are not informative. 
 
 We will use now the `dplyr` library to filter the data.
 
 
 ```r
-# select only the rows where the coverage is higher than 10
-CHG_coverage_filtered = CHG %>% filter(coverage > 10)
+# select only the rows where the coverage is higher than 5
+CHG_coverage_filtered = CHG %>% filter(coverage > 5)
 ```
 
 If, as commonly happens, the number of Cs with methylation values = 0 is extremely high, the graph may appear compressed and hard to understand on the **_x_** axis. Thus it might be useful to remove the rows where the methylation is 0. This can be done with the following command:
@@ -286,6 +265,7 @@ CHG_coverage_filtered = CHG %>% filter(coverage > 5 & methR > 0)
 
 
 ### CHH
+{: .no_toc }
 
 ```r
 # read the input file, which is missing the header
@@ -298,14 +278,13 @@ names(CHH)=c('chr', 'pos', 'strand', 'c', 't', 'context', 'genome_context', 'met
 # total coverage is calculated by summing the columns c and t
 CHH$coverage = CHH$c + CHH$t
 
-
 # Add now a new column named `methR` which represent the methylation level calculated in a different way. The value is calculated as % value, rounded to 0 decimal places:
 CHH$methR = round(100*CHH$c / CHH$coverage, 0)
 
 # check now the new dataframe
 head(CHH)
 
-
+# The output should look like
    chr pos strand c t context genome_context methylation coverage methR
 1 Chr3 166      + 0 1     CHH            CCC           0        1     0
 2 Chr3 167      + 0 1     CHH            CCT           0        1     0
@@ -317,24 +296,6 @@ head(CHH)
 ```
 
 
-### Add a new column named `coverage` which include the total coverage
-{: .no_toc }
-
-```r
-
-```
-
-
-
-```r
-
-
-```
-
-![Figure 3: header of the modified CG data frame]({{ "/assets/images/3a3-2_methylation_distribution_arabidopsis.png" | relative_url }})
-<br>
-**Figure 3:** First rows of the modified CG data frame.
-
 
 Now we can filter the table by removing the rows where the coverage is lower than a certain threshold (e.g. 10). We haven't done it previously with `awk` in order to test the different coverage thresholds in `R`. Removing the non covered positions (done previously with [awk](#filter-the-data-and-calculate-the-methylation-level)) can be done at the beginning because they are not informative. 
 
@@ -342,8 +303,8 @@ We will use now the `dplyr` library to filter the data.
 
 
 ```r
-# select only the rows where the coverage is higher than 10
-CHH_coverage_filtered = CHH %>% filter(coverage > 10)
+# select only the rows where the coverage is higher than 5
+CHH_coverage_filtered = CHH %>% filter(coverage > 5)
 ```
 
 If, as commonly happens, the number of Cs with methylation values = 0 is extremely high, the graph may appear compressed and hard to understand on the **_x_** axis. Thus it might be useful to remove the rows where the methylation is 0. This can be done with the following command:
@@ -390,7 +351,11 @@ The obtained graphs should look like:
 ## Repeat now the same for CHG and CHH.
 {: .no_toc }
 
-For CHG 
+### CHG
+{: .no_toc }
+
+### Draw the graph as histogram:
+{: .no_toc }
 
 ```r
 ggplot(CHG_coverage_filtered,aes(x=methR)) +
@@ -414,7 +379,11 @@ The obtained graphs for CHG should look like:
 
 
 
-For CHH 
+### CHH
+{: .no_toc }
+
+### Draw the graph as histogram:
+{: .no_toc }
 
 ```r
 ggplot(CHH_coverage_filtered,aes(x=methR)) +
