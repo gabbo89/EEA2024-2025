@@ -145,7 +145,7 @@ The tag lists the probability of each modification listed in the MM tag being co
 Suppose having the following values:
 
 `MM:Z:C+m,5,12;C+h,5,12;` may have an associated tag of `ML:B:C,204,89,26,130`.
-These probabilities should not sum to above 1.0(≈256 ininteger encoding, allowing for some minor rounding errors), but may sum to a lower total with the remainder representing the probability that none of the listed modification types are present. In the example used above, the 6<sup>th</sup> C has 80% chance of being 5mC, 10% chance of being 5hmC and 10% chance of being an unmodified C.
+These probabilities should not sum to above 1.0 (≈256 ininteger encoding, allowing for some minor rounding errors), but may sum to a lower total with the remainder representing the probability that none of the listed modification types are present. In the example used above, the 6<sup>th</sup> C has 80% chance of being 5mC, 10% chance of being 5hmC and 10% chance of being an unmodified C.
 
 
 ---
@@ -273,7 +273,7 @@ In order to proceed with downstream analysis, we need to convert the sam to bina
 # Define the number of threads
 threads=2
 
-# Convert the sam to bam file and soort by coordinates 
+# Convert the sam to bam file and sort by coordinates 
 samtools view -b ont/alignments/rkatsiteli.leaves.ont.sam | \
 samtools sort \
 -@ ${threads} \
@@ -318,6 +318,28 @@ ont/alignments/rkatsiteli.leaves.ont.sort.bam \
 ```
 
 The option `-n` is used to specify the name of the tracks. In this case, we have respectively two tracks: `wgbs` and `ont`. The `-g` option is used to specify the reference file . The `-l` option is used to specify the region of interest. 
+
+
+Since the version of igv available in the `epigenomics` conda environmente is not the latest, due to conflict with the libraries of other tools, not all features are available. There is a different conda environment available with a recent version of igv. To activate it, you can use the following command:
+
+```bash
+conda activate igv
+```
+
+This will open a new enviroment where a recent versione of igv is available. You can use the same command as above in order to visualize the content of the bam files.
+
+
+```bash
+igv \
+-g wgbs/reference/vitis_vinifera.fasta \
+-l chr05:24461000-24462000 \
+wgbs/alignments/rkatsiteli.leaves_pe.deduplicated.sort.bam \
+ont/alignments/rkatsiteli.leaves.ont.sort.bam \
+-n wgbs,ont
+```
+
+Now you are able to change the colors of the methylation status and for example discriminate between methylated and un-methylated positions in the ont track.
+
 
 # 4. Extract methylation informations 
 We will use `modkit` to extract the methylation informations from the aligned reads. For a short or detailed description checks respectively [Modkit short manual][Modkit short manual]{: .btn } and [Modkit on Github][Modkit_github]{: .btn }
@@ -567,3 +589,6 @@ ont/alignments/rkatsiteli.leaves.ont.chloroplast.only_chl.sort.bam
 [Modkit short manual]: https://gabbo89.github.io/EEA2024-2025/docs/2a4_Modkit_manual.html
 [Modkit_github]: https://github.com/nanoporetech/modkit
 
+<!--
+add sam st24_09
+-->
