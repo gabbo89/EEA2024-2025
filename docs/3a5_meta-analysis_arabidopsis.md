@@ -4,17 +4,18 @@ title: Lesson 5 - Meta-anlysis of DNA methylation
 nav_order: 5
 parent: 3. Tutorial
 description: A comprehensive guide to understanding epigenetics.
-published: true
+published: false
 ---
 
 
 INCOMPLETE
 {: .label .label-red }
 
+
 {: .important-title }
 > Aim
 >
-> Obtain a graph with the window distribution of methylation values across a chromosome in three contexts `CG`, `CHG` and `CHH`, using `R`.
+> The goal is to generate graphs representing average methylation profiles in structurally homogeneous genomic regions, such as across all genes or all members of a specific transposon type.
 
 <br>
 <details open markdown="block">
@@ -28,11 +29,6 @@ INCOMPLETE
 <br>
 
 
-
-{: .important-title }
-> Aim
->
-> The goal is to generate graphs representing average methylation profiles in structurally homogeneous genomic regions, such as across all genes or all members of a specific transposon type.
 
 
 For example from a meta-analysis in the soybean genome:
