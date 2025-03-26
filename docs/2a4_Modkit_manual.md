@@ -9,8 +9,8 @@ published: true
 ---
 
 
-COMPLETE
-{: .label .label-yellow }
+FINAL VERSION
+{: .label .label-green }
 
 ![ONT_logo]({{"/assets/images/ONT_logo_590x106.png" | relative_url }})
 

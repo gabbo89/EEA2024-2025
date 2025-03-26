@@ -270,4 +270,17 @@ R
 ```r
 # We will use a different library to read the bed file
 library(data.table)
+
+# Read the input table 
+meth_out<-read.table("genome_wide_meth/methylome_windows_mean.bed")
+
+# Rename the columns 
+```
+
+
+
+```r
+library(ggplot2)
+ggplot(meth_out, aes(x=window,y=methylation_level.mean)) + 
+geom_bar(stat="identity", col="blue")
 ```

@@ -8,8 +8,8 @@ has_children: true
 published: true
 ---
 
-COMPLETE
-{: .label .label-yellow }
+FINAL VERSION
+{: .label .label-green }
 
 ![Bismark_figure]({{"/assets/images/bismark.png" | relative_url }})
 

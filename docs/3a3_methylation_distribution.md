@@ -207,10 +207,7 @@ If, as commonly happens, the number of Cs with methylation values = 0 is extreme
 CG_coverage_filtered = CG %>% filter(coverage > 10 & methR > 0)
 ```
 
-## Repeat now the same analysis for CHG and CHH contexts.
-{: .no_toc }
-
-### CHG 
+## Repeat now the same analysis for CHG.
 {: .no_toc }
 
 ```r
@@ -264,7 +261,7 @@ CHG_coverage_filtered = CHG %>% filter(coverage > 5 & methR > 0)
 
 
 
-### CHH
+## Repeat now the same analysis for CHH.
 {: .no_toc }
 
 ```r
@@ -348,10 +345,7 @@ The obtained graphs should look like:
 |  ![histo]({{"/assets/images/3a3-3_methylation_distribution_arabidopsis.png" | relative_url }})  | ![density]({{"/assets/images/3a3-4_methylation_distribution_arabidopsis.png" | relative_url }})  |
 
 
-## Repeat now the same for CHG and CHH.
-{: .no_toc }
-
-### CHG
+## Repeat now the same for CHG
 {: .no_toc }
 
 ### Draw the graph as histogram:
@@ -378,9 +372,9 @@ The obtained graphs for CHG should look like:
 |  ![histo]({{"/assets/images/3a3-5_methylation_distribution_arabidopsis.png" | relative_url }})  | ![density]({{"/assets/images/3a3-6_methylation_distribution_arabidopsis.png" | relative_url }})  |
 
 
-
-### CHH
+## Repeat now the same for CHH
 {: .no_toc }
+
 
 ### Draw the graph as histogram:
 {: .no_toc }
