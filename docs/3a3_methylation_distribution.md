@@ -113,21 +113,21 @@ If we want to select only C in CG context and with a coverage greater than 0, we
 
 ```bash
 awk '{ if (($4+$5)>0 && $6=="CG") {meth = $4/($4+$5); print $0"\t"meth}}' \
-arabidopsis_wgbs.CX_report.txt > arabidopisis_metilome_CG.txt
+arabidopsis_wgbs.CX_report.txt > arabidopsis_metilome_CG.txt
 ```
 
 The same `awk` command may be used to extract values for CHG context:
 
 ```bash
 awk '{ if (($4+$5)>0 && $6=="CHG") {meth = $4/($4+$5); print $0"\t"meth}}' \
-arabidopsis_wgbs.CX_report.txt > arabidopisis_metilome_CHG.txt
+arabidopsis_wgbs.CX_report.txt > arabidopsis_metilome_CHG.txt
 ```
 
 and for CHH context:
 
 ```bash
 awk '{ if (($4+$5)>0 && $6=="CHH") {meth = $4/($4+$5); print $0"\t"meth}}' \
-arabidopsis_wgbs.CX_report.txt > arabidopisis_metilome_CHH.txt
+arabidopsis_wgbs.CX_report.txt > arabidopsis_metilome_CHH.txt
 ```
 
 # 2. Upload the methylation table in `R`.
@@ -151,7 +151,7 @@ We will store the table in a data.frame called CG, using the `read.table` functi
 
 ```r
 # read the input file, which is missing the header
-CG=read.table("arabidopisis_metilome_CG.txt", stringsAsFactors=F, header=F,sep="\t")
+CG=read.table("arabidopsis_metilome_CG.txt", stringsAsFactors=F, header=F,sep="\t")
 
 # we can now check the data.frame using for example the head() function
 head(CG)
@@ -212,7 +212,7 @@ CG_coverage_filtered = CG %>% filter(coverage > 10 & methR > 0)
 
 ```r
 # read the input file, which is missing the header
-CHG=read.table("arabidopisis_metilome_CHG.txt", stringsAsFactors=F, header=F,sep="\t")
+CHG=read.table("arabidopsis_metilome_CHG.txt", stringsAsFactors=F, header=F,sep="\t")
 
 # rename the columns
 names(CHG)=c('chr', 'pos', 'strand', 'c', 't', 'context', 'genome_context', 'methylation')
@@ -266,7 +266,7 @@ CHG_coverage_filtered = CHG %>% filter(coverage > 5 & methR > 0)
 
 ```r
 # read the input file, which is missing the header
-CHH=read.table("arabidopisis_metilome_CHH.txt", stringsAsFactors=F, header=F,sep="\t")
+CHH=read.table("arabidopsis_metilome_CHH.txt", stringsAsFactors=F, header=F,sep="\t")
 
 # rename the columns
 names(CHH)=c('chr', 'pos', 'strand', 'c', 't', 'context', 'genome_context', 'methylation')
@@ -392,7 +392,7 @@ ggplot(CHH_coverage_filtered,aes(x=methR)) +
 geom_density(alpha=.2,fill="#FF6666")
 ```
 
-The obtained graphs for CHG should look like: 
+The obtained graphs for CHH should look like: 
 
 | **histogram** | **density** |
 |:--------:|:---:|
