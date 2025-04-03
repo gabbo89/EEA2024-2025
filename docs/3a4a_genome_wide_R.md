@@ -137,12 +137,15 @@ cut(all_genomic_positions,breaks=my_breaks)
 > 10 Levels: (0,10] (10,20] (20,30] (30,40] (40,50] (50,60] (60,70] (70,80] (80,90] (90,100]
 -->
 
-
+<!--
 !!!! TO CHECK 
 For example , if we want to divide the chromosome in windows of 100,000 bp, we can use the following code:
 
+
 We can replace the intervals (0,10] with increasing numbers that identify the windows (1,2,3,4,5..) or with numbers that represent the end coordinates of each windows (100000,200000,300000..). For example:
 !!!!
+-->
+
 The output of the command shows the interval that are assigned to each single coordinate. We can replace the intervals labels (for example (0,10] ) with the corresponding window number (for example 1) or for example the genomic coordinates of each window (1, 100,000 ...) using the `label` argument of the `cut` function. *Labels* is a vector which need to have the same size as the vector *breaks* less than one unit and contains the labels to be assigned to each interval. Remember that breaks as 0 at the beginning 
 
 ```r
@@ -210,7 +213,7 @@ We can now create a data.frame with the average methylation for each window, usi
 For example:
 ```r
 # Use the aggregate funcion, to get the average per window
-aggregate(methylation_level~window,data=CG_windows, FUN = mean)
+aggregate(methylation_level~window,data=CG, FUN = mean)
 ```
 
 FUN can be also used with length, in order to get the number of Cs per window. Thus we can combine both, in order to obtain simultaneously the average and the number of Cs per window.

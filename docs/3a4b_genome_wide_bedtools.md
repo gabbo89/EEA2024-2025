@@ -32,6 +32,26 @@ Bedtools is a software package for the manipulation of genomic datasets. It is d
 
 You can find a detailed explanation [here](https://onedrive.live.com/?cid=YOUR_CID&resid=YOUR_RESID&authkey=YOUR_AUTHKEY&action=embedview).
 
+In order to obtain the chromosome wide distribution of the average methylation values, we need to follow the following steps.
+
+We will always begin from Bismark methylome output.
+![alt text](image-11.png)
+
+In order to draw the graph and use the Bismark file we need to know the chromosome sizes.The sizes can be used in combination with the command `bedtools makewindows` to create a file with the windows that will be used as interval for the graph. Windows can be then intersected with the Bismark file to obtain the methylation values for each window. The problem is that the Bismark file is not in the bed format, so we need to convert it in bed format. By reformatting the tabular file in bed format we can then use `bedtools intersect` to intersect the windows with the bed file.
+
+![alt text](image-12.png)
+
+So having the windows and the bed file with the methylation values, we can intersect the two datasets 
+
+![alt text](image-13.png)
+
+Last step is to measure the average methylation per window, and this can be achieved using `bedtools groupby` command. 
+
+![alt text](image-14.png)
+
+The output will be a bed file with the average methylation per window. This file can be then imported in R to draw the graph. 
+
+---
 
 The file has been already used in the previous tutorial. (add link)
 

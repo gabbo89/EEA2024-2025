@@ -16,7 +16,7 @@ INCOMPLETE
 >
 > Obtain a graph with the window distribution of methylation values across a chromosome in three contexts `CG`, `CHG` and `CHH`.
 
-
+<!--
 <br>
 <details open markdown="block">
   <summary>
@@ -27,7 +27,7 @@ INCOMPLETE
 {:toc}
 </details>
 <br>
-
+-->
 
 
 We will use the methylation table obtained from Bismark. The file represent the result of wgbs performed in _Arabidopsis thaliana_ sample.
