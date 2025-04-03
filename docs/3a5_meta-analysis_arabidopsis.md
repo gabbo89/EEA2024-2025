@@ -127,6 +127,8 @@ $ awk '{if ($1=="Chr1" && ($4+$5)>0 && $6=="CHH") print $0}' "Arabidopsis_wgbs.C
 ```
 -->
 
+---
+
 # 1. Filter the dataset 
 
 The initial methylome table must be filtered to remove cytosine positions not covered by any reads. We will use again `awk` for this purpose. It must then be split into three separate files containing only the `CG`, `CHG`, and `CHH` contexts, respectively. For faster computation during the exercise, only chromosome 1 (Chr1) data will be used, although ideally, data from all chromosomes should be included.
@@ -170,7 +172,7 @@ The files obtained will look like:
 
 ![alt text](image-10.png)
 
-# 2. Covert filtered Bismark output to BED Format
+# 2. Convert filtered Bismark output to BED Format
 
 Since the meta-analysis can be performed using [`bedtools`](https://bedtools.readthedocs.io/en/latest/), the methylation files need to be converted into BED format.
 
@@ -204,12 +206,12 @@ The file now should look like:
 
 ## Prepare Gene Coordinates File to be used by bedtools (GFF to BED Conversion)
 
-In order to perform a meta-analysis, bedtools will be used in order to divide the genic regions of the genome (of "Chr1" in this tutorial) in percentile of lenght. We will start from a set of coordinates of the genes in the genome. Gene coordinates are represented in `gff` format. Each row represent a gene with the chromosome, the start and end position.
+In order to perform a meta-analysis, bedtools will be used in order to divide the genic regions of the genome ("Chr1" in this tutorial) in percentile of lenght. We will start from a set of coordinates of the genes in the genome. Gene coordinates are represented in `gff` format. Each row represent a gene with the chromosome, the start and end position.
 
 
-Using the bedtools makewindows function, we can convert the gff file into a bed file with a list of coordinates of each of the 100 percentiles (each row will represent a percentile of length of a gene, and percentiles are numbered in the last column on the right).
+Using the bedtools makewindows function, we can convert the [gff](2a1_file_formats.html#annotations). file into a bed file with a list of coordinates of each of the 100 percentiles (each row will represent a percentile of length of a gene, and percentiles are numbered in the last column on the right).
 
-!!! FIGURA!!!
+![alt text](image-37.png)
 
 We are interested only in the rows that report the start and end coordinates of the genes, thus those lines with the feature "gene" in the 3<sup>th</sup> column. Also the row with the feature "mRNA" which represent the transcripts could be used. Important to remember that gff files may report different transcripts per gene, and thus it will be necessary to decide which transcript to consider for the meta-analysis.
 
