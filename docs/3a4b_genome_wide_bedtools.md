@@ -72,7 +72,8 @@ cd /data2/student_space/st24_16_folder/epigenomics/
 # Create a new directory for this tutorial
 mkdir -p genome_wide_meth/
 
-# Filter the input file in order to keep only the methylation context of interest (CG) and to keep sites located on Chr1 with a coverage greater than 0
+# Filter the input file in order to keep only the methylation context of interest (CG)
+# and to keep sites located on Chr1 with a coverage greater than 0
 awk -v "OFS=\t" '{if($1=="Chr1" && ($4+$5)>0 && $6=="CG") {meth=100*($4/($4+$5)); print $0,meth}}' \
 methylation_distribution/arabidopsis_wgbs.CX_report.txt \
 > genome_wide_meth/arabidopsis_chr1_CG_meth.txt

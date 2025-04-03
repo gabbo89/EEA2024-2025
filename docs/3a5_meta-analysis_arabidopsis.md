@@ -47,6 +47,9 @@ A repeated meta-analysis on data from different biological conditions can immedi
 
 ## Rationale of the Procedure
 
+
+![alt text](image-18.png)
+
 Each gene is ideally divided into 100 equal-length regions (called percentiles, intervals, or bins), numbered from 1 to 100. All cytosines present in percentile 1 of each gene are used to compute an average methylation value for percentile 1. This process is repeated for all 99 remaining percentiles.
 
 An extract of the final file will look like this, with a percentile column (from 1 to 100) and a column containing their average methylation values.
@@ -149,7 +152,8 @@ mkdir -p meta_analysis/
 # Move inside the new directory
 cd meta_analysis/
 
-# Filter the input file in order to keep only the methylation context of interest (CG) and to keep sites located on Chr1 with a coverage greater than 0
+# Filter the input file in order to keep only the methylation context of interest (CG) 
+# and to keep sites located on Chr1 with a coverage greater than 0
 awk '{ if ($1=="Chr1" && ($4+$5)>0 && $6=="CG") {meth = $4/($4+$5); print $0"\t"meth}}' \
 ../methylation_distribution/arabidopsis_wgbs.CX_report.txt > arabidopsis_chr1_CG_meth.txt
 
@@ -176,13 +180,16 @@ In order to transform the methylation tables into BED format, we will use the fo
 
 ```sh
 # For the CG context 
-awk '{chr=$1; start=$2 - 1; end=$2; meth=$8; print chr"\t"start"\t"end"\t"meth}' arabidopsis_chr1_CG_meth.txt > arabidopsis_chr1_CG_meth.bed
+awk '{chr=$1; start=$2 - 1; end=$2; meth=$8; print chr"\t"start"\t"end"\t"meth}' \
+arabidopsis_chr1_CG_meth.txt > arabidopsis_chr1_CG_meth.bed
 
 # For the CHG context
-awk '{chr=$1; start=$2 - 1; end=$2; meth=$8; print chr"\t"start"\t"end"\t"meth}' arabidopsis_chr1_CHG_meth.txt > arabidopsis_chr1_CHG_meth.bed
+awk '{chr=$1; start=$2 - 1; end=$2; meth=$8; print chr"\t"start"\t"end"\t"meth}' \
+arabidopsis_chr1_CHG_meth.txt > arabidopsis_chr1_CHG_meth.bed
 
 # For the CHH context
-awk '{chr=$1; start=$2 - 1; end=$2; meth=$8; print chr"\t"start"\t"end"\t"meth}' arabidopsis_chr1_CHH_meth.txt > arabidopsis_chr1_CHH_meth.bed
+awk '{chr=$1; start=$2 - 1; end=$2; meth=$8; print chr"\t"start"\t"end"\t"meth}' \
+arabidopsis_chr1_CHH_meth.txt > arabidopsis_chr1_CHH_meth.bed
 
 ```
 
@@ -258,10 +265,10 @@ bedtools makewindows \
 ```
 The options used:
 
-`-b` : input file in bed format
-`-n` : number of windows (percentiles) to divide the genes in 
-`-i` : a name column added as fourth columns, which indicate the window number
-`-reverse` : reverse the order of the windows for genes on the negative strand
+- `-b` : input file in bed format
+- `-n` : number of windows (percentiles) to divide the genes in 
+- `-i` : a name column added as fourth columns, which indicate the window number
+- `-reverse` : reverse the order of the windows for genes on the negative strand
 
 We will get two files, one for each strand, with the genes divided into 100 percentiles of length. For example:
 
@@ -312,21 +319,21 @@ bedtools intersect \
 
 The options used:
 
-`-a` : files A with features to be compared with file B
-`-b` : file B with features to be compared with file A
-`-wa`: report the original "A" feature when an overlap is found
-`-wb`: report the original "B" feature when an overlap is found
+- `-a` : files A with features to be compared with file B
+- `-b` : file B with features to be compared with file A
+- `-wa`: report the original "A" feature when an overlap is found
+- `-wb`: report the original "B" feature when an overlap is found
 
 {: .note }
-both -wa and -wb are used, the originals of both "A" and "B" will be reported.
+both **-wa** and **-wb** are used, the originals of both "A" and "B" will be reported.
 
 
 The output will contain alle the features from the first file (transcript_bins.bed). If two or more Cs intersect with the same percentile, the rows (the values of percetiles) will be repeated for each cytosine. Percentile values that do not intersect with any cytosine will be reported as -1 or . in the columns.
 
-![intersect_output](image-18.png)
+![intersect_output](image-23.png)
 
 
-We can repeath the same for the CHG and CHH contexts. 
+We can repeat the same for the CHG and CHH contexts. 
 
 
 ```sh
@@ -360,7 +367,7 @@ sort -k4,4n intersect_CHH.txt > sorted_intersect_CHH.txt
 ```
 
 We will obtain something like this
-![alt text](image-19.png)
+![alt text](image-24.png)
 
 
 ## Calculating Average Methylation per Percentile
@@ -377,10 +384,10 @@ bedtools groupby \
 
 The options used:
 
-`-i` : input file to be grouped and summarized
-`-g` : specify the column to group by the input (in this case, the 4th column, which is the percentile)
-`-c` : specify the column (1-based) that should be summarized
-`-o` : specify the operation that should be applied to the selected columns (in this case, the mean)
+- `-i` : input file to be grouped and summarized
+- `-g` : specify the column to group by the input (in this case, the 4th column, which is the percentile)
+- `-c` : specify the column (1-based) that should be summarized
+- `-o` : specify the operation that should be applied to the selected columns (in this case, the mean)
 
 The obtained file will have the average methylation per percentile (from 1 to 100), and will look like
 
