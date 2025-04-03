@@ -4,7 +4,7 @@ title: Lesson 5 - Meta-anlysis of DNA methylation
 nav_order: 5
 parent: 3. Tutorial
 description: A comprehensive guide to understanding epigenetics.
-published: false
+published: true
 ---
 
 
