@@ -182,7 +182,7 @@ iris.pca$eig
 iris.pca$var$contribution
 ```
 
-## EIGENVECTORS AND EIGENVALUES 
+## Eigenvectors and eigenvalues 
 
 __THE CONTRIBUTION OF PRINCIPAL COMPONENTS TO EXPLAINING THE OVERALL DATA INFORMATION__
 
@@ -301,7 +301,8 @@ When supplemental information on sample identity can be used to help interpretin
 
 For instance:  
 ```r
-fviz_pca_ind(iris.pca, label = "none", habillage = iris$Species, palette = c("#00AFBB", "#E7B800", "#FC4E07"), addEllipses = TRUE)
+fviz_pca_ind(iris.pca, label = "none", habillage = iris$Species, 
+palette = c("#00AFBB", "#E7B800", "#FC4E07"), addEllipses = TRUE)
 ```
 
 
@@ -328,6 +329,7 @@ The poison dataset is an example of individuals vs categorical variables dataset
 
 
 ```r
+# Load the required libraries
 library(FactoMineR)
 library(factoextra)
 
@@ -351,17 +353,17 @@ head(poison_subset1,10)
 
 R functions similar to those used for PCA can be applied to this kind of dataset. Indeed, to compute principal components and their statistics, the MCA function can be used:
 
-> ```r
+```r
 poison_subset1.mca=MCA(poison_subset1, graph=FALSE)
 ```
 Evoking the poison_subset1.mca will provide the paths to get the different computations:
 
-> ```r
+```r
 poison_subset1.mca
 ```
 
 ![alt text](image-40.png)
-Figure 16. |||| Portion of total variance explained by each principal component (dimension) in the MCA.
+**Figure 16:**
 
 
 Information about the eigenvectors (i.e. principal components) and their contribution to the total data variance (eigenvalues and the percent contribution) can be displayed with functions similar to PCA’s:
@@ -380,6 +382,7 @@ fviz_screeplot(poison_subset1.mca, addlabels = TRUE)
 ```
 
 ![alt text](image-41.png)
+
 **Figure 17:** Portion of total variance explained by each principal component (dimension) (Scree plot) in the MCA
 
 A main different between MCA and PCA stands in the fact that in MCA every parameter used as a variable in broad sense (for instance “Fever” in the poison dataset) comes with a number of options or categories (“Fever_yes”, “Fever_no” in the example) that each contributes to the principal components. In PCA, instead, “Fever” would be considered the actual variable and the different values taken by the variable, on a quantitative numerical scale, would not be considered as contributors per se. Thus, the MCA output is organized accordingly when information about the contribution of each variable to the principal components is retrieved from the “.mca” object (in this “case poison_subset1.mca”).  Indeed, this is the case using functions like the following ones:
@@ -412,7 +415,8 @@ fviz_contrib(poison_subset1.mca, choice = "var", axes = 2)
 The position of each variable category in the PC space can be plotted using:
 
 ```r
-fviz_mca_var(poison_subset1.mca, col.var="contrib", gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), repel = TRUE)
+fviz_mca_var(poison_subset1.mca, col.var="contrib", 
+gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), repel = TRUE)
 ```
 
 ![alt text](image-46.png)
@@ -453,6 +457,7 @@ Positions of individual samples in the PC coordinate system (PC1 and PC2 dimensi
 ```
 
 ![alt text](image-48.png)
+
 **Figure 22:** Mapping of the individual samples on the principal components.
 
 
@@ -462,6 +467,7 @@ fviz_mca_biplot(poison_subset1.mca, repel=T)
 ```
 
 ![alt text](image-49.png)
+
 **Figure 23:** Mapping of individual samples and variable categories on the principal components.
 
 
@@ -472,6 +478,7 @@ fviz_mca_biplot(poison_subset1.mca, choice="var", repel=T)
 ```
 
 ![alt text](image-50.png)
+
 **Figure 24:** Mapping of individual samples and the variable on the principal components.
 
 
@@ -495,6 +502,7 @@ head(poison_subset2, 10)
 ```
 
 ![alt text](image-51.png)
+
 **Figure 25:** Subset of the poison dataset (poison_subset2), selected to test the MCA function, including quantitative and qualitative supplementary variables.
 
 Then, run MCA, declaring the quantitative and qualitative supplementary variables:
@@ -510,6 +518,7 @@ fviz_mca_var(poison_subset2.mca, repel = TRUE)
  ```
 
 ![alt text](image-52.png)
+
 **Figure 26:** Mapping of the original variables (variable categories) as well as qualitative supplementary variable (sex M/F) on the principal component space. The proximity of the sex variables M and F to the axes’ origin denotes their low correlation with symptoms and food items.
 
 
@@ -520,4 +529,5 @@ fviz_mca_var(poison_subset2.mca, choice="var", repel = TRUE)
 ```
  
 ![alt text](image-53.png)
+
 **Figure 27:** Correlation of the original variables (in broad sense, not variable categories) as well as supplementary qualitative (Sex) and quantitative (Age) variables with principal components. The proximity of Sex and Age to the axes’ origin denotes their small contribution to PCs.
