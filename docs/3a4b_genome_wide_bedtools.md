@@ -293,15 +293,17 @@ R
 library(data.table)
 
 # Read the input table 
-meth_out<-read.table("genome_wide_meth/methylome_windows_mean.bed")
+meth_out<-fread("genome_wide_meth/methylome_windows_mean.bed",data.table=F,header=F)
 
 # Rename the columns 
+names(meth_out) <- c("chr","start","end","methylation_level_mean")
+
 ```
 
 
 
 ```r
 library(ggplot2)
-ggplot(meth_out, aes(x=window,y=methylation_level.mean)) + 
+ggplot(meth_out, aes(x=window,y=methylation_level_mean)) + 
 geom_bar(stat="identity", col="blue")
 ```
