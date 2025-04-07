@@ -204,7 +204,7 @@ The file now should look like:
 
 
 
-## Prepare Gene Coordinates File to be used by bedtools (GFF to BED Conversion)
+# 3. Prepare Gene Coordinates File to be used by bedtools (GFF to BED Conversion)
 
 In order to perform a meta-analysis, bedtools will be used in order to divide the genic regions of the genome ("Chr1" in this tutorial) in percentile of lenght. We will start from a set of coordinates of the genes in the genome. Gene coordinates are represented in `gff` format. Each row represent a gene with the chromosome, the start and end position.
 
@@ -245,7 +245,7 @@ awk '{chr=$1; start=$4 - 1; end=$5;strand=$7; if(strand == "-") print chr"\t"sta
 
 
 
-## Divide genes into percentiles
+# 4. Divide genes into percentiles
 
 Now each gene can be divided into 100 percentiles of length. This is done using the bedtools makewindows.
 
@@ -297,7 +297,7 @@ sort -k1,1 -k2,2n > transcript_bins.bed
 With sort -k1,1 -k2,2n , we are sorting the file by the first column (chromosome) and the second column (start position) in numerical order. The n value at the end of the second column indicates that the sorting should be done in numerical order (and not lexicographic, thus 2 will be placed after 1, and not after 10).
 
 
-## Intersecting Percentile Coordinates with Cytosine Coordinates
+# 5. Intersect percentile coordinates with Cytosine coordinates
 
 We can now proceed with the intersect of the obtained percentiles with the cytosine coordinates. We will use the bedtools intersect command.
 Bedtools intersect will try to find overlap between two datasets.
@@ -327,10 +327,10 @@ The options used:
 - `-wb`: report the original "B" feature when an overlap is found
 
 {: .note }
-both **-wa** and **-wb** are used, the originals of both "A" and "B" will be reported.
+Both **-wa** and **-wb** are used, the originals features of both "A" and "B" will be reported.
 
 
-The output will contain alle the features from the first file (transcript_bins.bed). If two or more Cs intersect with the same percentile, the rows (the values of percetiles) will be repeated for each cytosine. Percentile values that do not intersect with any cytosine will be reported as -1 or . in the columns.
+The output will contain all the features from the first file (transcript_bins.bed). If two or more Cs intersect with the same percentile, the rows (the values of percetiles) will be repeated for each cytosine. Percentile values that do not intersect with any cytosine will not be reported.
 
 ![intersect_output](image-23.png)
 
@@ -355,7 +355,7 @@ bedtools intersect \
 > intersect_CHH.txt
 ```
 
-Now we have files with the methylation values for each percentile and each cytosine context. Since we want to draw a graph with the average values per percentile, we need to sort the files based on the percentile values. This can be easyli achieved with the `sort` command.
+Now we have files with the methylation values for each percentile and each cytosine context. Since we want to draw a graph with the average values per percentile, we need to sort the files based on the percentile values. This can be easily achieved with the `sort` command.
 
 ```bash
 # For CG context
@@ -368,11 +368,11 @@ sort -k4,4n intersect_CHG.txt > sorted_intersect_CHG.txt
 sort -k4,4n intersect_CHH.txt > sorted_intersect_CHH.txt
 ```
 
-We will obtain something like this
+We will obtain something like this:
 ![alt text](image-24.png)
 
 
-## Calculating Average Methylation per Percentile
+# 6. Calculating Average Methylation per Percentile
 
 We need now to calculate the average methylation per percentile. This can be done in different ways, for example with `awk` or using directly `bedtools`.
 
@@ -414,7 +414,7 @@ bedtools groupby \
 -o mean > CHH_percentile_meth.txt
 ```
 
-## Visualization of Meta-Analysis
+# 7. Visualization of Meta-Analysis
 
 Using **R** with **ggplot2**:
 

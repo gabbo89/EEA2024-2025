@@ -184,7 +184,7 @@ iris.pca$var$contribution
 
 ## Eigenvectors and eigenvalues 
 
-__THE CONTRIBUTION OF PRINCIPAL COMPONENTS TO EXPLAINING THE OVERALL DATA INFORMATION__
+*THE CONTRIBUTION OF PRINCIPAL COMPONENTS TO EXPLAINING THE OVERALL DATA INFORMATION*
 
 Eigenvectors and their own eigenvalues are concepts from the theory of linear transformation. To explain the meaning of this concepts in the context of PCA, we may state that:
 
@@ -319,6 +319,112 @@ The advantage of having the PCA algorithm perform this data transformation stems
 In the iris example, the sample clustering is mainly influenced by three out of four variables and the initial visualization of how the samples were related to each other based on those few variables was already quite clear before performing the PCA. However, in most real cases, datasets are more complex and unsuitable for manual inspection of the single variables.  
 The PCA clustering of iris individual samples makes sense when compared to the taxonomical organization of the flowers (the three species), which represents a reasonable preliminary expectation. In a customized analysis with your data, a preliminary hypothesis of clustering could be based on the experimental setup and the PCA could help confirm the expectations. Otherwise, the situation could be neutrally open to any possible result and be just exploratory.
 
+
+# Run PCA with a toy dataset 
+
+PCA (Principal Component Analysis) and K-means analysis are clustering methods based on multivariate data, allowing the identification of common or differential behaviors among the objects under study.
+
+PCA will be applied to a matrix of observations (samples) concerning a list of multiple variables. The goal is to organize the samples into groups with similar behavior or the variables into groups with similar behavior (the latter known as "loadings" analysis).
+
+The analysis will be applied to DNA methylation data, consisting of methylation percentage values for a large number of cytosines in the genome across a limited number of plant samples (different developmental stages of callus of two different varieties).
+
+
+The file is located at the following path:
+
+`/data2/biotecnologie_molecolari_magris/epigenomics/pca/methylation_pca.txt`
+
+Copy the file to a new directory from `bash`.
+
+```bash
+cd /data2/student_space/st24_16_folder/epigenomics/
+
+# Create the new directory
+mkdir pca
+
+# Copy the input dataset 
+cp /data2/biotecnologie_molecolari_magris/epigenomics/pca/methylation_pca.txt pca/
+```
+
+
+The file include the (not rounded) methylation values for 12 samples. In order to perform a PCA it is important to work with several individuals, the more the better. 
+
+```r
+# open R 
+R
+
+# Load the required library
+library(data.table)
+
+# Read the data
+meth<-fread("pca/methylation_pca.txt", data.table=F, header=T)
+
+# Set rownames by replacing the numerical values with the positions
+row.names(meth)=meth[,1]
+
+# Set to NULL the column with positions id - and thus remove it
+meth$Position=NULL
+
+# check the file 
+head(meth)
+```
+![alt text](image-54.png)
+
+
+In order to perform the PCA analysis we need to transpose the dataframe (invert columns and rows). We can use the following R function `t(meth)`.
+
+```r
+# Perform the PCA analysis
+meth_pca<-prcomp(t(meth))
+
+# In order to understand the output structure 
+str(meth_pca)
+```
+
+![alt text](image-55.png)
+
+
+We obtained 12 principal components (which is the number of samples). Also the proportion of variance explained by each component is shown. The first two component explains more than 70% of the variance. This is a good starting point for the analysis. 
+
+
+```r
+# Get a summary of the PCA results 
+summary(meth_pca)
+
+# Or even hidden results 
+str(summary(meth_pca))
+```
+![alt text](image-58.png)
+
+If we want to access to a specific component of the PCA results (in list format), we could type 
+
+```r
+# To access to the variance explained by each component
+summary(t_meth_pca)$importance[2,]
+
+# Now we are able to draw a raw barplot with the percentage of variance explained by each component
+barplot(summary(meth_pca)$importance[2,], las=2)
+```
+
+![alt text](image-57.png)
+
+We can plot the first two components to visualize the data. 
+
+```r
+plot(meth_pca$x)
+```
+
+![alt text](image-56.png)
+
+```r
+# We can tune a little bit the graph
+plot(meth_pca$x, col=c(3,3,3,3,3,3,2,2,2,2,2,2), pch=19)
+text(meth_pca$x,  labels=rownames(t(meth)), cex=0.5, pos=c(4,4,4,4,4,4,2,2,2,2,2,2))
+```
+
+![alt text](image-59.png)
+
+Loadings can be obtained 
+![alt text](image-60.png)
 
 ## A glimpse on multiple correspondence analysis (MCA)
 
