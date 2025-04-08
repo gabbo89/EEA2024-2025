@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Lesson 5 - Meta-anlysis of DNA methylation
+title: Lesson 5 - Meta-analysis of DNA methylation
 nav_order: 5
 parent: 3. Tutorial
 description: A comprehensive guide to understanding epigenetics.
@@ -204,7 +204,7 @@ The file now should look like:
 
 
 
-# 3. Prepare Gene Coordinates File to be used by bedtools (GFF to BED Conversion)
+# 3. Prepare gene coordinates file to be used by bedtools (GFF to BED conversion)
 
 In order to perform a meta-analysis, bedtools will be used in order to divide the genic regions of the genome ("Chr1" in this tutorial) in percentile of lenght. We will start from a set of coordinates of the genes in the genome. Gene coordinates are represented in `gff` format. Each row represent a gene with the chromosome, the start and end position.
 
@@ -372,7 +372,7 @@ We will obtain something like this:
 ![alt text](image-24.png)
 
 
-# 6. Calculating Average Methylation per Percentile
+# 6. Calculating average methylation per percentile
 
 We need now to calculate the average methylation per percentile. This can be done in different ways, for example with `awk` or using directly `bedtools`.
 
@@ -414,7 +414,7 @@ bedtools groupby \
 -o mean > CHH_percentile_meth.txt
 ```
 
-# 7. Visualization of Meta-Analysis
+# 7. Visualization of meta-analysis
 
 Using **R** with **ggplot2**:
 

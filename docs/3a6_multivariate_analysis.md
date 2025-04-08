@@ -12,7 +12,7 @@ INCOMPLETE
 {: .important-title }
 > Aim
 >
-> Obtain a graph with the window distribution of methylation values across a chromosome in three contexts `CG`, `CHG` and `CHH`, using `bedtools`.
+> Perform a multivariate analysis using `R`.
 
 <br>
 <details open markdown="block">
@@ -25,15 +25,15 @@ INCOMPLETE
 </details>
 <br>
 
-Multivariate analysis is a statistical approach that focuses on analyzing multiple variables of an experiment simultaneously. This technique is used to identify patterns, relationships and correlations between different variables as to detect the major combinations of factors that drive or influence the behavior of samples that are described by those variables. Relationships between samples that are described by those variables can also be identified using multivariate analysis methods. Thus, with this approach it is possible to sort the individual samples of an experiment (e.g. a number of animal or plants) into groups of samples that behave in a homogeneous way within each group but are differentiated between groups, according to the overall variables (characteristics) that describe those samples.
+Multivariate analysis is a statistical approach that focuses on analyzing multiple variables of an experiment simultaneously. This technique is used to identify patterns, relationships and correlations between different variables as to detect the major combinations of factors that drive or influence the behavior of samples that are described by those variables. Relationships between samples that are described by those variables can also be identified using multivariate analysis methods. Thus, with this approach it is possible to sort the individual samples of an experiment (e.g. a number of animals or plants) into groups of samples that behave in a homogeneous way within each group but are differentiated between groups, according to the overall variables (characteristics) that describe those samples.
 
-Among multivariate analysis methods, Principal Component Analysis stands out for popularity and broader use in scientific literature. It comes with different flavors, three of which will be briefly described in this mini-tutorial:
+Among multivariate analysis methods, Principal Component Analysis stands out for popularity and broader use in scientific literature. It comes with different flavors, two of which will be briefly described in this mini-tutorial:
 
 1.	Principal Components Analysis (in strict sense) or PCA
-2.	Correspondence analysis or CA
-3.	Multiple correspondence analysis or MCA
+2.	Multiple correspondence analysis or MCA
+3.	Correspondence Analysis or CA
 
-All these methods elaborate data to produce the so-called principal components, which represent a way to identify, sort and combine all the variables describing a dataset into a new set of fewer composite variables that are capable of dissecting most the of variability in the data.
+All these methods elaborate data to produce the so-called principal components, which represent a way to identify, sort and combine all the variables describing a dataset into a new set of fewer composite variables that are capable of dissecting most of the variability in the data.
 
 Typical datasets that are prone to be analyzed by PCA are two-entry tables with individuals indicated in rows and numerical variables indicated in columns, like the following examples (Fig. 1):
 
@@ -59,7 +59,7 @@ Each new principal component can be a combination of few or more original variab
 **Figure 3:** Principal components regarded as new coordinates of individual samples into a simplified multidimensional space. The first two or three dimensions can suffice in representing a 2D or 3D (not shown) space where samples can be located to identify their proximity. 
 
 
-## Differences between PCA, CA and MCA
+# Differences between PCA, CA and MCA
 <br>
 **_Input dataset_**
 
@@ -129,12 +129,12 @@ ggplot(iris,aes(x=Sepal.Width,y=Sepal.Length,color=Species)) + geom_point()
 
 where: 
 -	iris defines the dataset
--	aes defines the dataset elements contributing to the aesthetics of the plot (the Sepal.Width data are used as x coordinates, the Sepal.Length data as y coordinates, the species to which each flower belongs is used to distinguish the species with different colors)
--	geom_point() defines the type of plot (points in a Cartesian plane)
+-	aes defines the dataset elements contributing to the aesthetics of the plot (the *Sepal.Width* data are used as x coordinates, the *Sepal.Length* data as y coordinates, the *Species* to which each flower belongs is used to distinguish the species with different colors)
+-	*geom_point()* defines the type of plot (points in a Cartesian plane)
 
 ![alt text](image-19.png)
 
-**Figure 5:** Comparison between two variables of the iris dataset. Neither variables (Sepal length or Width) are capable of clearly distinguishing the three species. However, Sepal length is a bit better at that.
+**Figure 5:** Comparison between two variables of the iris dataset. Neither variables (Sepal length or width) are capable of clearly distinguishing the three species. However, Sepal length is a bit better at that.
 
 
 ```r
@@ -144,28 +144,30 @@ ggplot(iris,aes(x=Petal.Width,y=Petal.Length,color=Species)) + geom_point()
 ![alt text](image-25.png)
 
 
-**Figure 6:** Correlation between two variables of the iris dataset. Both variables (Petal length and Width) are capable of clearly distinguishing the three species (with minor overlapping of the *versicolor* and *virginica*).
+**Figure 6:** Correlation between two variables of the iris dataset. Both variables (Petal length and width) are capable of clearly distinguishing the three species (with minor overlapping of the *versicolor* and *virginica*).
 
 From the comparison of the two graphs, petal variables seem to be more useful than sepals to separate individual flowers in three groups that make sense with respect to the species they belong. It is also clear that petal length and width are mostly redundant as either one could suffice to distinguish the three species.
 
 We can run the PCA algorithm to check how these four variables are rearranged in a new set of artificial variables representing the principal components.
 
-## Run the PCA analysis on the iris dataset
+# Run the PCA analysis on the iris dataset
 
 
 
-PCA input must be a dataset with variables arranged in columns. Variables not used, such as the species column, must be purged. 
+PCA input must be a dataset with variables arranged in columns. Variables not used, such as the species column, must be purged (removed). 
 
 ```r
+# Select only the first four columns
 iris.pca <- PCA(iris[,1:4], graph = FALSE)
-# or
+
+# Or discard the last column
 iris.pca <- PCA(iris[,-5], graph = FALSE)
 ```
 
 The expression iris[,1:4] means subsetting iris by only taking the first four columns of each row.
 The expression iris[,-5] means subsetting iris by removing the fifth column of each row.
 
-As iris has five columns, the two expressions are equivalent.
+As iris has five columns, the two expressions are equivalent!
 
 
 The object iris.pca now contains the analytical results of the PCA analysis (Figure 7).
@@ -173,7 +175,7 @@ The object iris.pca now contains the analytical results of the PCA analysis (Fig
 ![alt text](image-26.png)
 **Figure 7:** Results of the PCA.
 
-Different result tables can be evoked by typing iris.pca followed by the fifteen options displayed. For instance:
+Different result tables can be obtained by typing iris.pca followed by the fifteen options displayed. For instance:
 
 ```r
 iris.pca$eig
@@ -183,13 +185,13 @@ iris.pca$var$contribution
 ```
 
 ## Eigenvectors and eigenvalues 
-
+<br>
 *THE CONTRIBUTION OF PRINCIPAL COMPONENTS TO EXPLAINING THE OVERALL DATA INFORMATION*
 
 Eigenvectors and their own eigenvalues are concepts from the theory of linear transformation. To explain the meaning of this concepts in the context of PCA, we may state that:
 
-1)	The eigenvectors are the directions in which the data vary the most and represent the new coordinates (or dimensions or principal components to say it in different but equivalent ways) of the coordinate system in which samples (individuals) are relocated. Let n be the number of initial variables. The final number of eigenvectors or principal components is still n (or n-1 if individuals are scarcer than the variables). 
-2)	The eigenvalues are the amount of data variance or quantity of information present in each new coordinate (principal component).
+1.	The eigenvectors are the directions in which the data vary the most and represent the new coordinates (or dimensions or principal components to say it in different but equivalent ways) of the coordinate system in which samples (individuals) are relocated. Let n be the number of initial variables. The final number of eigenvectors or principal components is still n (or n-1 if individuals are scarcer than the variables). 
+2.	The eigenvalues are the amount of data variance or quantity of information present in each new coordinate (principal component).
 
 In the iris example we have 4 original variables that are transformed in 4 final principal components sorted by descending amount of total data variance explained. The total variance is set to 4 and the amount of this variance (eigenvalue) distributed in each principal component can be known from the “eig” subtable (Figure 8):
 
@@ -207,10 +209,10 @@ An almost identical table can be obtained with:
 ```r
 get_eig(iris.pca)
 ```
-
+<br>
 **Interpretation**
 
-Thus, in iris the first principal component explains 72% (2.92 out of 4) of the total variance in the data, meaning that the position where samples are located on the first component axis of the new coordinate system already allows distinguishing the samples using 72% of the total information contained in the data.
+In iris the first principal component explains 72% (2.92 out of 4) of the total variance in the data, meaning that the position where samples are located on the first component axis of the new coordinate system already allows distinguishing the samples using 72% of the total information contained in the data.
 A plot displaying the contribution of each principal components to recording the total amount of data variance can be obtained with the following function:
 
 ```r
@@ -223,7 +225,7 @@ and should look like Figure 9.
 ![alt text](image-28.png)
 <br>
 
-**Figure 9:** Total variance explained by each principal component (dimension) (Scree plot)
+**Figure 9:** Total variance explained by each principal component (dimension) [Scree plot]
 
 ## Contribution of original variables to the principal components
 
@@ -237,7 +239,7 @@ These data are reported in Figure 10.
 
 **Figure 10:** Contribution of original variables to the principal components (dimensions)
 
-Barplot conveying this information can be produced with the following functions, where the “axes” parameter indicates the principal component:
+Barplot conveying this information can be produced with the following functions, where the *axes* parameter indicates the principal component:
 
 ```r
 # Contributions of variables to PC1
@@ -279,7 +281,7 @@ This is one of the most used applications of PCA and consists of identifying clu
 This operation entails mapping the samples in the PC coordinate system using information that is stored in iris.pca in subtables homologous variables tables (e.g. `iris.pca$ind`, `iris.pca$ind$coord`, `iris.pca$ind$contrib`, etc.).
 
 
-As well as the `get_pca_var()` functions is useful to grab in one single step variable coordinates and contributions, the get_pca_ind() function allows retrieving similar parameters for the individual samples.
+As well as the `get_pca_var()` functions is useful to grab in one single step variable coordinates and contributions, the `get_pca_ind()` function allows retrieving similar parameters for the individual samples.
 
 ```r
 get_pca_ind(iris.pca)
@@ -469,7 +471,7 @@ poison_subset1.mca
 ```
 
 ![alt text](image-40.png)
-**Figure 16:**
+**Figure 16:** Results of the Multiple Correspondence Analysis
 
 
 Information about the eigenvectors (i.e. principal components) and their contribution to the total data variance (eigenvalues and the percent contribution) can be displayed with functions similar to PCA’s:
@@ -491,7 +493,7 @@ fviz_screeplot(poison_subset1.mca, addlabels = TRUE)
 
 **Figure 17:** Portion of total variance explained by each principal component (dimension) (Scree plot) in the MCA
 
-A main different between MCA and PCA stands in the fact that in MCA every parameter used as a variable in broad sense (for instance “Fever” in the poison dataset) comes with a number of options or categories (“Fever_yes”, “Fever_no” in the example) that each contributes to the principal components. In PCA, instead, “Fever” would be considered the actual variable and the different values taken by the variable, on a quantitative numerical scale, would not be considered as contributors per se. Thus, the MCA output is organized accordingly when information about the contribution of each variable to the principal components is retrieved from the “.mca” object (in this “case poison_subset1.mca”).  Indeed, this is the case using functions like the following ones:
+A main different between MCA and PCA stands in the fact that in MCA every parameter used as a variable in broad sense (for instance “Fever” in the poison dataset) comes with a number of options or categories (“Fever_yes”, “Fever_no” in the example) that each contributes to the principal components. In PCA, instead, “Fever” would be considered the actual variable and the different values taken by the variable, on a quantitative numerical scale, would not be considered as contributors per se. Thus, the MCA output is organized accordingly when information about the contribution of each variable to the principal components is retrieved from the *.mca* object (in this case` poison_subset1.mca`).  Indeed, this is the case using functions like the following ones:
 
 ```r
 # to get variable coordinates in the PC space
@@ -526,10 +528,11 @@ gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), repel = TRUE)
 ```
 
 ![alt text](image-46.png)
-Figure 20. Mapping of the original variables (variable categories) on the principal component space.
+<br>
+**Figure 20:** Mapping of the original variables (variable categories) on the principal component space.
 
 
-The relationship between variables (instead of variable categories) and principal components can only be displayed as a correlation plot. The necessary data are stored in the “.mca$var$eta2” section (in this case “poison_subset1.mca$var$eta2”). For unknown reasons, this section, the so-called “eta-squared values”, is not displayed among the options in Figure 16 but it’s there!
+The relationship between variables (instead of variable categories) and principal components can only be displayed as a correlation plot. The necessary data are stored in the *.mca$var$eta2* section (in this case *poison_subset1.mca$var$eta2*). For unknown reasons, this section, the so-called “eta-squared values”, is not displayed among the options in Figure 16 but it’s there!
 
 Thus, the eta-squared values conveying information about variable correlations with PCs can be evoked by typing:
 

@@ -304,6 +304,6 @@ names(meth_out) <- c("chr","start","end","methylation_level_mean")
 
 ```r
 library(ggplot2)
-ggplot(meth_out, aes(x=window,y=methylation_level_mean)) + 
+ggplot(meth_out, aes(x=start,y=methylation_level_mean)) + 
 geom_bar(stat="identity", col="blue")
 ```
