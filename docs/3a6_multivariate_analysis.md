@@ -428,7 +428,7 @@ text(meth_pca$x,  labels=rownames(t(meth)), cex=0.5, pos=c(4,4,4,4,4,4,2,2,2,2,2
 Loadings can be obtained 
 ![alt text](image-60.png)
 
-## A glimpse on multiple correspondence analysis (MCA)
+# A glimpse on multiple correspondence analysis (MCA)
 
 The MCA approach of multivariate analysis is similar to PCA in exploiting the principal component theory, but in contrast to PCA it is designed to handle categorical (qualitative) variants. Datasets can contain quantitative variables as well and correlations among these and other categorical variables can be computed. However, only categorical variables can be used to define principal components.
 
