@@ -80,7 +80,7 @@ CA is only meant to (1) sort variables into very relevant and less relevant and 
 
 R offers basic functions to perform PCA. However, here we will describe how to use two packages specialized in PCA, namely FactoMineR and factoextra.
 
-
+<!--
 ```bash
 # Move the working directory
 cd /data2/student_space/st24_16_folder/epigenomics/
@@ -91,6 +91,7 @@ mkdir -p multivariate_analysis/
 # Move inside the new directory
 cd multivariate_analysis/
 ```
+-->
 
 <br>
 
