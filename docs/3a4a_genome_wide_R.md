@@ -40,9 +40,16 @@ It should be already available in your directory:
 `/data2/student_space/st24_16_folder/epigenomics/methylation_distribution/`
 
 
+### Activate the conda environment
+{: .no_toc }
 
 ```bash
-# Move the working directori
+conda activate epigenomics
+```
+
+
+```bash
+# Move the working directory
 cd /data2/student_space/st24_16_folder/epigenomics/
 
 # Create a new directory for this tutorial
