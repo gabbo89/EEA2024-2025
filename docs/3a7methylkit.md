@@ -13,7 +13,7 @@ INCOMPLETE
 {: .important-title }
 > Aim
 >
-> Perform a Chipseq analysis
+> Perform a differential methylation analysis using methylKit
 
 <br>
 <details open markdown="block">
@@ -66,33 +66,45 @@ R
 
 ```r
 # Create a list object with the path to the file of interest
-file.list = list("/data2/biotecnologie_molecolari_magris/epigenomics/methylkit/dataset/301.rrbs.methylkit","/data2/biotecnologie_molecolari_magris/epigenomics/methylkit/dataset/302.rrbs.methylkit","/data2/biotecnologie_molecolari_magris/epigenomics/methylkit/dataset/310.rrbs.methylkit","/data2/biotecnologie_molecolari_magris/epigenomics/methylkit/dataset/311.rrbs.methylkit")
+file.list = list("/data2/biotecnologie_molecolari_magris/epigenomics/methylkit/dataset/301.rrbs.methylkit",
+"/data2/biotecnologie_molecolari_magris/epigenomics/methylkit/dataset/302.rrbs.methylkit",
+"/data2/biotecnologie_molecolari_magris/epigenomics/methylkit/dataset/310.rrbs.methylkit",
+"/data2/biotecnologie_molecolari_magris/epigenomics/methylkit/dataset/311.rrbs.methylkit")
 ```
 
 
 Load the files into methylKit objects. By defining the treatment function, we classify the samples in case or treament (1) vs controls (0). Samples 301 and 302 are controls, while samples 310 and 311 are treated.
 ```r
-myMethylRawList = methRead(file.list, sample.id = list("301", "302", "310", "311"), assembly="NONE", treatment = c(0,0,1,1))
+myMethylRawList = methRead(file.list, sample.id = list("301", "302", "310", "311"),
+ assembly="NONE", treatment = c(0,0,1,1))
 ```
 
 {: .success-title }
 > STDOUT
 >
 >Received list of locations.
+>
 >Reading file.
+>
 >Reading file.
+>
 >Reading file.
+>
 >Reading file.
 
 
 ![alt text](image-66.png)
+
+`myMethylRawList` is an object of the type `MethylRawList`. It is a list of `MethylRaw` objects (S4 class objects for those familiar with R), with as many elements as there are .methylkit files loaded using the list function.
+Calling the `MethylRawList` object provides an overview of the loaded methylomes. For each one, the first rows of the table containing the methylation data are shown, along with additional information such as the sample name and the context of the analyzed cytosines.
 
 If we want to access to a single element of the list, we can use the following command: `myMethylRawList[[1]]` to access the first element of the list, which is the methylKit object for sample 301. Eitherwise, data can be accessed using `getData()` function, and we have a finer control on the data we want to access. 
 
 Filter dataset by coverage 
 
 ```r
-filtered.myMethylRawList = filterByCoverage(myMethylRawList, lo.count=4, lo.perc=NULL, hi.count=NULL, hi.perc=99.9)
+filtered.myMethylRawList = filterByCoverage(myMethylRawList, lo.count=4, 
+lo.perc=NULL, hi.count=NULL, hi.perc=99.9)
 ```
 
 
@@ -133,14 +145,15 @@ If now we would like to get the methylation percentage for each C in common betw
 meth_round_percent = round(percMethylation(meth, rowids=T), 2)
 ```
 
+---
 
-If we want to have the methylation values per wiondow size (e.g. 1000), separately for each input sample
+If we want to have the methylation values per window size (e.g. 1000), separately for each input sample, and not the single C positions, tiles could be created by defining the window size and the step size. 
 
 ```r
 tiles = tileMethylCounts(filtered.myMethylRawList, win.size = 1000, step.size=1000)
 ```
 
-Now we can merge the information of the tiles
+Now we can merge the information of the tiles of the different samples together. 
 
 ```r
 tiles_united = unite(tiles, destrand=FALSE, save.db=F)
@@ -152,11 +165,15 @@ And tiles can be filtered
 filtered.tiles = filterByCoverage(tiles, lo.count=4, lo.perc=NULL, hi.count=NULL, hi.perc=99.9)
 ```
 
+Output tables can be stored into file using the write.table function. 
 
-In order to compute the differential methylation 
+---
+## Differential methylation 
+{: .no_toc }
 
+In order to compute the differential methylation between the single Cs or the windows, we can use the `calculateDiffMeth` function. Several parameters are already defined by default. We will only need to set the type of test (chi-squared) and rthe correction type (q-value). We will try with the single C values.
 
-We can create a PCA 
+Before we could inspect our dataset. We could perform a PCA 
 
 ```r
 PCASamples(meth, adj.lim=c(1,1))
@@ -171,19 +188,22 @@ clusterSamples(meth, dist="correlation", method="ward", plot=TRUE)
 
 ![alt text](image-67.png)
 
-And now we are ready to calculate the differential methylation between the two conditions. 
+Now we are ready to calculate the differential methylation between the two conditions. 
 
 ```r
 myDiff=calculateDiffMeth(meth)
 ```
+
 {: .success-title }
 > STDOUT
 >
 > two groups detected:
+>
 > will calculate methylation difference as the difference of
->treatment (group: 1) - control (group: 0)
+>
+> treatment (group: 1) - control (group: 0)
 
-The created object will have a C in each row, with values of differential methylation. The last column represent the weighted difference of methylation between the test samples and control samples. Positive values will show hypermethylation of the test samples, while negative values will show hypomethylation. 
+The created object will have a C in each row, with values of differential methylation. The last column represent the weighted difference of methylation between test and control samples. Positive values will show hypermethylation of the test samples, while negative values will show hypomethylation. 
 
 ```r
 myDiff
@@ -214,16 +234,17 @@ We will see that our control samples have low methylation values compared to the
 Table can then be saved using the `write.table` function 
 
 ```r
-write.table(getData(myDiffSignificants),file= "differential_methylation.tbl", quote=FALSE, sep="\t", row.names=FALSE)
+write.table(getData(myDiffSignificants),file= "differential_methylation.txt",
+ quote=FALSE, sep="\t", row.names=FALSE)
 ```
 
 
 
-The same can be obtained also for the tiles 
+The same can be obtained also for the tiles (windows) 
 
 myDiff_tiles=calculateDiffMeth(tiles_united, adjust=c("qvalue"),test=c("Chisq"))
 
-By performing the analysis this way we will get the putative windows were differential methylation is observed, which are referred as Differentially Methylated Regions (DMRs). 
+By performing the analysis this way we will get the putative windows were differential methylation is observed, which are commonly referred as Differentially Methylated Regions (DMRs). 
 
 
 The windows could be saved to file and imported in igv to visualise the differentially methylated windows in the genomic context, as for example genes and repetitive elements 

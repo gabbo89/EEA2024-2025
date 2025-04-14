@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Lesson 7 - Chip-seq analysis
+title: Lesson 8 - Chip-seq analysis
 parent: 3. Tutorial
 nav_order: 8
 description: A comprehensive guide to understanding epigenetics.
@@ -38,6 +38,8 @@ After isolation and fragmentation of chromatin, the protein–DNA complexes are 
 Our epigenome is defined as methylated DNA and modified histone proteins (around which both methylated and unmethylated DNA are wrapped). DNA methylation and histone modifications undergo global changes during transitions in developmental states and in diseases such as cancer and therefore are major contributors to the dynamic nature of chromatin.
 
 ![alt text](image-61.png)
+<br>
+
 **Figure 1:** Schematic nucleosome structure. A nucleosome consists of two copies of each core histone (H2A, H2B, H3 and H4) and ∼150 bp DNA. The N-terminal tail of each histone is extruded from the nucleosome.
 
 
@@ -45,7 +47,7 @@ Specific histone modifications may still serve as good epigenetic indicators of 
 
 ![Figure2](image-62.png)
 
-**Figure 2: **Distributions of six modifications with respect to genes are schematically illustrated. TSS, transcription start site; TES, transcription end site. H3K4me3 is enriched around TSSs. H3K4me1 is enriched around enhancers and more downstream. H3K27ac is enriched around active enhancers and TSSs. In undifferentiated stem cells, both H3K4me3 and H3K27me3 (active and inactive marks, respectively) are enriched around TSSs on many genes. H3K27me3 is enriched around inactive TSS in somatic cells. H3K9me3 is broadly distributed on inactive regions. H3K27me3 and H3K9me3 are usually not colocalized. TSSs are generally devoid of nucleosomes.
+**Figure 2:**   Distributions of six modifications with respect to genes are schematically illustrated. TSS, transcription start site; TES, transcription end site. H3K4me3 is enriched around TSSs. H3K4me1 is enriched around enhancers and more downstream. H3K27ac is enriched around active enhancers and TSSs. In undifferentiated stem cells, both H3K4me3 and H3K27me3 (active and inactive marks, respectively) are enriched around TSSs on many genes. H3K27me3 is enriched around inactive TSS in somatic cells. H3K9me3 is broadly distributed on inactive regions. H3K27me3 and H3K9me3 are usually not colocalized. TSSs are generally devoid of nucleosomes.
 
 
 We need to add a control sample to our ChIP-seq experiment to account for non-specific binding of the antibody. Two commonly controls are used:
@@ -207,3 +209,4 @@ plotHeatmap \
   --heatmapHeight 10 \
   --heatmapWidth 6 \
   --dpi 300
+```

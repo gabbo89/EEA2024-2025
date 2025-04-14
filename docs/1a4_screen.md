@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Conda environment
+title: Screen session
 parent: 1. Introduction
 nav_order: 5
 description: A comprehensive guide to understanding epigenetics.
@@ -75,6 +75,8 @@ All screen commands are prefixed by an escape key, by default Ctrl-a (that's Con
 | Remove current region 		| `Ctrl-a X`								|
 | Remove all regions but the current one| `Ctrl-a Q`								|
 
+
+<!--
 ## Misc
 
 | Description						| Command								|
@@ -88,3 +90,5 @@ All screen commands are prefixed by an escape key, by default Ctrl-a (that's Con
 | Lock (password protect) display 			| `Ctrl-a x`								|
 | Enter screen command 					| `Ctrl-a :`								|
 | Enable logging in the screen session 			| `Ctrl-a H`								|
+
+-->
