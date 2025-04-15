@@ -375,3 +375,6 @@ macs3/h3k4me3_peaks.narrowPeak \
 /data2/biotecnologie_molecolari_magris/epigenomics/chip_seq/te_prediction/chr05.TE.gff3 \
 -n ont,h3k4me1,h3k4me3,k4me1_peaks,k4me3_peaks,genes,TE
 ```
+
+
+![alt text](image-71.png)
