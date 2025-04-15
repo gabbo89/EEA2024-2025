@@ -90,7 +90,7 @@ bowtie2-build reference/vitis_vinifera.fasta  reference/vitis_vinifera
 # Create also the index .fai for igv visualization
 samtools faidx reference/vitis_vinifera.fasta
 ```
-
+<br>
 
 # 1. H3K4me1 data analysis
 
@@ -238,8 +238,7 @@ dataset=h3k27ac
 
 
 
-### Peak calling
-{: .no_toc }
+# Peak calling
 
 ChIP-seq analysis algorithms are specialized in identifying one of two types of enrichment (or have specific methods for each): broad peaks or broad domains (i.e. histone modifications that cover entire gene bodies) or narrow peaks (i.e. a transcription factor binding). Narrow peaks are easier to detect as we are looking for regions that have higher amplitude and are easier to distinguish from the background, compared to broad or dispersed marks. There are also ‘mixed’ binding profiles which can be hard for algorithms to discern. An example of this is the binding properties of PolII, which binds at promotor and across the length of the gene resulting in mixed signals (narrow and broad).
 
@@ -251,7 +250,7 @@ In order to perform peak calling - we nee to have also the INPUT control aligned
 Repeats the same above, by replacing the dataset with the input sample
 
 
-# 2 input data analysis
+# 4. INPUT data analysis
 Commands are identical as above (for the modifications explored). 
 
 ```bash
@@ -329,6 +328,7 @@ alignments/${dataset}.dedup.bam
 
 Now we have available the two bam files (h3k4me3 and input) and we can perform peak calling using `MACS3`.
 
+```bash
 macs3 callpeak \
   -t alignments/h3k4me3.dedup.bam \
   -c alignments/input.dedup.bam \
@@ -340,9 +340,11 @@ macs3 callpeak \
   --shift -100 \
   --extsize 200 \
   -q 0.01
-
+```
+<br>
 Repeat the same for h3k4me1 and we can perform peak calling using `MACS3`.
 
+```bash
 macs3 callpeak \
   -t alignments/h3k4me1.dedup.bam \
   -c alignments/input.dedup.bam \
@@ -353,8 +355,9 @@ macs3 callpeak \
   --nomodel \
   --shift -100 \
   --extsize 200 \
+  --broad \
   -q 0.01
-
+```
 
 # Upload dataset on igv 
 {: .no_toc}
@@ -362,12 +365,13 @@ macs3 callpeak \
 ```bash
 igv \
 -g reference/vitis_vinifera.fasta \
--l chr05:24461000-24462000 \
+-l chr05:24258000-24272000 \
 ../ont/alignments/rkatsiteli.leaves.ont.sort.bam \
 bigwig/h3k4me1.dedup.bw \
 bigwig/h3k4me3.dedup.bw \
-macs3/h3k4me1_peaks.narrowPeak \
+macs3/h3k4me1_peaks.broadPeak \
 macs3/h3k4me3_peaks.narrowPeak \
-/data2/biotecnologie_molecolari_magris/epigenomics/chip_seq/gene_prediction/chr5.gtf \
--n ont,h3k4me1,h3k4me3,k4me1_peaks,k4me3_peaks,genes
+/data2/biotecnologie_molecolari_magris/epigenomics/chip_seq/gene_prediction/chr05.genes.gtf \
+/data2/biotecnologie_molecolari_magris/epigenomics/chip_seq/te_prediction/chr05.TE.gff3 \
+-n ont,h3k4me1,h3k4me3,k4me1_peaks,k4me3_peaks,genes,TE
 ```
