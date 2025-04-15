@@ -62,6 +62,9 @@ cd /data2/student_space/st24_16_folder/epigenomics
 
 # Open R
 R
+
+# Load the library
+library(methylKit)
 ```
 
 
@@ -251,4 +254,4 @@ myDiff_tiles=calculateDiffMeth(tiles_united, adjust=c("qvalue"),test=c("Chisq"))
 By performing the analysis this way we will get the putative windows were differential methylation is observed, which are commonly referred as Differentially Methylated Regions (DMRs). 
 
 
-The windows could be saved to file and imported in igv to visualise the differentially methylated windows in the genomic context, as for example genes and repetitive elements 
+The windows could be saved to file and imported in igv to visualise the differentially methylated windows in the genomic context, as for example genes and repetitive elements.

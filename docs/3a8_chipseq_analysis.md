@@ -4,7 +4,7 @@ title: Lesson 8 - Chip-seq analysis
 parent: 3. Tutorial
 nav_order: 8
 description: A comprehensive guide to understanding epigenetics.
-published: false
+published: true
 ---
 
 INCOMPLETE
@@ -57,7 +57,6 @@ We need to add a control sample to our ChIP-seq experiment to account for non-sp
 2. Performing  a ChIP-seq experiment with an antibody that does not bind to the protein of interest (not known to be involved in DNA bindin or chromatin modifications, such as IgG). This is called an (Mock IP). [Control for antibody specificity] 
 
 
-#
 
 ### Activate the conda environment
 {: .no_toc }
@@ -72,10 +71,10 @@ conda activate chipseq_data
 mkdir -p /data2/student_space/st24_16_folder/epigenomics/chip_seq/
 
 # Move the working directory
-mkdir -p /data2/student_space/st24_16_folder/epigenomics/chip_seq/
+cd /data2/student_space/st24_16_folder/epigenomics/chip_seq/
 
 # Create the output folders 
-mkdir -p fastq trimmed aligned reference bigwig plots
+mkdir -p fastq logs trimmed alignments reference bigwig plots macs3
 ```
 
 We need to create the indexes for bowtie2 which is the aligner we will use to map the reads to the genome.
@@ -87,6 +86,9 @@ cp \
 
 # Create the indexes 
 bowtie2-build reference/vitis_vinifera.fasta  reference/vitis_vinifera
+
+# Create also the index .fai for igv visualization
+samtools faidx reference/vitis_vinifera.fasta
 ```
 
 
@@ -95,8 +97,9 @@ bowtie2-build reference/vitis_vinifera.fasta  reference/vitis_vinifera
 ```bash
 # Define a set of variables
 dataset=h3k4me1
-R1=fastq/rkatsiteli.${dataset}.R1.fastq.gz
-R2=fastq/rkatsiteli.${dataset}.R2.fastq.gz
+fastqpath=/data2/biotecnologie_molecolari_magris/epigenomics/chip_seq/fastq/
+R1=${fastqpath}/rkatsiteli.${dataset}.R1.fastq.gz
+R2=${fastqpath}/rkatsiteli.${dataset}.R2.fastq.gz
 threads=2
 
 # path to bowtie2 indexes
@@ -114,7 +117,6 @@ fastp \
   -O trimmed/${dataset}_2.trimmed.fastq.gz \
   -h logs/${dataset}_fastp.html \
   -j logs/${dataset}_fastp.json
-
 ```
 
 ### Alignment with bowtie2
@@ -124,7 +126,7 @@ fastp \
 bowtie2 -x $ref_index \
   -1 trimmed/${dataset}_1.trimmed.fastq.gz \
   -2 trimmed/${dataset}_2.trimmed.fastq.gz \
-  -S aligned/${dataset}.sam \
+  -S alignments/${dataset}.sam \
   --very-sensitive \
   -p $threads 2> logs/${dataset}_bowtie2.log
 ```
@@ -134,10 +136,14 @@ bowtie2 -x $ref_index \
 {: .no_toc }
 
 ```bash
-samtools view  -@ ${threads} -b -o aligned/${dataset}.bam aligned/${dataset}.sam 
+samtools view \
+-@ ${threads} \
+-b \
+-o alignments/${dataset}.bam \
+alignments/${dataset}.sam 
 
 # remove the sam file (since we have the bam file now)
-rm aligned/${dataset}.sam 
+rm alignments/${dataset}.sam 
 
 # Before sorting the bam file, we will fixmate the reads # to ensure that the mate information 
 # is correct, the output will be redirect to the sort command and then
@@ -149,7 +155,7 @@ samtools fixmate \
 -@ ${threads} \
 -m \
 -u \
-aligned/${dataset}.bam - | \
+alignments/${dataset}.bam - | \
 samtools sort \
 -@ ${threads} \
 -u \
@@ -158,7 +164,7 @@ samtools markdup \
 -@ ${threads} \
 --write-index \
 - \
-aligned/${dataset}.dedup.bam
+alignments/${dataset}.dedup.bam
 ```
 
 
@@ -169,7 +175,7 @@ In order to get a first look at our data, we can use [deeptools](https://deeptoo
 
 ```bash
 bamCoverage \
-  -b aligned/${dataset}.dedup.bam \
+  -b alignments/${dataset}.dedup.bam \
   -o bigwig/${dataset}.dedup.bw \
   --normalizeUsing RPGC \
   --effectiveGenomeSize 26902106 \
@@ -203,21 +209,165 @@ plotHeatmap \
   --dpi 300
 ```
 
+We can now repeat the same workflow for two other modifications:
+- **h3k4me3**
+- **h3k27ac**
+
+
+We need to define the new dataset variable, but anything else is identical as above.
+
+# 2. H3K4me3 data analysis
+
+```bash
+# Define a set of variables
+dataset=h3k4me3
+
+...
+# Repeat the same command as above. 
+```
+
+# 3. H3K27ac data analysis
+
+```bash
+# Define a set of variables
+dataset=h3k27ac
+
+...
+# Repeat the same command as above. 
+```
+
 
 
 ### Peak calling
 {: .no_toc }
 
+ChIP-seq analysis algorithms are specialized in identifying one of two types of enrichment (or have specific methods for each): broad peaks or broad domains (i.e. histone modifications that cover entire gene bodies) or narrow peaks (i.e. a transcription factor binding). Narrow peaks are easier to detect as we are looking for regions that have higher amplitude and are easier to distinguish from the background, compared to broad or dispersed marks. There are also ‘mixed’ binding profiles which can be hard for algorithms to discern. An example of this is the binding properties of PolII, which binds at promotor and across the length of the gene resulting in mixed signals (narrow and broad).
+
+A commonly used tool is named Model-based Analysis of ChIP-Seq (MACS). MACS2 is a model-based algorithm for peak detection in ChIP-seq data. It uses a Poisson distribution to model the background and a Gaussian distribution to model the signal. MACS2 can also be used to call peaks from paired-end data 
+
+Combining the information of both sequencing tag position and orientation 
+
 In order to perform peak calling - we nee to have also the INPUT control aligned to the reference genome, to be provided as input for macs3. 
-Repeats the same above, by replacing the dataset of inpu 
+Repeats the same above, by replacing the dataset with the input sample
+
+
+# 2 input data analysis
+Commands are identical as above (for the modifications explored). 
+
+```bash
+# Define a set of variables
+dataset=input
+fastqpath=/data2/biotecnologie_molecolari_magris/epigenomics/chip_seq/fastq/
+R1=${fastqpath}/rkatsiteli.${dataset}.R1.fastq.gz
+R2=${fastqpath}/rkatsiteli.${dataset}.R2.fastq.gz
+threads=2
+
+# path to bowtie2 indexes
+ref_index=reference/vitis_vinifera
+```
+
+### Trimming with fastp
+{: .no_toc }
+
+```bash
+fastp \
+  -i $R1 -I $R2 \
+  -w 3 \
+  -o trimmed/${dataset}_1.trimmed.fastq.gz \
+  -O trimmed/${dataset}_2.trimmed.fastq.gz \
+  -h logs/${dataset}_fastp.html \
+  -j logs/${dataset}_fastp.json
+```
+
+### Alignment with bowtie2
+{: .no_toc }
+
+```bash
+bowtie2 -x $ref_index \
+  -1 trimmed/${dataset}_1.trimmed.fastq.gz \
+  -2 trimmed/${dataset}_2.trimmed.fastq.gz \
+  -S alignments/${dataset}.sam \
+  --very-sensitive \
+  -p $threads 2> logs/${dataset}_bowtie2.log
+```
+
+
+### Convert SAM to BAM and remove duplicated reads
+{: .no_toc }
+
+```bash
+samtools view \
+-@ ${threads} \
+-b \
+-o alignments/${dataset}.bam \
+alignments/${dataset}.sam 
+
+# remove the sam file (since we have the bam file now)
+rm alignments/${dataset}.sam 
+
+# Before sorting the bam file, we will fixmate the reads # to ensure that the mate information 
+# is correct, the output will be redirect to the sort command and then
+# duplicated reads will be marked
+#  -u options of samtools sort specify an uncompressed output
+
+# We will combine the three commands in an unique workflow
+samtools fixmate \
+-@ ${threads} \
+-m \
+-u \
+alignments/${dataset}.bam - | \
+samtools sort \
+-@ ${threads} \
+-u \
+- | \
+samtools markdup \
+-@ ${threads} \
+--write-index \
+- \
+alignments/${dataset}.dedup.bam
+```
+
+Now we have available the two bam files (h3k4me3 and input) and we can perform peak calling using `MACS3`.
+
 macs3 callpeak \
-  -t aligned/${dataset}.dedup.bam \
-  -c aligned/rkatsiteli_input.chr5.bam \
+  -t alignments/h3k4me3.dedup.bam \
+  -c alignments/input.dedup.bam \
   -f AUTO \
-  -g hs \
-  -n ${SAMPLE}_chr5 \
-  --outdir macs2_output \
+  -g 26902106 \
+  -n h3k4me3 \
+  --outdir macs3 \
   --nomodel \
   --shift -100 \
   --extsize 200 \
   -q 0.01
+
+Repeat the same for h3k4me1 and we can perform peak calling using `MACS3`.
+
+macs3 callpeak \
+  -t alignments/h3k4me1.dedup.bam \
+  -c alignments/input.dedup.bam \
+  -f AUTO \
+  -g 26902106 \
+  -n h3k4me1 \
+  --outdir macs3 \
+  --nomodel \
+  --shift -100 \
+  --extsize 200 \
+  -q 0.01
+
+
+# Upload dataset on igv 
+{: .no_toc}
+
+```bash
+igv \
+-g reference/vitis_vinifera.fasta \
+-l chr05:24461000-24462000 \
+../ont/alignments/rkatsiteli.leaves.ont.sort.bam \
+bigwig/h3k4me1.dedup.bw \
+bigwig/h3k4me3.dedup.bw \
+macs3/h3k4me1_peaks.narrowPeak \
+macs3/h3k4me3_peaks.narrowPeak \
+/data2/biotecnologie_molecolari_magris/epigenomics/chip_seq/gene_prediction/chr5.gtf \
+-n ont,h3k4me1,h3k4me3,k4me1_peaks,k4me3_peaks,genes
+```
