@@ -184,7 +184,20 @@ bamCoverage \
   -p $threads
 ```
 
-In order to plot a heatmap associated with genomic regions, we need to first generate a matrix file (generated with `computeMatrix`) and then 
+In order to plot a heatmap associated with genomic regions, we need to first generate a matrix file (generated with `computeMatrix`) and then draw the heatmap with `plotHeatmap`.
+
+`computeMatrix` has two main modes of use:
+
+- for computing the signal distribution relative to a point (reference-point), e.g., the beginning or end of each genomic region
+
+- for computing the signal over a set of regions (scale-regions) where all regions are scaled to the same size
+
+![alt text](image-72.png)
+
+`computeMatrix` is tightly connected to [`plotHeatmap`](https://deeptools.readthedocs.io/en/stable/content/tools/plotHeatmap.html) and [`plotProfile`](https://deeptools.readthedocs.io/en/stable/content/tools/plotProfile.html): it takes the values of all the signal files and all genomic regions that you would like to plot and computes the corresponding data matrix.
+
+![alt text](image-73.png)
+
 
 ```bash
 # Compute matrix around TSS
@@ -239,6 +252,7 @@ dataset=h3k27ac
 
 
 # Peak calling
+{: .no_toc}
 
 ChIP-seq analysis algorithms are specialized in identifying one of two types of enrichment (or have specific methods for each): broad peaks or broad domains (i.e. histone modifications that cover entire gene bodies) or narrow peaks (i.e. a transcription factor binding). Narrow peaks are easier to detect as we are looking for regions that have higher amplitude and are easier to distinguish from the background, compared to broad or dispersed marks. There are also ‘mixed’ binding profiles which can be hard for algorithms to discern. An example of this is the binding properties of PolII, which binds at promotor and across the length of the gene resulting in mixed signals (narrow and broad).
 
@@ -367,14 +381,17 @@ igv \
 -g reference/vitis_vinifera.fasta \
 -l chr05:24258000-24272000 \
 ../ont/alignments/rkatsiteli.leaves.ont.sort.bam \
+alignments/h3k4me3.dedup.bam \
 bigwig/h3k4me1.dedup.bw \
 bigwig/h3k4me3.dedup.bw \
 macs3/h3k4me1_peaks.broadPeak \
 macs3/h3k4me3_peaks.narrowPeak \
 /data2/biotecnologie_molecolari_magris/epigenomics/chip_seq/gene_prediction/chr05.genes.gtf \
 /data2/biotecnologie_molecolari_magris/epigenomics/chip_seq/te_prediction/chr05.TE.gff3 \
--n ont,h3k4me1,h3k4me3,k4me1_peaks,k4me3_peaks,genes,TE
+-n ont,h3k4me3-bam,h3k4me1,h3k4me3,k4me1_peaks,k4me3_peaks,genes,TE
 ```
+
+![alt text](image-75.png)
 
 
 ![alt text](image-71.png)
