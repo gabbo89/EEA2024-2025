@@ -4,7 +4,7 @@ title: Lesson 8 - Chip-seq analysis
 parent: 3. Tutorial
 nav_order: 8
 description: A comprehensive guide to understanding epigenetics.
-published: true
+published: false
 ---
 
 INCOMPLETE
@@ -139,11 +139,12 @@ samtools view  -@ ${threads} -b -o aligned/${dataset}.bam aligned/${dataset}.sam
 # remove the sam file (since we have the bam file now)
 rm aligned/${dataset}.sam 
 
-# Before sorting the bam file, we will fixmate the reads 
-# to ensure that the mate information is correct, 
-# the output will be redirect to the sort command and then
+# Before sorting the bam file, we will fixmate the reads # to ensure that the mate information 
+# is correct, the output will be redirect to the sort command and then
 # duplicated reads will be marked
-# -u options of samtools sort specify an uncompressed output
+#  -u options of samtools sort specify an uncompressed output
+
+# We will combine the three commands in an unique workflow
 samtools fixmate \
 -@ ${threads} \
 -m \
@@ -161,10 +162,54 @@ aligned/${dataset}.dedup.bam
 ```
 
 
+In order to get a first look at our data, we can use [deeptools](https://deeptools.readthedocs.io/en/latest/content/example_usage.html), which is a suite of python tools developed for the efficient analysis of high-througput sequencing data. It is particularly useful for the analysis of ChIP-seq data. A coverage track can be generated using the `bamCoverage` function. The track can then be uploaded on igv for visualization.
+
+![alt text](image-70.png)
+
+
+```bash
+bamCoverage \
+  -b aligned/${dataset}.dedup.bam \
+  -o bigwig/${dataset}.dedup.bw \
+  --normalizeUsing RPGC \
+  --effectiveGenomeSize 26902106 \
+  --binSize 25 \
+  --extendReads 200 \
+  -p $threads
+```
+
+In order to plot a heatmap associated with genomic regions, we need to first generate a matrix file (generated with `computeMatrix`) and then 
+
+```bash
+# Compute matrix around TSS
+computeMatrix reference-point \
+  -S bigwig/${dataset}.dedup.bw \
+  -R /data2/biotecnologie_molecolari_magris/epigenomics/chip_seq/gene_prediction/chr5_tss.bed \
+  --referencePoint TSS \
+  -b 3000 -a 3000 \
+  --skipZeros \
+  -bs 50 \
+  -p $threads \
+  -out plots/${dataset}_TSS_matrix.gz \
+  --outFileSortedRegions plots/${dataset}_TSS_genes.bed
+
+# Plot heatmap
+plotHeatmap \
+  -m plots/${dataset}_TSS_matrix.gz \
+  -out plots/${dataset}_TSS_heatmap.png \
+  --colorMap RdBu \
+  --heatmapHeight 10 \
+  --heatmapWidth 6 \
+  --dpi 300
+```
+
+
+
 ### Peak calling
 {: .no_toc }
 
-```bash
+In order to perform peak calling - we nee to have also the INPUT control aligned to the reference genome, to be provided as input for macs3. 
+Repeats the same above, by replacing the dataset of inpu 
 macs3 callpeak \
   -t aligned/${dataset}.dedup.bam \
   -c aligned/rkatsiteli_input.chr5.bam \
@@ -176,37 +221,3 @@ macs3 callpeak \
   --shift -100 \
   --extsize 200 \
   -q 0.01
-
-echo "Step 7: Generate bigWig for chr5 with deepTools"
-bamCoverage \
-  -b aligned/${dataset}.dedup.bam \
-  -o bigwig/${dataset}.dedup.bw \
-  --normalizeUsing RPGC \
-  --effectiveGenomeSize 26902106 \
-  --binSize 25 \
-  --extendReads 200 \
-  -p $threads
-
-
-
-# Compute matrix around TSS
-computeMatrix reference-point \
-  -S bigwig/${SAMPLE}.chr5.bw \
-  -R chr5_tss.bed \
-  --referencePoint TSS \
-  -b 3000 -a 3000 \
-  --skipZeros \
-  -bs 50 \
-  -p $THREADS \
-  -out plots/${SAMPLE}_TSS_matrix.gz \
-  --outFileSortedRegions plots/${SAMPLE}_TSS_genes.bed
-
-# Plot heatmap
-plotHeatmap \
-  -m plots/${SAMPLE}_TSS_matrix.gz \
-  -out plots/${SAMPLE}_TSS_heatmap.png \
-  --colorMap RdBu \
-  --heatmapHeight 10 \
-  --heatmapWidth 6 \
-  --dpi 300
-```
