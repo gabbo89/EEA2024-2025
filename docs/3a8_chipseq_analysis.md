@@ -386,7 +386,6 @@ macs3 callpeak \
 # Upload dataset on igv 
 {: .no_toc}
 
--remove long insert size 
 
 ```bash
 igv \
