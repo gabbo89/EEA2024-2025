@@ -242,6 +242,8 @@ We need to define the new dataset variable, but anything else is identical as ab
 ```bash
 # Define a set of variables
 dataset=h3k4me3
+R1=${fastqpath}/rkatsiteli.${dataset}.R1.fastq.gz
+R2=${fastqpath}/rkatsiteli.${dataset}.R2.fastq.gz
 
 ...
 # Repeat the same command as above. 
@@ -252,6 +254,8 @@ dataset=h3k4me3
 ```bash
 # Define a set of variables
 dataset=h3k27ac
+R1=${fastqpath}/rkatsiteli.${dataset}.R1.fastq.gz
+R2=${fastqpath}/rkatsiteli.${dataset}.R2.fastq.gz
 
 ...
 # Repeat the same command as above. 
