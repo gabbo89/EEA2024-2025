@@ -8,8 +8,8 @@ published: true
 ---
 
 
-INCOMPLETE
-{: .label .label-red }
+Final version
+{: .label .label-green }
 
 
 {: .important-title }

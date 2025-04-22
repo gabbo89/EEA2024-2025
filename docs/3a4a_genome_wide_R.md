@@ -7,8 +7,8 @@ description: A comprehensive guide to understanding epigenetics.
 published: true
 ---
 
-INCOMPLETE
-{: .label .label-red }
+Final version
+{: .label .label-green }
 
 {: .important-title }
 > Aim
