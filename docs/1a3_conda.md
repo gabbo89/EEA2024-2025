@@ -52,3 +52,22 @@ Conda can be deactivated using `$ conda deactivate`.
 1. Downloading conda: <https://docs.conda.io/projects/conda/en/latest/user-guide/install/download.html>
 2. Conda packages: <https://docs.conda.io/projects/conda/en/latest/user-guide/concepts/packages.html>
 3. Conda environments: <https://docs.conda.io/projects/conda/en/latest/user-guide/concepts/environments.html>
+
+
+## Configure the prompt 
+
+In order to configure the prompt and be able to use conda, you need to run the following command
+
+```bash
+eval "$(/course/tadb/miniconda3/bin/conda shell.bash hook)"
+```
+
+Now you will be able to use teh conda command.
+
+In order to use the conda environments, you need to run the following command:
+
+```bash
+conda init bash
+```
+
+![alt text](conda-init.png)
